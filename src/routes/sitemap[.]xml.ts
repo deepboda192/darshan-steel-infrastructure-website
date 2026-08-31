@@ -23,7 +23,8 @@ const ROUTES: Entry[] = [
 export const Route = createFileRoute('/sitemap.xml')({
   server: {
     handlers: {
-      GET: () => {
+      GET: async () => {
+        const projects = await listProjects()
         const lastModified = new Date().toISOString()
 
         const entries = ROUTES.flatMap((route) => {

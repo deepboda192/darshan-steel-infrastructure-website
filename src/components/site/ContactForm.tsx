@@ -23,7 +23,7 @@ import { cn } from '@/lib/cn'
  * Where the enquiry is posted. Set NEXT_PUBLIC_ENQUIRY_ENDPOINT to hand the
  * submission to a CRM or form service instead of the built-in route handler.
  */
-const ENDPOINT = process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT || '/api/enquiry'
+const ENDPOINT = import.meta.env.VITE_ENQUIRY_ENDPOINT || '/api/public/enquiry'
 
 /** Project types come from the solutions data so the two never drift apart. */
 const PROJECT_TYPES: string[] = [...solutions.map((s) => s.title), 'Other']

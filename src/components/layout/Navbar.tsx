@@ -1,7 +1,6 @@
-'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import Link from '@/components/site/NextLink'
+import { usePathname } from '@/lib/next-navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { primaryNav } from '@/data/nav'
 import { company } from '@/data/company'

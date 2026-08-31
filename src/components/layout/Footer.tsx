@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/site/NextLink'
 import { company, formattedAddress, activeSocials } from '@/data/company'
 import { footerNav, legalNav } from '@/data/nav'
 import { Logo } from './Logo'

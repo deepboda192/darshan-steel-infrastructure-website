@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from '@/components/media/NextImage'
 import { type SiteImage } from '@/data/images'
 import { cn } from '@/lib/cn'
 import { TechnicalPlate } from './TechnicalPlate'

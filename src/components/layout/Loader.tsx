@@ -1,6 +1,5 @@
-'use client'
 
-import Image from 'next/image'
+import Image from '@/components/media/NextImage'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/cn'
 import { company } from '@/data/company'

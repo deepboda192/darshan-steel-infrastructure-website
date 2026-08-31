@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/site/NextLink'
 import type { ReactNode } from 'react'
 import type { SiteImage } from '@/data/images'
 import { ImageFrame } from '@/components/media/ImageFrame'

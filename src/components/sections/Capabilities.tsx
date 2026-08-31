@@ -1,4 +1,3 @@
-'use client'
 
 import { useEffect, useRef, useState } from 'react'
 import { workflowStages } from '@/data/capabilities'

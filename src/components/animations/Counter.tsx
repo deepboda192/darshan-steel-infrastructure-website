@@ -1,4 +1,3 @@
-'use client'
 
 import { useEffect, useRef, useState } from 'react'
 import { onReveal, prefersReducedMotion } from '@/lib/revealManager'

@@ -1,4 +1,3 @@
-'use client'
 
 import {
   useMemo,
@@ -8,7 +7,7 @@ import {
   type FormEvent,
   type ReactNode,
 } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from '@/lib/next-navigation'
 import { company } from '@/data/company'
 import { solutions } from '@/data/solutions'
 import { Button } from '@/components/site/Button'

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from '@/components/site/NextLink'
 import { solutions } from '@/data/solutions'
 import { ImageFrame } from '@/components/media/ImageFrame'
 import { SectionHeader } from '@/components/site/SectionHeader'

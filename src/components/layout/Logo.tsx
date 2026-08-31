@@ -1,5 +1,5 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from '@/components/media/NextImage'
+import Link from '@/components/site/NextLink'
 import { company } from '@/data/company'
 import { cn } from '@/lib/cn'
 

@@ -40,7 +40,7 @@ function AuthPage() {
   }
 
   return (
-    <main className="bg-charcoal py-32 text-white">
+    <section className="bg-charcoal py-32 text-white">
       <Container>
         <div className="mx-auto max-w-md">
           <p className="tech text-white/55">Darshan Steel Infrastructure</p>
@@ -96,7 +96,7 @@ function AuthPage() {
           </button>
         </div>
       </Container>
-    </main>
+    </section>
   )
 }
 

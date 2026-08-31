@@ -32,7 +32,7 @@ function AdminLayout() {
   }
 
   return (
-    <main className="min-h-screen bg-white pt-32 pb-24">
+    <section className="min-h-screen bg-white pt-32 pb-24">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-6 border-b border-charcoal/15 pb-6">
           <div>
@@ -86,7 +86,7 @@ function AdminLayout() {
           )}
         </div>
       </Container>
-    </main>
+    </section>
   )
 }
 

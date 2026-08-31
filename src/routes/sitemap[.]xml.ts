@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { company } from '@/data/company'
-import { projects } from '@/data/projects'
+import { listProjects } from '@/lib/projects.functions'
 
 const BASE = company.siteUrl.replace(/\/+$/, '')
 

@@ -1,9 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { projectsQueryOptions } from '@/lib/projects-query'
 import Link from '@/components/site/NextLink'
 
 import { company } from '@/data/company'
 import { siteImages, type SiteImage } from '@/data/images'
-import { projects, type Project } from '@/data/projects'
+import { type Project } from '@/data/projects'
 
 import { PageHero } from '@/components/layout/PageHero'
 import { CTASection } from '@/components/sections/CTASection'
@@ -24,9 +26,9 @@ import { cn } from '@/lib/cn'
 const pad = (n: number) => String(n).padStart(2, '0')
 
 /** The delivery scope carried on every record, in order. */
-const scopeStages = Array.from(new Set(projects.flatMap((p) => p.scope)))
+const scopeStagesOf = (list: Project[]) => Array.from(new Set(list.flatMap((p) => p.scope)))
 
-const buildingTypeCount = new Set(projects.map((p) => p.buildingType)).size
+const buildingTypeCountOf = (list: Project[]) => new Set(list.map((p) => p.buildingType)).size
 
 /** Each record's own cover photograph. See `photo` in data/projects.ts. */
 function coverImage(project: Project): SiteImage {
@@ -148,6 +150,10 @@ const RELATED = [
 /* ========================================================================== */
 
 function ProjectsPage() {
+  const { data: projects } = useSuspenseQuery(projectsQueryOptions)
+  const scopeStages = scopeStagesOf(projects)
+  const buildingTypeCount = buildingTypeCountOf(projects)
+
   return (
     <>
       <JsonLd
@@ -471,6 +477,7 @@ function ProjectsPage() {
 }
 
 export const Route = createFileRoute('/projects/')({
+  loader: ({ context }) => context.queryClient.ensureQueryData(projectsQueryOptions),
   head: () => ({
     meta: [
       { title: "Projects | DSI" },

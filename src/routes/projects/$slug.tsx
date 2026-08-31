@@ -1,9 +1,11 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { projectsQueryOptions } from '@/lib/projects-query'
 import Link from '@/components/site/NextLink'
 
 import { company } from '@/data/company'
 import type { SiteImage } from '@/data/images'
-import { projects, projectBySlug } from '@/data/projects'
+import type { Project } from '@/data/projects'
 
 import { PageHero } from '@/components/layout/PageHero'
 import { CTASection } from '@/components/sections/CTASection'
@@ -80,7 +82,8 @@ const GALLERY_LAYOUT = [
 
 function ProjectDetailPage() {
   const { slug } = Route.useParams()
-  const project = projectBySlug(slug)
+  const { data: projects } = useSuspenseQuery(projectsQueryOptions)
+  const project = projects.find((p) => p.slug === slug)
 
   if (!project) throw notFound()
 
@@ -425,8 +428,9 @@ function ProjectDetailPage() {
 }
 
 export const Route = createFileRoute('/projects/$slug')({
-  head: ({ params }) => {
-    const project = projectBySlug(params.slug)
+  loader: ({ context }) => context.queryClient.ensureQueryData(projectsQueryOptions),
+  head: ({ params, loaderData }) => {
+    const project = ((loaderData as Project[] | undefined) ?? []).find((p) => p.slug === params.slug)
     const title = project
       ? `${project.buildingType} — Project ${project.index} | ${company.shortName}`
       : `Project Not Found | ${company.shortName}`

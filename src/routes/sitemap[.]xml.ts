@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { company } from '@/data/company'
-import { projects } from '@/data/projects'
+import { listProjects } from '@/lib/projects.functions'
 
 const BASE = company.siteUrl.replace(/\/+$/, '')
 
@@ -23,7 +23,8 @@ const ROUTES: Entry[] = [
 export const Route = createFileRoute('/sitemap.xml')({
   server: {
     handlers: {
-      GET: () => {
+      GET: async () => {
+        const projects = await listProjects()
         const lastModified = new Date().toISOString()
 
         const entries = ROUTES.flatMap((route) => {

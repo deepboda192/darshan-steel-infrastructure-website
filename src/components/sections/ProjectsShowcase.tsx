@@ -1,5 +1,7 @@
 import Link from '@/components/site/NextLink'
+import { useQuery } from '@tanstack/react-query'
 import { featuredProjects } from '@/data/projects'
+import { projectsQueryOptions } from '@/lib/projects-query'
 import { ImageFrame } from '@/components/media/ImageFrame'
 import { SectionHeader } from '@/components/site/SectionHeader'
 import { Button } from '@/components/site/Button'
@@ -28,6 +30,9 @@ const LAYOUT = [
 ]
 
 export function ProjectsShowcase() {
+  const { data } = useQuery(projectsQueryOptions)
+  const shown = (data ?? featuredProjects).slice(0, 4)
+
   return (
     <section className="bg-white py-24 md:py-32 lg:py-40" aria-label="Selected projects">
       <div className="container-site">
@@ -51,7 +56,7 @@ export function ProjectsShowcase() {
         />
 
         <div className="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-12">
-          {featuredProjects.map((project, i) => {
+          {shown.map((project, i) => {
             const layout = LAYOUT[i] ?? LAYOUT[0]
             return (
               <article key={project.slug} className={cn(layout.span, layout.offset)}>

@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { projectsQueryOptions } from '@/lib/projects-query'
 
 import { Hero } from '@/components/sections/Hero'
 import { Metrics } from '@/components/sections/Metrics'
@@ -44,6 +45,7 @@ function HomePage() {
 }
 
 export const Route = createFileRoute('/')({
+  loader: ({ context }) => context.queryClient.ensureQueryData(projectsQueryOptions),
   head: () => ({
     meta: [
       { title: "Darshan Steel Infrastructure | PEB & Structural Steel Solutions" },

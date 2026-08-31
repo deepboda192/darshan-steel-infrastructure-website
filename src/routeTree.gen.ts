@@ -18,6 +18,8 @@ import { Route as ManufacturingRouteImport } from './routes/manufacturing'
 import { Route as PebSolutionsRouteImport } from './routes/peb-solutions'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as QualityEngineeringRouteImport } from './routes/quality-engineering'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects/$slug'
@@ -68,6 +70,16 @@ const QualityEngineeringRoute = QualityEngineeringRouteImport.update({
   path: '/quality-engineering',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -99,6 +111,8 @@ export interface FileRoutesByFullPath {
   '/peb-solutions': typeof PebSolutionsRoute
   '/privacy': typeof PrivacyRoute
   '/quality-engineering': typeof QualityEngineeringRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/': typeof ProjectsIndexRoute
@@ -114,6 +128,8 @@ export interface FileRoutesByTo {
   '/peb-solutions': typeof PebSolutionsRoute
   '/privacy': typeof PrivacyRoute
   '/quality-engineering': typeof QualityEngineeringRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects': typeof ProjectsIndexRoute
@@ -130,6 +146,8 @@ export interface FileRoutesById {
   '/peb-solutions': typeof PebSolutionsRoute
   '/privacy': typeof PrivacyRoute
   '/quality-engineering': typeof QualityEngineeringRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/': typeof ProjectsIndexRoute
@@ -147,6 +165,8 @@ export interface FileRouteTypes {
     | '/peb-solutions'
     | '/privacy'
     | '/quality-engineering'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/terms'
     | '/projects/$slug'
     | '/projects/'
@@ -162,6 +182,8 @@ export interface FileRouteTypes {
     | '/peb-solutions'
     | '/privacy'
     | '/quality-engineering'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/terms'
     | '/projects/$slug'
     | '/projects'
@@ -177,6 +199,8 @@ export interface FileRouteTypes {
     | '/peb-solutions'
     | '/privacy'
     | '/quality-engineering'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/terms'
     | '/projects/$slug'
     | '/projects/'
@@ -193,6 +217,8 @@ export interface RootRouteChildren {
   PebSolutionsRoute: typeof PebSolutionsRoute
   PrivacyRoute: typeof PrivacyRoute
   QualityEngineeringRoute: typeof QualityEngineeringRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
@@ -264,6 +290,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QualityEngineeringRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -305,6 +345,8 @@ const rootRouteChildren: RootRouteChildren = {
   PebSolutionsRoute: PebSolutionsRoute,
   PrivacyRoute: PrivacyRoute,
   QualityEngineeringRoute: QualityEngineeringRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,

@@ -14,6 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { company } from "@/data/company";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { Toaster } from "@/components/ui/sonner";
+
 import { GridLines } from "@/components/layout/GridLines";
 import { Loader } from "@/components/layout/Loader";
 import { organizationSchema } from "@/lib/schema";
@@ -136,6 +138,8 @@ function RootComponent() {
         <Outlet />
       </main>
       <Footer />
+      <Toaster />
     </QueryClientProvider>
+
   );
 }

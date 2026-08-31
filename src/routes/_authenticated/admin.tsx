@@ -8,6 +8,7 @@ import { cn } from '@/lib/cn'
 const NAV = [
   { label: 'Overview', href: '/admin' },
   { label: 'Projects', href: '/admin/projects' },
+  { label: 'Users', href: '/admin/users' },
 ]
 
 function AdminLayout() {

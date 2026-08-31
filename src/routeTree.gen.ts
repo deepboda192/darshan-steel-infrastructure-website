@@ -28,6 +28,7 @@ import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects/$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminProjectsRouteImport } from './routes/_authenticated/admin.projects'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as ApiPublicEnquiryRouteImport } from './routes/api/public/enquiry'
 
 const IndexRoute = IndexRouteImport.update({
@@ -125,6 +126,11 @@ const AuthenticatedAdminProjectsRoute =
     path: '/projects',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const ApiPublicEnquiryRoute = ApiPublicEnquiryRouteImport.update({
   id: '/api/public/enquiry',
   path: '/api/public/enquiry',
@@ -149,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/': typeof ProjectsIndexRoute
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/api/public/enquiry': typeof ApiPublicEnquiryRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects': typeof ProjectsIndexRoute
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
+  '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/api/public/enquiry': typeof ApiPublicEnquiryRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
 }
@@ -192,6 +200,7 @@ export interface FileRoutesById {
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/': typeof ProjectsIndexRoute
   '/_authenticated/admin/projects': typeof AuthenticatedAdminProjectsRoute
+  '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/api/public/enquiry': typeof ApiPublicEnquiryRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
@@ -215,6 +224,7 @@ export interface FileRouteTypes {
     | '/projects/$slug'
     | '/projects/'
     | '/admin/projects'
+    | '/admin/users'
     | '/api/public/enquiry'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -235,6 +245,7 @@ export interface FileRouteTypes {
     | '/projects/$slug'
     | '/projects'
     | '/admin/projects'
+    | '/admin/users'
     | '/api/public/enquiry'
     | '/admin'
   id:
@@ -257,6 +268,7 @@ export interface FileRouteTypes {
     | '/projects/$slug'
     | '/projects/'
     | '/_authenticated/admin/projects'
+    | '/_authenticated/admin/users'
     | '/api/public/enquiry'
     | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
@@ -416,6 +428,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminProjectsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/api/public/enquiry': {
       id: '/api/public/enquiry'
       path: '/api/public/enquiry'
@@ -428,11 +447,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminProjectsRoute: typeof AuthenticatedAdminProjectsRoute
+  AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminProjectsRoute: AuthenticatedAdminProjectsRoute,
+  AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
 }
 

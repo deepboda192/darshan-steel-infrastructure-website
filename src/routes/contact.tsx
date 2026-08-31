@@ -282,10 +282,31 @@ function ContactPage() {
                       className="text-small text-charcoal"
                       data-placeholder={company.address.mapsQuery.placeholder}
                     >
-                      {company.address.mapsQuery.value}
+                      <a
+                        href={company.address.mapsQuery.value}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-brand underline-offset-4 hover:underline"
+                      >
+                        Open in Google Maps
+                      </a>
                     </dd>
                   </div>
                 </dl>
+
+                {/* Two works units, both on the Rajkot-Morbi highway. */}
+                <div className="mt-10 border-t border-charcoal/10 pt-8">
+                  <p className="tech text-muted">Manufacturing units</p>
+                  <ul className="mt-6 grid gap-7 sm:grid-cols-2">
+                    {company.works.map((unit) => (
+                      <li key={unit.unit} className="border-l-2 border-brand pl-5">
+                        <p className="tech text-brand">{unit.unit}</p>
+                        <p className="mt-2.5 text-small font-medium text-charcoal">{unit.name}</p>
+                        <p className="mt-1.5 text-small leading-relaxed text-muted">{unit.address}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
                 <p className="measure mt-8 text-small text-muted">
                   Site visits to the fabrication shop are arranged by appointment. Call the
@@ -432,7 +453,7 @@ export const Route = createFileRoute('/contact')({
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'canonical', href: 'https://darshansteel.in/contact' }],
+    links: [{ rel: 'canonical', href: `${company.siteUrl}/contact` }],
   }),
   component: ContactPage,
 })

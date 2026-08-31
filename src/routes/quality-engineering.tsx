@@ -550,7 +550,7 @@ export const Route = createFileRoute('/quality-engineering')({
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'canonical', href: 'https://darshansteel.in/quality-engineering' }],
+    links: [{ rel: 'canonical', href: `${company.siteUrl}/quality-engineering` }],
   }),
   component: QualityEngineeringPage,
 })

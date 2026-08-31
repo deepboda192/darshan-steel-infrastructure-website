@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { company } from '@/data/company'
 import { projectsQueryOptions } from '@/lib/projects-query'
 
 import { Hero } from '@/components/sections/Hero'
@@ -55,7 +56,7 @@ export const Route = createFileRoute('/')({
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'canonical', href: 'https://darshansteel.in/' }],
+    links: [{ rel: 'canonical', href: `${company.siteUrl}/` }],
   }),
   component: HomePage,
 })

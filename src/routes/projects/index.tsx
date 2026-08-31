@@ -247,7 +247,7 @@ function ProjectsPage() {
                   value: project.area,
                   className: 'col-span-2 sm:col-span-1',
                 },
-              ]
+              ].filter((s) => s.value)
 
               return (
                 <Reveal
@@ -487,7 +487,7 @@ export const Route = createFileRoute('/projects/')({
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'canonical', href: 'https://darshansteel.in/projects' }],
+    links: [{ rel: 'canonical', href: `${company.siteUrl}/projects` }],
   }),
   component: ProjectsPage,
 })

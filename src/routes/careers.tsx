@@ -418,7 +418,7 @@ export const Route = createFileRoute('/careers')({
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'canonical', href: 'https://darshansteel.in/careers' }],
+    links: [{ rel: 'canonical', href: `${company.siteUrl}/careers` }],
   }),
   component: CareersPage,
 })

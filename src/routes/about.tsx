@@ -198,6 +198,22 @@ function AboutPage() {
               ))}
             </ul>
           </Reveal>
+
+          {/* Vision and mission, as published in the company catalogue. */}
+          <div className="mt-16 grid gap-12 border-t border-charcoal/12 pt-14 md:mt-24 lg:grid-cols-2 lg:gap-20">
+            <Reveal>
+              <TechLabel rule className="mb-7">
+                Vision
+              </TechLabel>
+              <p className="measure text-lead text-charcoal/85">{company.vision}</p>
+            </Reveal>
+            <Reveal delay={0.08}>
+              <TechLabel rule className="mb-7">
+                Mission
+              </TechLabel>
+              <p className="measure text-lead text-charcoal/85">{company.mission}</p>
+            </Reveal>
+          </div>
         </Container>
       </Section>
 
@@ -555,7 +571,7 @@ export const Route = createFileRoute('/about')({
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'canonical', href: 'https://darshansteel.in/about' }],
+    links: [{ rel: 'canonical', href: `${company.siteUrl}/about` }],
   }),
   component: AboutPage,
 })

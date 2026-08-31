@@ -99,10 +99,12 @@ export function ProjectsShowcase() {
                           <dt className="text-charcoal/40">Loc</dt>
                           <dd>{project.location}</dd>
                         </div>
-                        <div className="flex gap-2.5">
-                          <dt className="text-charcoal/40">Year</dt>
-                          <dd>{project.year}</dd>
-                        </div>
+                        {project.year && (
+                            <div className="flex gap-2.5">
+                              <dt className="text-charcoal/40">Year</dt>
+                              <dd>{project.year}</dd>
+                            </div>
+                          )}
                         <div className="flex gap-2.5">
                           <dt className="text-charcoal/40">Area</dt>
                           <dd>{project.area}</dd>

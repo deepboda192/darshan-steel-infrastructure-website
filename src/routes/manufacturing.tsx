@@ -58,8 +58,10 @@ function ManufacturingPage() {
     },
     {
       label: 'Fabrication capacity',
-      value: capacityMetric?.note ?? '[FABRICATION CAPACITY — MT / MONTH]',
-      placeholder: true,
+      value: capacityMetric && capacityMetric.value > 0
+        ? `${capacityMetric.value.toLocaleString('en-IN')}${capacityMetric.suffix}`
+        : '[FABRICATION CAPACITY — MT / MONTH]',
+      placeholder: capacityMetric?.placeholder ?? true,
     },
     {
       label: 'Year established',
@@ -439,7 +441,7 @@ export const Route = createFileRoute('/manufacturing')({
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'canonical', href: 'https://darshansteel.in/manufacturing' }],
+    links: [{ rel: 'canonical', href: `${company.siteUrl}/manufacturing` }],
   }),
   component: ManufacturingPage,
 })

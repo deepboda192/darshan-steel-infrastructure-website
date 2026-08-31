@@ -104,7 +104,7 @@ function ProjectDetailPage() {
     { label: 'Location', value: project.location },
     { label: 'Year', value: project.year },
     { label: 'Built-up area', value: project.area },
-  ]
+  ].filter((f) => f.value)
 
   const chapters = [
     { index: '01', id: 'overview', title: 'Overview', body: project.study.overview },
@@ -450,7 +450,7 @@ export const Route = createFileRoute('/projects/$slug')({
         { name: 'twitter:card', content: 'summary_large_image' },
         ...(project?.verified ? [] : [{ name: 'robots', content: 'noindex, follow' }]),
       ],
-      links: [{ rel: 'canonical', href: `https://darshansteel.in/projects/${params.slug}` }],
+      links: [{ rel: 'canonical', href: `${company.siteUrl}/projects/${params.slug}` }],
     }
   },
   component: ProjectDetailPage,

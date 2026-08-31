@@ -74,7 +74,17 @@ export function Counter({
     }
   }, [value, duration])
 
-  const shown = decimals > 0 ? display.toFixed(decimals) : Math.round(display).toString()
+  // Grouped with Indian digit separators so large figures stay readable:
+  // 134540 reads as 1,34,540 rather than a six-digit run. Both server and
+  // client render `display` as 0 on first paint, so grouping cannot cause a
+  // hydration mismatch — the count-up only ever runs after mount.
+  const shown =
+    decimals > 0
+      ? display.toLocaleString('en-IN', {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals,
+        })
+      : Math.round(display).toLocaleString('en-IN')
 
   return (
     <span ref={ref} className={cn('tabular', className)}>

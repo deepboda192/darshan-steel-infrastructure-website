@@ -37,9 +37,15 @@
   --color-current: currentColor;
 
   /* --- typography -------------------------------------------------------- */
-  --font-display: var(--font-archivo), 'Archivo', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-inter), 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+  /* The three families are loaded by the Google Fonts <link> in routes/__root.tsx.
+     Do NOT reintroduce a var(--font-archivo) style indirection here: that is a
+     next/font idiom and nothing defines those properties in this stack. A var()
+     pointing at an undefined property with no fallback makes the WHOLE token
+     guaranteed-invalid, so every rule using it resolves to unset and the site
+     silently falls back to the UA default face. */
+  --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   /* Fluid display scale. Hero tops out at ~132px, section heads at ~80px.
      The display-1 floor is set so that "ENGINEERED" — the widest single word

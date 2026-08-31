@@ -528,7 +528,7 @@ export const Route = createFileRoute('/terms')({
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'canonical', href: 'https://darshansteel.in/terms' }],
+    links: [{ rel: 'canonical', href: `${company.siteUrl}/terms` }],
   }),
   component: TermsPage,
 })

@@ -15,30 +15,81 @@ export type Advantage = {
   description: string
 }
 
+/**
+ * The advantages of building pre-engineered, from the catalogue's
+ * "Advantages of Using PEB" page.
+ *
+ * DEDUPLICATED. The printed page lists twelve panels, but three of them make
+ * the same argument: "Faster Construction" (prefabrication), "Quick & Easy
+ * Erection" (standardised connections beat RCC) and "Early Occupancy
+ * Advantage" (finishing sooner pays) are one point stated three ways. They are
+ * merged into a single "Faster Construction" entry that keeps all three
+ * reasons. The remaining ten are distinct and are kept.
+ *
+ * Figures quoted — 50–60 m clear span, 8–10 m bays without jack beams,
+ * 20–30% lighter, XLPE / fibreglass insulation — are the catalogue's own.
+ * Supporting engineering detail is general PEB practice, not a DSI claim.
+ */
 export const pebAdvantages: Advantage[] = [
   {
     index: '01',
-    title: 'Faster Construction',
+    title: 'Single-Source Responsibility',
     description:
-      'Fabrication runs in the shop while foundations are cast on site. Two critical paths run in parallel instead of one after the other, and members arrive cut, drilled and marked for assembly.',
+      'Frame, cladding, fasteners and accessories from a single vendor. Everything fits, and one party is accountable.',
   },
   {
     index: '02',
-    title: 'Optimised Steel Usage',
+    title: 'Faster Construction',
     description:
-      'Tapered built-up sections put material where the bending moment actually is. Sections vary along their length instead of carrying a constant profile sized for the worst point.',
+      'Fabrication runs while foundations cure, and bolted connections erect faster than RCC. Finishing sooner means occupying sooner.',
   },
   {
     index: '03',
-    title: 'Flexible Design',
+    title: 'Simplified Foundations',
     description:
-      'Spans, eave heights, bay spacing and crane provision are set per project. End bays can be detailed for future extension so the building grows without structural rework.',
+      'A frame 20–30% lighter than conventional steel needs smaller, simpler and cheaper footings.',
   },
   {
     index: '04',
-    title: 'Efficient Lifecycle',
+    title: 'Optimal & Aesthetic Designs',
     description:
-      'Bolted connections make members replaceable, coatings are specified to the operating environment, and the structure can be extended, relocated or reconfigured later.',
+      'Tapered sections put steel where the bending moment is — strength-to-weight that frees the architecture rather than constraining it.',
+  },
+  {
+    index: '05',
+    title: 'Functional Versatility',
+    description:
+      'Clear spans to 50–60 m and 8–10 m bays without jack beams, from a single shed to a multi-bay plant.',
+  },
+  {
+    index: '06',
+    title: 'Flexibility in Expansion',
+    description:
+      'Length grows by adding bays, width and height too when pre-designed. Bolted joints keep the work non-destructive.',
+  },
+  {
+    index: '07',
+    title: 'Assured Quality',
+    description:
+      'Cut, drilled and welded on CNC lines under factory control — site matches the drawing mark for mark.',
+  },
+  {
+    index: '08',
+    title: 'Durability & Low Maintenance',
+    description:
+      'Steel properties stay stable for decades; blast-cleaned, painted surfaces keep maintenance cost down.',
+  },
+  {
+    index: '09',
+    title: 'Energy-Efficient Systems',
+    description:
+      'Roof and wall panels take XLPE insulation or fibreglass blankets; daylight panels cut the lighting load.',
+  },
+  {
+    index: '10',
+    title: 'Earthquake Resistant',
+    description:
+      'Ductile steel absorbs seismic and blast shock, and a lighter structure attracts less force to begin with.',
   },
 ]
 
@@ -194,4 +245,253 @@ export const processSteps = [
   { index: '05', title: 'Deliver', description: 'Material dispatched in erection sequence with matching documentation.' },
   { index: '06', title: 'Erect', description: 'Structure assembled, aligned, bolted and sheeted on site.' },
   { index: '07', title: 'Complete', description: 'Final inspection, snag closure and handover with as-built documentation.' },
+]
+
+/* ==========================================================================
+   CATALOGUE CONTENT
+   --------------------------------------------------------------------------
+   Everything below is reproduced from the Darshan Steel Group product
+   catalogue (Edition 3). These are published company facts, not inferences.
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------- */
+/* APPLICATIONS OF PEB — catalogue "Applications of PEB"                       */
+/* -------------------------------------------------------------------------- */
+
+export const pebApplications: string[] = [
+  'Metro Stations',
+  'Showrooms',
+  'Airport Terminal Buildings',
+  'Aircraft Hangars',
+  'Factory Sheds',
+  'Shopping Malls',
+  'Foot Over Bridges',
+  'Multi-level Parking Areas',
+  'Auditoriums',
+]
+
+/* -------------------------------------------------------------------------- */
+/* INDUSTRIES SERVED — catalogue "Industries we serve"                         */
+/* The printed grid lists Pharmaceutical twice; the duplicate is dropped here. */
+/* -------------------------------------------------------------------------- */
+
+export const industriesServed: string[] = [
+  'Automobile',
+  'Chemical',
+  'Pharmaceutical',
+  'Electrical & Electronics',
+  'Food & Beverage',
+  'Steel & Metal Fabrication',
+  'Machinery & Equipment',
+  'Packaging',
+  'Dairy & Poultry',
+  'Food Processing',
+  'Warehousing',
+  'Shipping & Freight',
+  'Airports',
+  'Railways',
+]
+
+/* -------------------------------------------------------------------------- */
+/* WHAT A DSI PRE-ENGINEERED BUILDING INCLUDES                                 */
+/* -------------------------------------------------------------------------- */
+
+export const pebIncludes: string[] = [
+  'Primary and secondary framing',
+  'All connecting parts and fasteners',
+  'Choice of roof and wall systems',
+  'Fixings and flashing',
+  'Thermal and/or acoustic insulation',
+  'Sealants for complete weatherproofing',
+  'Liner panels for aesthetics and performance',
+  'Crane beams and rails for heavy-duty use',
+  'Mezzanine floors for added functionality',
+  'Integrated accessories for a complete solution',
+]
+
+/* -------------------------------------------------------------------------- */
+/* STRUCTURAL SYSTEMS AND THEIR COMPONENTS                                     */
+/* -------------------------------------------------------------------------- */
+
+export type StructuralSystem = { name: string; components: string[] }
+
+export const structuralSystems: StructuralSystem[] = [
+  {
+    name: 'Primary System',
+    components: ['Primary framing system', 'Crane system', 'Canopies & fascia', 'Bracing systems'],
+  },
+  {
+    name: 'Secondary System',
+    components: ['Purlins', 'Girts', 'Eave struts'],
+  },
+  {
+    name: 'Mezzanine System',
+    components: ['Mezzanine beams & columns', 'Deck sheet', 'Hand rails', 'Staircase'],
+  },
+  {
+    name: 'Cladding System',
+    components: ['Roof cladding', 'Wall cladding', 'Standing seam roofing', 'Cladding components'],
+  },
+  {
+    name: 'Accessories',
+    components: [
+      'Turbo ventilators',
+      'Roof monitor',
+      'Ridge ventilator',
+      'Daylight panel',
+      'Louvers',
+      'Insulation',
+      'Cage ladder',
+    ],
+  },
+]
+
+/* -------------------------------------------------------------------------- */
+/* BUILDING ACCESSORIES                                                        */
+/* -------------------------------------------------------------------------- */
+
+export const buildingAccessories: string[] = [
+  'Poly-carbonate sheet',
+  'Turbo fan',
+  'Roof monitor',
+  'S-type louvers',
+  'Insulation',
+  'Nut-bolts',
+  'Cage ladders',
+]
+
+/* -------------------------------------------------------------------------- */
+/* MEZZANINE FLOOR USES                                                        */
+/* -------------------------------------------------------------------------- */
+
+export const mezzanineUses: string[] = [
+  'Storage mezzanines',
+  'Office mezzanines',
+  'Warehouse mezzanines',
+  'Retail mezzanines',
+  'Production mezzanines',
+  'In-situ concrete solution',
+]
+
+/* -------------------------------------------------------------------------- */
+/* CLADDING COLOUR RANGE                                                       */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * The seven standard cladding colours named in the catalogue.
+ *
+ * NOTE ON `hex`: these are approximations sampled from the printed swatches so
+ * the range can be shown on screen. They are NOT specified shade references.
+ * Replace each with the exact RAL / shade code before treating them as a
+ * colour commitment to a client.
+ */
+export const claddingColours: { name: string; hex: string }[] = [
+  { name: 'DSI Leaf Green', hex: '#1f5c30' },
+  { name: 'DSI Galvalume', hex: '#c9cccd' },
+  { name: 'DSI Off White', hex: '#f4f4ef' },
+  { name: 'DSI Taurus Blue', hex: '#1b9cb0' },
+  { name: 'DSI Stone Grey', hex: '#a9a48f' },
+  { name: 'DSI Red', hex: '#c02128' },
+  { name: 'DSI Dark Grey', hex: '#5b6270' },
+]
+
+/* -------------------------------------------------------------------------- */
+/* WHY DSI — catalogue "Why to choose Darshan"                                 */
+/* -------------------------------------------------------------------------- */
+
+export type Differentiator = { index: string; title: string; description: string }
+
+export const whyChooseDsi: Differentiator[] = [
+  {
+    index: '01',
+    title: 'Single Window Solution',
+    description:
+      'Complete pre-engineered building solutions under one roof — design, detailing, fabrication and erection. One integrated team means smooth coordination, timely execution and structures customised to the brief.',
+  },
+  {
+    index: '02',
+    title: 'Fast Delivery & Erection',
+    description:
+      'Simplified designs and streamlined processes move a project quickly from detailing to fabrication and dispatch, so demanding delivery schedules are met without giving up quality or safety.',
+  },
+  {
+    index: '03',
+    title: 'Safe & Cost-Effective Designs',
+    description:
+      'Advanced design software gives precision in every structural component. Optimising steel usage while maximising strength delivers safety, durability and long-term cost savings.',
+  },
+  {
+    index: '04',
+    title: 'Advanced Manufacturing Facility',
+    description:
+      'A modern plant equipped with CNC-based cutting, welding and forming machines. Producing every PEB component in-house keeps quality control tight and the structure consistent.',
+  },
+  {
+    index: '05',
+    title: 'Premium-Grade Materials',
+    description:
+      'Primary and secondary members are made with 345 MPa steel; 550 MPa grade is used for roofing. Only high-strength, industry-standard steel goes into a building.',
+  },
+  {
+    index: '06',
+    title: 'Quality Assurance',
+    description:
+      'From raw material to final execution, every stage is tested for strength, finish and performance, so each structure meets the same standard before it is released.',
+  },
+  {
+    index: '07',
+    title: 'Future Expansion',
+    description:
+      'The bolted connection system makes expansion straightforward. Additional bays, width or height can be added later without structural rework.',
+  },
+  {
+    index: '08',
+    title: 'Customer Support & Services',
+    description:
+      'A dedicated project management team supports the client from concept to completion, covering quality, timely execution and service at every stage.',
+  },
+]
+
+/* -------------------------------------------------------------------------- */
+/* PROJECT WORK FLOW — the commercial sequence, catalogue "Project Work Flow"   */
+/* This is the client-facing order of events. The engineering sequence is       */
+/* `workflowStages`; the delivery summary is `processSteps`.                    */
+/* -------------------------------------------------------------------------- */
+
+export const projectWorkflow: { index: string; title: string; description: string }[] = [
+  {
+    index: '01',
+    title: 'Identifying the requirement',
+    description: 'The customer need is established, possible solutions developed and the most promising one selected.',
+  },
+  {
+    index: '02',
+    title: 'Quotation',
+    description: 'A proposal is issued setting out the recommended solution for the PEB structure.',
+  },
+  {
+    index: '03',
+    title: 'Order confirmation',
+    description: 'The deal is finalised and the purchase order received; design, fabrication and erection planning begins so the project completes in optimum time.',
+  },
+  {
+    index: '04',
+    title: 'General Arrangement approval',
+    description: 'Once the GA drawing is approved, detailed design drawings and erection drawings are prepared.',
+  },
+  {
+    index: '05',
+    title: 'Fabrication & supply',
+    description: 'All fabrication is carried out on CNC cutting, welding and forming systems, and the structural material is supplied.',
+  },
+  {
+    index: '06',
+    title: 'Erection',
+    description: 'Erection is executed using advanced techniques, ensuring structural stability and precise alignment.',
+  },
+  {
+    index: '07',
+    title: 'Work completion',
+    description: 'A project completion certificate is issued once the project is finished to the customer’s full satisfaction.',
+  },
 ]

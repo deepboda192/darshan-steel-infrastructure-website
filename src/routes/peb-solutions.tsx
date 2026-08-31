@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { company } from '@/data/company'
 
 import { PageHero } from '@/components/layout/PageHero'
 import { CTASection } from '@/components/sections/CTASection'
@@ -10,8 +11,13 @@ import { Container } from '@/components/site/Container'
 import { Section } from '@/components/site/Section'
 import { SectionHeader } from '@/components/site/SectionHeader'
 import { siteImages } from '@/data/images'
-import { solutions } from '@/data/solutions'
-import { pebAdvantages, processSteps } from '@/data/capabilities'
+import { solutions, framingSystems } from '@/data/solutions'
+import {
+  pebAdvantages,
+  pebApplications,
+  industriesServed,
+  processSteps,
+} from '@/data/capabilities'
 import { JsonLd, serviceCatalogSchema } from '@/lib/schema'
 import { cn } from '@/lib/cn'
 
@@ -348,6 +354,121 @@ function PebSolutionsPage() {
         </Container>
       </Section>
 
+      {/* ==================================================== FRAMING SYSTEMS */}
+      <Section tone="white" space="md" ariaLabel="Primary framing systems">
+        <Container>
+          <SectionHeader
+            index="04"
+            eyebrow="Framing systems"
+            size="md"
+            title={
+              <>
+                Eight primary
+                {' '}<br />
+                frame types.
+              </>
+            }
+            lead="The frame type sets the practical building width. Clear span keeps the floor uninterrupted; multi-span carries greater width on interior columns; lean-to and roof systems extend or cover structures that already exist."
+          />
+
+          <ul className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-8">
+            {framingSystems.map((system, i) => (
+              <Reveal
+                as="li"
+                key={system.code}
+                delay={0.04 * i}
+                className="border-t border-charcoal/15 py-7"
+              >
+                <div className="flex items-baseline gap-3">
+                  <span className="tech tabular text-brand">{system.code}</span>
+                  <span aria-hidden="true" className="h-px flex-1 bg-charcoal/12" />
+                </div>
+                <h3 className="mt-4 text-body font-medium text-charcoal">{system.name}</h3>
+                <p className="tech mt-2.5 text-muted">{system.width}</p>
+              </Reveal>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+
+      {/* =============================================== APPLICATIONS & SECTORS */}
+      <Section tone="offwhite" space="md" ariaLabel="Applications and industries served">
+        <Container>
+          <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
+            {/* ---------------------------------------------- applications */}
+            <div className="lg:col-span-5">
+              <SectionHeader
+                index="05"
+                eyebrow="Applications"
+                size="md"
+                title={
+                  <>
+                    Where a PEB
+                    {' '}<br />
+                    gets used.
+                  </>
+                }
+                lead="The same framing logic covers far more than a factory shed."
+              />
+
+              <ul className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1">
+                {pebApplications.map((application, i) => (
+                  <Reveal
+                    as="li"
+                    key={application}
+                    delay={0.03 * i}
+                    className="flex items-center gap-4 border-b border-charcoal/10 py-3.5"
+                  >
+                    <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 bg-brand" />
+                    <span className="text-small text-charcoal">{application}</span>
+                  </Reveal>
+                ))}
+              </ul>
+            </div>
+
+            {/* ------------------------------------------------- industries */}
+            <div className="lg:col-span-7">
+              <SectionHeader
+                index="06"
+                eyebrow="Industries we serve"
+                size="md"
+                title={
+                  <>
+                    Fourteen sectors,
+                    {' '}<br />
+                    one delivery chain.
+                  </>
+                }
+                lead="Each sector loads the building differently — crane duty, wash-down, dust, heat or storage height. The frame is specified for the one in front of it."
+              />
+
+              <ul className="mt-10 grid grid-cols-1 sm:grid-cols-2">
+                {industriesServed.map((industry, i) => (
+                  <Reveal
+                    as="li"
+                    key={industry}
+                    delay={0.025 * i}
+                    className="flex items-center gap-4 border-b border-charcoal/10 py-3.5 sm:odd:sm:pr-8"
+                  >
+                    <span className="tech tabular text-charcoal/35">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-small text-charcoal">{industry}</span>
+                  </Reveal>
+                ))}
+              </ul>
+
+              <Reveal delay={0.2}>
+                <p className="measure mt-10 text-small text-muted">
+                  Working in a sector that is not listed? The engineering approach does not
+                  change — send us the process and the loads it puts on the building.
+                </p>
+              </Reveal>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
       <CTASection
         title={
           <>
@@ -373,7 +494,7 @@ export const Route = createFileRoute('/peb-solutions')({
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'canonical', href: 'https://darshansteel.in/peb-solutions' }],
+    links: [{ rel: 'canonical', href: `${company.siteUrl}/peb-solutions` }],
   }),
   component: PebSolutionsPage,
 })

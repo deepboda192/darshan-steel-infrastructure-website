@@ -1,7 +1,7 @@
 import { qualityChecks } from '@/data/capabilities'
 import { Reveal } from '@/components/animations/Reveal'
-import { TechLabel } from '@/components/ui/TechLabel'
-import { Button } from '@/components/ui/Button'
+import { TechLabel } from '@/components/site/TechLabel'
+import { Button } from '@/components/site/Button'
 
 /**
  * Quality control.

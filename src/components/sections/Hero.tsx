@@ -1,8 +1,8 @@
 import { siteImages } from '@/data/images'
 import { ImageFrame } from '@/components/media/ImageFrame'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/site/Button'
 import { Reveal } from '@/components/animations/Reveal'
-import { Arrow } from '@/components/ui/Arrow'
+import { Arrow } from '@/components/site/Arrow'
 
 const DISCIPLINES = ['PEB Manufacturing', 'Structural Steel', 'Engineering & Erection']
 const CHAIN = ['Design', 'Fabrication', 'Delivery', 'Erection']

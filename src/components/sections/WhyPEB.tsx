@@ -1,7 +1,7 @@
 import { pebAdvantages } from '@/data/capabilities'
-import { SectionHeader } from '@/components/ui/SectionHeader'
+import { SectionHeader } from '@/components/site/SectionHeader'
 import { Reveal } from '@/components/animations/Reveal'
-import { TechLabel } from '@/components/ui/TechLabel'
+import { TechLabel } from '@/components/site/TechLabel'
 
 /**
  * Why PEB.

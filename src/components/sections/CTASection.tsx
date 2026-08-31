@@ -1,8 +1,8 @@
 import { company } from '@/data/company'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/site/Button'
 import { Reveal } from '@/components/animations/Reveal'
-import { TechLabel } from '@/components/ui/TechLabel'
-import { Arrow } from '@/components/ui/Arrow'
+import { TechLabel } from '@/components/site/TechLabel'
+import { Arrow } from '@/components/site/Arrow'
 
 type CTASectionProps = {
   /** Override the default headline. Use <br/> to control line breaks. */

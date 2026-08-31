@@ -2,8 +2,8 @@ import Link from 'next/link'
 import { company, formattedAddress, activeSocials } from '@/data/company'
 import { footerNav, legalNav } from '@/data/nav'
 import { Logo } from './Logo'
-import { Arrow } from '@/components/ui/Arrow'
-import { TechLabel } from '@/components/ui/TechLabel'
+import { Arrow } from '@/components/site/Arrow'
+import { TechLabel } from '@/components/site/TechLabel'
 
 export function Footer() {
   const year = new Date().getFullYear()

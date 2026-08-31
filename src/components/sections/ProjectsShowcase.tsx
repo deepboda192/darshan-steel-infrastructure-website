@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { featuredProjects } from '@/data/projects'
 import { ImageFrame } from '@/components/media/ImageFrame'
-import { SectionHeader } from '@/components/ui/SectionHeader'
-import { Button } from '@/components/ui/Button'
-import { Arrow } from '@/components/ui/Arrow'
+import { SectionHeader } from '@/components/site/SectionHeader'
+import { Button } from '@/components/site/Button'
+import { Arrow } from '@/components/site/Arrow'
 import { Reveal } from '@/components/animations/Reveal'
 import { cn } from '@/lib/cn'
 

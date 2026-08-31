@@ -1,5 +1,5 @@
 import { processSteps } from '@/data/capabilities'
-import { SectionHeader } from '@/components/ui/SectionHeader'
+import { SectionHeader } from '@/components/site/SectionHeader'
 import { Reveal } from '@/components/animations/Reveal'
 
 /**

@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { industries } from '@/data/industries'
 import { ImageFrame } from '@/components/media/ImageFrame'
-import { SectionHeader } from '@/components/ui/SectionHeader'
-import { Arrow } from '@/components/ui/Arrow'
-import { Button } from '@/components/ui/Button'
+import { SectionHeader } from '@/components/site/SectionHeader'
+import { Arrow } from '@/components/site/Arrow'
+import { Button } from '@/components/site/Button'
 
 /**
  * Industries served.

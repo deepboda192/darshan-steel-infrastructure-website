@@ -11,9 +11,9 @@ import {
 import { useSearchParams } from 'next/navigation'
 import { company } from '@/data/company'
 import { solutions } from '@/data/solutions'
-import { Button } from '@/components/ui/Button'
-import { TechLabel } from '@/components/ui/TechLabel'
-import { Arrow } from '@/components/ui/Arrow'
+import { Button } from '@/components/site/Button'
+import { TechLabel } from '@/components/site/TechLabel'
+import { Arrow } from '@/components/site/Arrow'
 import { cn } from '@/lib/cn'
 
 /* -------------------------------------------------------------------------- */

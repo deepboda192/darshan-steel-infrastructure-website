@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import type { SiteImage } from '@/data/images'
 import { ImageFrame } from '@/components/media/ImageFrame'
 import { Reveal } from '@/components/animations/Reveal'
-import { TechLabel } from '@/components/ui/TechLabel'
+import { TechLabel } from '@/components/site/TechLabel'
 import { cn } from '@/lib/cn'
 
 type Crumb = {

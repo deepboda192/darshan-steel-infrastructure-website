@@ -1,7 +1,7 @@
 import { company } from '@/data/company'
 import { Counter } from '@/components/animations/Counter'
 import { Reveal } from '@/components/animations/Reveal'
-import { TechLabel } from '@/components/ui/TechLabel'
+import { TechLabel } from '@/components/site/TechLabel'
 
 /**
  * Scale band, directly under the hero.

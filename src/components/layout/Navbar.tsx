@@ -7,7 +7,7 @@ import { primaryNav } from '@/data/nav'
 import { company } from '@/data/company'
 import { cn } from '@/lib/cn'
 import { Logo } from './Logo'
-import { Arrow } from '@/components/ui/Arrow'
+import { Arrow } from '@/components/site/Arrow'
 
 /**
  * Sticky navigation.

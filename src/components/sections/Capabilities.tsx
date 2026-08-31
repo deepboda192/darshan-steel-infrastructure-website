@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { workflowStages } from '@/data/capabilities'
-import { SectionHeader } from '@/components/ui/SectionHeader'
-import { Button } from '@/components/ui/Button'
+import { SectionHeader } from '@/components/site/SectionHeader'
+import { Button } from '@/components/site/Button'
 import { cn } from '@/lib/cn'
 
 /**

@@ -470,7 +470,7 @@ function ProjectsPage() {
   )
 }
 
-export const Route = createFileRoute('/projects')({
+export const Route = createFileRoute('/projects/')({
   head: () => ({
     meta: [
       { title: "Projects | DSI" },

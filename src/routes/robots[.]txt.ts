@@ -3,7 +3,7 @@ import { company } from '@/data/company'
 
 const BASE = company.siteUrl.replace(/\/+$/, '')
 
-export const Route = createFileRoute('/api/public/robots[.]txt')({
+export const Route = createFileRoute('/robots.txt')({
   server: {
     handlers: {
       GET: () => {

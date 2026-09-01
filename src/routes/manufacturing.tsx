@@ -59,7 +59,7 @@ function ManufacturingPage() {
     {
       label: 'Fabrication capacity',
       value: capacityMetric && capacityMetric.value > 0
-        ? `${capacityMetric.value.toLocaleString('en-IN')}${capacityMetric.suffix}`
+        ? `${capacityMetric.value.toLocaleString('en-IN')}${capacityMetric.suffix} ${capacityMetric.unit}`.trim()
         : '[FABRICATION CAPACITY — MT / MONTH]',
       placeholder: capacityMetric?.placeholder ?? true,
     },

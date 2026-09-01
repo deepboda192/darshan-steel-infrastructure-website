@@ -2,76 +2,129 @@ import { company } from '@/data/company'
 import { Counter } from '@/components/animations/Counter'
 import { Reveal } from '@/components/animations/Reveal'
 import { TechLabel } from '@/components/site/TechLabel'
+import { cn } from '@/lib/cn'
 
 /**
- * Scale band, directly under the hero.
+ * Scale band — a full-height data plate, two ruled rows of four figures.
  *
- * Reads as a data plate on a drawing sheet: rules top and bottom, hairline
- * dividers between figures, counters that run once on entry. Every figure here
- * is a placeholder from data/company.ts and is flagged as such — see the
- * `placeholder` field and ?audit=1.
+ * The numeral carries the weight; its unit is set on its own line beneath it
+ * rather than inside the counter. Baked into the counter, "MT / Month" and
+ * "Sq. Mt." wrapped those numerals onto a second line while the bare figures
+ * stayed on one, so the row sat at four heights and nothing aligned.
+ *
+ * The two figures DSI has not yet supplied (years, lifetime projects) render
+ * as flagged pending slots, not as counters reading zero — and the note at the
+ * foot of the band says so. Both go live by filling `value` in
+ * data/company.ts; the pending state and the note retire themselves.
+ *
+ * Layout note: the divider classes live on the <Reveal>, because the Reveal is
+ * the grid child. Put on the inner div, `nth-child` arithmetic sees only that
+ * div inside its own wrapper and every divider silently disappears.
  */
 export function Metrics() {
-  // The capacity metric has no value yet; it is shown on /manufacturing as a
-  // bracketed placeholder rather than as a counter reading zero.
-  const metrics = company.metrics.filter((m) => m.value > 0)
+  const metrics = company.metrics
 
   return (
-    <section className="relative bg-white" aria-label="Scale and experience">
-      <div className="container-site">
-        <div className="flex flex-col gap-10 border-b border-charcoal/10 py-16 md:py-20 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
-          <Reveal>
-            <TechLabel index="01" rule className="lg:mb-0">
-              Scale
-            </TechLabel>
-          </Reveal>
+    <section
+      className="relative flex min-h-screen items-center bg-white"
+      aria-label="Scale and experience"
+    >
+      <div className="container-site w-full py-10 md:py-12">
+        <Reveal>
+          <TechLabel index="01" rule>
+            Scale
+          </TechLabel>
+        </Reveal>
 
-          <Reveal delay={0.08} className="lg:max-w-md">
-            <p className="text-lead text-muted">
-              Delivered across manufacturing, warehousing and cold chain — from single-bay
-              sheds to multi-bay crane-served plants.
-            </p>
-          </Reveal>
-        </div>
+        {/* Stacked on phones, paired on tablets, two ruled rows of four on
+            desktop. Cells 1 and 5 open each row, so 4n+1 drops the divider. */}
+        <dl className="mt-8 grid sm:grid-cols-2 md:mt-10 lg:grid-cols-4 lg:border-b lg:border-charcoal/10">
+          {metrics.map((metric, i) => {
+            // Every current figure is live, so TS narrows this to `false` —
+            // the cast keeps the pending path for future unsupplied stats.
+            const pending = (metric.value as number) === 0
+            return (
+              <Reveal
+                key={metric.key}
+                delay={0.05 * (i % 4)}
+                className={cn(
+                  'border-b border-charcoal/10 py-6 sm:py-8 lg:border-b-0 lg:border-charcoal/10 lg:py-9 lg:pl-8',
+                  'lg:border-l lg:[&:nth-child(4n+1)]:border-l-0 lg:[&:nth-child(4n+1)]:pl-0',
+                  'lg:[&:nth-child(n+5)]:border-t',
+                )}
+              >
+                <div className="flex h-full flex-col" data-placeholder={metric.placeholder}>
+                  <dd className="order-1 m-0">
+                    <span className="flex items-start gap-1">
+                      <span
+                        className={cn(
+                          'font-display wdth-wide tabular text-display-3 leading-[0.9]',
+                          pending ? 'text-steel' : 'text-charcoal',
+                        )}
+                      >
+                        {pending ? (
+                          '—'
+                        ) : (
+                          <Counter
+                            value={metric.value}
+                            grouping={'grouping' in metric ? metric.grouping : true}
+                          />
+                        )}
+                      </span>
+                      {!pending && metric.suffix && (
+                        <span
+                          aria-hidden="true"
+                          className="font-display wdth-wide text-display-4 leading-none text-brand"
+                        >
+                          {metric.suffix}
+                        </span>
+                      )}
+                    </span>
 
-        {/* Stacked on phones, paired on tablets, and a single ruled row on
-            desktop where the vertical dividers line up with the page grid. */}
-        <dl className="grid sm:grid-cols-2 lg:grid-cols-4 lg:border-b lg:border-charcoal/10">
-          {metrics.map((metric, i) => (
-            <Reveal
-              key={metric.key}
-              delay={0.06 * i}
-              className="border-b border-charcoal/10 py-9 sm:py-11 lg:border-b-0 lg:border-l lg:border-charcoal/10 lg:py-14 lg:pl-8 lg:first:border-l-0 lg:first:pl-0"
-            >
-              <div data-placeholder={metric.placeholder}>
-                <dd className="font-display wdth-wide text-display-3 text-charcoal">
-                  <Counter value={metric.value} suffix={metric.suffix} />
-                </dd>
-                <dt className="mt-4 text-small font-medium text-charcoal">{metric.label}</dt>
-                <p className="tech mt-2.5 text-muted">{metric.note}</p>
-              </div>
-            </Reveal>
-          ))}
+                    {/* The unit belongs to the figure, so it is set at body
+                        scale in the numeral's own colour — not as tech caps,
+                        which were unreadable under a 60px numeral. The line is
+                        reserved even when empty so every label in the row
+                        lands on the same baseline. */}
+                    <span
+                      className={cn(
+                        'mt-2.5 block text-lead font-medium leading-none',
+                        metric.unit ? 'text-charcoal/60' : 'invisible',
+                      )}
+                      aria-hidden={metric.unit ? undefined : 'true'}
+                    >
+                      {metric.unit || '—'}
+                    </span>
+                  </dd>
+
+                  <dt className="order-2 mt-5">
+                    <span className="block text-small font-medium text-charcoal">
+                      {metric.label}
+                    </span>
+                    <span className="tech mt-2.5 block text-muted">{metric.note}</span>
+                  </dt>
+                </div>
+              </Reveal>
+            )
+          })}
         </dl>
 
         {/*
-          Every figure above carries `placeholder: true` in data/company.ts.
-          Rendering them as bare numerals with no visible qualifier would state
-          four unverified claims about a real business — the one thing this site
-          must not do. The note stays until DSI supplies real figures and the
-          flags are cleared; delete it in the same commit.
+          Shown while any figure on the band is still unconfirmed. Rendering an
+          unsupplied figure as a bare numeral would state a claim about a real
+          business that cannot be evidenced — the one thing this site must not
+          do. Filling the pending values in data/company.ts retires this note.
         */}
         {metrics.some((m) => m.placeholder) && (
-          <Reveal delay={0.18}>
+          <Reveal delay={0.2}>
             <p
-              className="measure mt-10 flex items-start gap-4 text-small text-muted"
+              className="measure mt-8 flex items-start gap-4 text-small text-muted"
               data-placeholder="true"
             >
               <span aria-hidden="true" className="mt-2.5 h-px w-8 shrink-0 bg-brand" />
               <span>
-                Figures shown are placeholders awaiting confirmation by DSI. Each will be
-                replaced with a verified value before launch — no project count, area or
-                capacity is claimed until it can be evidenced.
+                Figures marked — are awaiting confirmation by DSI and will be published once
+                they can be evidenced.
               </span>
             </p>
           </Reveal>

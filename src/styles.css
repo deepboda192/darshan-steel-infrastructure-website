@@ -48,10 +48,14 @@
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   /* Fluid display scale. Hero tops out at ~132px, section heads at ~80px.
-     The display-1 floor is set so that "ENGINEERED" — the widest single word
-     in the hero — still fits a 320px gutter. The masked line reveal uses
-     overflow:hidden, so anything wider is silently clipped, not wrapped. */
-  --text-display-1: clamp(2.4rem, 10.4vw, 8.25rem);
+     The display-1 steps are set so that "PRE-ENGINEERED" — the widest single
+     word in the hero — stays on one line at every width. It is 35% wider than
+     the "ENGINEERED" this scale was originally tuned for, which is why the vw
+     step and the floor are lower than they look like they should be.
+     Re-measure both if that headline ever changes: the word has a hyphen, so
+     it does not clip when too wide, it breaks — leaving "PRE-" dangling on a
+     line of its own. */
+  --text-display-1: clamp(1.9rem, 9.2vw, 8.25rem);
   --text-display-1--line-height: 0.9;
   --text-display-1--letter-spacing: -0.035em;
 

@@ -61,7 +61,7 @@ export function Hero() {
         {/* headline */}
         <h1 className="font-display wdth-wide text-display-1 uppercase text-white">
           <Reveal variant="line" delay={0.28}>
-            Engineered
+            Pre-Engineered
           </Reveal>
           <Reveal variant="line" delay={0.38}>
             <span>For </span>
@@ -101,10 +101,6 @@ export function Hero() {
                 <span className={i === 0 ? 'text-white' : undefined}>{step}</span>
               </li>
             ))}
-            <li className="ml-auto hidden items-center gap-3 text-white/55 lg:flex">
-              <span className="h-px w-10 bg-white/25" aria-hidden="true" />
-              Scroll
-            </li>
           </ul>
         </div>
       </Reveal>

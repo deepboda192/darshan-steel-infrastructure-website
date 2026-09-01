@@ -300,7 +300,8 @@ function AboutPage() {
 
           <ul className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
             {company.metrics.map((metric, i) => {
-              const unset = metric.value === 0
+              // Cast: all current figures are live; keeps the path for future ones.
+              const unset = (metric.value as number) === 0
               return (
                 <Reveal
                   as="li"
@@ -313,7 +314,14 @@ function AboutPage() {
                       <p className="tech-lg pb-2 text-muted">{metric.note}</p>
                     ) : (
                       <p className="font-display wdth-wide text-display-3 text-charcoal">
-                        <Counter value={metric.value} suffix={metric.suffix} />
+                        <Counter
+                          value={metric.value}
+                          suffix={metric.suffix}
+                          grouping={'grouping' in metric ? metric.grouping : true}
+                        />
+                        {metric.unit && (
+                          <span className="tech ml-3 align-middle text-muted">{metric.unit}</span>
+                        )}
                       </p>
                     )}
                     <p className="mt-4 text-body text-charcoal">{metric.label}</p>

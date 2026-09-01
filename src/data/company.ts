@@ -34,6 +34,10 @@ export type Placeholder<T> = {
 const todo = <T,>(value: T): Placeholder<T> => ({ value, placeholder: true })
 const real = <T,>(value: T): Placeholder<T> => ({ value, placeholder: false })
 
+/** DSI was established in 2018; the experience figure is derived, not typed. */
+const ESTABLISHED_YEAR = 2018
+const yearsOfExperience = new Date().getFullYear() - ESTABLISHED_YEAR
+
 export const company = {
   /* ---------------------------------------------------------------- IDENTITY */
   name: 'Darshan Steel Infrastructure',
@@ -138,17 +142,32 @@ export const company = {
    *  - clients    — client marks published on the catalogue's client wall.
    *  - industries — unique entries in the "Industries we serve" list.
    *
-   * `years` and `projects` carry value 0: the catalogue states neither a
-   * founding year nor a lifetime project count, so they are filtered out of the
-   * homepage band and render as bracketed placeholders on /about.
+   * `years` (derived from ESTABLISHED_YEAR) and the 230+ project count were
+   * supplied directly by DSI on 2026-09-01; `crane` and `span` are catalogue
+   * engineering figures.
+   */
+  /**
+   * `suffix` is the marker set tight against the numeral; `unit` is set on its
+   * own line beneath it. Keeping the unit out of the counter is what stops
+   * "MT / Month" and "Sq. Mt." wrapping the numeral onto a second line while
+   * the bare figures stay on one — the fault that made the band sit at four
+   * different heights.
+   *
+   * Array order is the homepage band order: two rows of four.
+   * `crane` and `span` are catalogue figures — 50 MT EOT capacity on column
+   * brackets, 50 m practical clear-span width (120 m as a multi-span module).
    */
   metrics: [
-    { key: 'capacity',   value: 2300,   suffix: ' MT / Month', label: 'Fabrication Capacity',    note: 'Fully enclosed, automated production line', placeholder: false },
-    { key: 'area',       value: 134540, suffix: '+ Sq.Mt.',    label: 'Built-Up Area Delivered', note: 'Across 14 documented projects',             placeholder: false },
-    { key: 'clients',    value: 34,     suffix: '+',           label: 'Clients Served',          note: 'Paper, ceramics, forging, logistics',       placeholder: false },
-    { key: 'industries', value: 14,     suffix: '+',           label: 'Industries Served',       note: 'Automobile to pharmaceutical',              placeholder: false },
-    { key: 'years',      value: 0,      suffix: '+',           label: 'Years of Experience',     note: '[YEAR ESTABLISHED — TO BE SUPPLIED]',       placeholder: true },
-    { key: 'projects',   value: 0,      suffix: '+',           label: 'Projects Delivered',      note: '[LIFETIME PROJECT COUNT — TO BE SUPPLIED]', placeholder: true },
+    { key: 'capacity',   value: 2300,   suffix: '',  unit: 'MT / Month', label: 'Fabrication Capacity',    note: 'Fully enclosed, automated production line',  placeholder: false },
+    { key: 'area',       value: 134540, suffix: '+', unit: 'Sq. Mt.',    label: 'Built-Up Area Delivered', note: 'Across 14 documented projects',              placeholder: false },
+    { key: 'clients',    value: 34,     suffix: '+', unit: '',           label: 'Clients Served',          note: 'Paper, ceramics, forging, logistics',        placeholder: false },
+    { key: 'industries', value: 14,     suffix: '+', unit: '',           label: 'Industries Served',       note: 'Automobile to pharmaceutical',               placeholder: false },
+    // The year itself is the figure; the derived experience moves to the note.
+    // grouping:false — a year renders as 2018, never 2,018.
+    { key: 'years',      value: ESTABLISHED_YEAR, suffix: '', unit: '',  label: 'Established',             note: `${yearsOfExperience}+ years of experience`,    placeholder: false, grouping: false },
+    { key: 'projects',   value: 230,    suffix: '+', unit: '',           label: 'Projects Delivered',      note: 'Since 2018',                                  placeholder: false },
+    { key: 'crane',      value: 50,     suffix: '',  unit: 'MT',         label: 'Max Crane Capacity',      note: 'EOT cranes carried on column brackets',      placeholder: false },
+    { key: 'span',       value: 50,     suffix: '',  unit: 'M',          label: 'Clear Span',              note: 'Column-free; multi-span widths to 120 m',    placeholder: false },
   ],
 
   /* ----------------------------------------------------------- CERTIFICATIONS */
@@ -188,7 +207,7 @@ export const company = {
   /* -------------------------------------------------------------- WORKFORCE */
   employees: todo('[NUMBER OF EMPLOYEES]'),
   facilityArea: todo('[FACILITY AREA — SQ.FT.]'),
-  established: todo('[YEAR ESTABLISHED]'),
+  established: real('2018'),
 } as const
 
 /** Formatted single-line address, skipping any unfilled parts. */

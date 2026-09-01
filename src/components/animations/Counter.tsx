@@ -12,6 +12,8 @@ type CounterProps = {
   className?: string
   /** Decimal places to display. */
   decimals?: number
+  /** Set false for years and other identifiers — 2018, not 2,018. */
+  grouping?: boolean
 }
 
 const easeOutExpo = (t: number) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t))
@@ -27,6 +29,7 @@ export function Counter({
   duration = 1800,
   className,
   decimals = 0,
+  grouping = true,
 }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const [display, setDisplay] = useState(0)
@@ -78,8 +81,9 @@ export function Counter({
   // 134540 reads as 1,34,540 rather than a six-digit run. Both server and
   // client render `display` as 0 on first paint, so grouping cannot cause a
   // hydration mismatch — the count-up only ever runs after mount.
-  const shown =
-    decimals > 0
+  const shown = !grouping
+    ? String(Math.round(display))
+    : decimals > 0
       ? display.toLocaleString('en-IN', {
           minimumFractionDigits: decimals,
           maximumFractionDigits: decimals,

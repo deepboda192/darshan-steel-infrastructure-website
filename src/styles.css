@@ -452,3 +452,32 @@ html[data-audit='on'] [data-placeholder='true']::after {
     transition: none !important;
   }
 }
+
+/* ==========================================================================
+   CAPABILITIES — pinned stage hand-off
+   Direction-aware enter/exit for the active stage panel while the section is
+   scroll-stepped. Small travel, expo ease: the content leads, not the motion.
+   The global reduced-motion rules collapse these to instant swaps.
+   ========================================================================== */
+
+@keyframes stage-enter-up {
+  from { opacity: 0; transform: translate3d(0, 26px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes stage-enter-down {
+  from { opacity: 0; transform: translate3d(0, -26px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes stage-exit-up {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(0, -26px, 0); }
+}
+@keyframes stage-exit-down {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(0, 26px, 0); }
+}
+
+.stage-enter-up   { animation: stage-enter-up 0.5s var(--ease-expo) both; }
+.stage-enter-down { animation: stage-enter-down 0.5s var(--ease-expo) both; }
+.stage-exit-up    { animation: stage-exit-up 0.4s var(--ease-expo) both; }
+.stage-exit-down  { animation: stage-exit-down 0.4s var(--ease-expo) both; }

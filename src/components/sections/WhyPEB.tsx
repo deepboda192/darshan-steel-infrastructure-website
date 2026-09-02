@@ -244,20 +244,9 @@ export function WhyPEB() {
           {/* ---------------- diagram ---------------- */}
           <div className="lg:col-span-6 lg:col-start-7">
             <Reveal delay={0.1}>
-              <figure>
-                <div className="border border-charcoal/10 bg-offwhite p-6 md:p-10">
-                  <MomentDiagram />
-                </div>
-                <figcaption className="mt-5 flex items-start gap-4 text-small text-muted">
-                  <span className="tech mt-[0.35rem] shrink-0 text-charcoal/45">Fig. 02</span>
-                  <span className="measure">
-                    The blue envelope is the bending moment the frame has to carry; the solid
-                    steel inside it is the depth provided to carry it. Both peak at the haunch and
-                    fall away to nothing at the pinned base — steel sits where the load actually
-                    is, rather than spread evenly along the member.
-                  </span>
-                </figcaption>
-              </figure>
+              <div className="border border-charcoal/10 bg-offwhite p-6 md:p-10">
+                <MomentDiagram />
+              </div>
             </Reveal>
           </div>
         </div>

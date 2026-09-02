@@ -1,11 +1,20 @@
+import { Building2, CalendarDays, Factory, Layers } from 'lucide-react'
 import { company } from '@/data/company'
 import { Counter } from '@/components/animations/Counter'
 import { Reveal } from '@/components/animations/Reveal'
 import { TechLabel } from '@/components/site/TechLabel'
 import { cn } from '@/lib/cn'
 
+import type { LucideIcon } from 'lucide-react'
+
 /**
- * Scale band — a full-height data plate, two ruled rows of four figures.
+ * Scale band — a data plate of one ruled row of four figures. A single row
+ * doesn't earn a full viewport, so the band sits on its own padding rather
+ * than min-h-screen.
+ *
+ * The homepage shows a curated four of the full metric set (established,
+ * projects, capacity, industries) in that order; the about page still renders
+ * the complete list from data/company.ts.
  *
  * The numeral carries the weight; its unit is set on its own line beneath it
  * rather than inside the counter. Baked into the counter, "MT / Month" and
@@ -21,28 +30,40 @@ import { cn } from '@/lib/cn'
  * the grid child. Put on the inner div, `nth-child` arithmetic sees only that
  * div inside its own wrapper and every divider silently disappears.
  */
+// The four figures the homepage leads with, in band order.
+const HOME_METRIC_KEYS = ['years', 'projects', 'capacity', 'industries']
+
+// One pictogram per figure, keyed like the data. Presentation only, so the
+// mapping lives here rather than in data/company.ts.
+const METRIC_ICONS: Record<string, LucideIcon> = {
+  years: CalendarDays,
+  projects: Building2,
+  capacity: Factory,
+  industries: Layers,
+}
+
 export function Metrics() {
-  const metrics = company.metrics
+  const metrics = HOME_METRIC_KEYS.flatMap((key) =>
+    company.metrics.filter((m) => m.key === key),
+  )
 
   return (
-    <section
-      className="relative flex min-h-screen items-center bg-white"
-      aria-label="Scale and experience"
-    >
-      <div className="container-site w-full py-10 md:py-12">
+    <section className="relative bg-white" aria-label="Scale and experience">
+      <div className="container-site w-full py-16 md:py-24">
         <Reveal>
           <TechLabel index="01" rule>
             Scale
           </TechLabel>
         </Reveal>
 
-        {/* Stacked on phones, paired on tablets, two ruled rows of four on
-            desktop. Cells 1 and 5 open each row, so 4n+1 drops the divider. */}
+        {/* Stacked on phones, paired on tablets, one ruled row of four on
+            desktop. Cell 1 opens the row, so 4n+1 drops the divider. */}
         <dl className="mt-8 grid sm:grid-cols-2 md:mt-10 lg:grid-cols-4 lg:border-b lg:border-charcoal/10">
           {metrics.map((metric, i) => {
             // Every current figure is live, so TS narrows this to `false` —
             // the cast keeps the pending path for future unsupplied stats.
             const pending = (metric.value as number) === 0
+            const Icon = METRIC_ICONS[metric.key]
             return (
               <Reveal
                 key={metric.key}
@@ -54,6 +75,13 @@ export function Metrics() {
                 )}
               >
                 <div className="flex h-full flex-col" data-placeholder={metric.placeholder}>
+                  {/* A quiet pictogram, not a badge — thin stroke, brand blue,
+                      sitting on the cell's own baseline grid above the numeral. */}
+                  {Icon && (
+                    <span aria-hidden="true" className="order-0 mb-5 block">
+                      <Icon className="h-6 w-6 text-brand" strokeWidth={1.5} />
+                    </span>
+                  )}
                   <dd className="order-1 m-0">
                     <span className="flex items-start gap-1">
                       <span

@@ -40,7 +40,7 @@ export function CTASection({
       {/* single blue rule marking the top edge of the closing band */}
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-brand/70" />
 
-      <div className="container-site relative py-24 md:py-32 lg:py-40">
+      <div className="container-site relative py-20 lg:py-24">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <Reveal>

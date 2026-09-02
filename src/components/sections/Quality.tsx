@@ -11,7 +11,7 @@ import { Button } from '@/components/site/Button'
  */
 export function Quality() {
   return (
-    <section className="relative overflow-hidden bg-charcoal on-dark py-24 md:py-32 lg:py-40" aria-label="Quality control">
+    <section className="relative overflow-hidden bg-charcoal on-dark py-20 lg:py-24" aria-label="Quality control">
       <div
         aria-hidden="true"
         className="dotgrid pointer-events-none absolute inset-0 text-white opacity-[0.07]"

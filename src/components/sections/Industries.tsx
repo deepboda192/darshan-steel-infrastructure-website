@@ -14,7 +14,7 @@ import { Button } from '@/components/site/Button'
  */
 export function Industries() {
   return (
-    <section className="overflow-hidden bg-offwhite py-24 md:py-32 lg:py-40" aria-label="Industries we serve">
+    <section className="overflow-hidden bg-offwhite py-20 lg:py-24" aria-label="Industries we serve">
       <div className="container-site">
         <SectionHeader
           index="08"

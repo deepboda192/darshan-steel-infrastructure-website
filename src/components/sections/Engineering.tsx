@@ -15,7 +15,7 @@ import { Button } from '@/components/site/Button'
  */
 export function Engineering() {
   return (
-    <section className="relative overflow-hidden bg-ink on-dark py-24 md:py-32 lg:py-40" aria-label="Engineering">
+    <section className="relative overflow-hidden bg-ink on-dark py-20 lg:py-24" aria-label="Engineering">
       <div
         aria-hidden="true"
         className="blueprint pointer-events-none absolute inset-0 text-white opacity-[0.055]"

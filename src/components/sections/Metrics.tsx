@@ -49,7 +49,7 @@ export function Metrics() {
 
   return (
     <section className="relative bg-white" aria-label="Scale and experience">
-      <div className="container-site w-full py-16 md:py-24">
+      <div className="container-site w-full py-20 lg:pb-15 lg:pt-24">
         <Reveal>
           <TechLabel index="01" rule>
             Scale
@@ -83,7 +83,7 @@ export function Metrics() {
                     </span>
                   )}
                   <dd className="order-1 m-0">
-                    <span className="flex items-start gap-1">
+                    <span className="flex flex-wrap items-baseline gap-x-2">
                       <span
                         className={cn(
                           'font-display wdth-wide tabular text-display-3 leading-[0.9]',
@@ -107,21 +107,12 @@ export function Metrics() {
                           {metric.suffix}
                         </span>
                       )}
-                    </span>
-
-                    {/* The unit belongs to the figure, so it is set at body
-                        scale in the numeral's own colour — not as tech caps,
-                        which were unreadable under a 60px numeral. The line is
-                        reserved even when empty so every label in the row
-                        lands on the same baseline. */}
-                    <span
-                      className={cn(
-                        'mt-2.5 block text-lead font-medium leading-none',
-                        metric.unit ? 'text-charcoal/60' : 'invisible',
+                      {/* The unit rides the numeral's baseline — small, in
+                          brand blue, part of the figure rather than a caption
+                          beneath it. */}
+                      {!pending && metric.unit && (
+                        <span className="text-lead font-medium leading-none text-brand">{metric.unit}</span>
                       )}
-                      aria-hidden={metric.unit ? undefined : 'true'}
-                    >
-                      {metric.unit || '—'}
                     </span>
                   </dd>
 

@@ -2,17 +2,14 @@ import { siteImages } from '@/data/images'
 import { ImageFrame } from '@/components/media/ImageFrame'
 import { Button } from '@/components/site/Button'
 import { Reveal } from '@/components/animations/Reveal'
-import { Arrow } from '@/components/site/Arrow'
 
 const DISCIPLINES = ['PEB Manufacturing', 'Structural Steel', 'Engineering & Erection']
-const CHAIN = ['Design', 'Fabrication', 'Delivery', 'Erection']
 
 /**
  * Homepage hero.
  *
  * Full-height, dark, image-led. The headline reveals line by line behind a
- * mask, the background settles from a 1.06 scale, and the technical strip at
- * the foot states the delivery chain in four words. Everything else is
+ * mask and the background settles from a 1.06 scale. Everything else is
  * restraint — one blue accent word, one blue button.
  */
 export function Hero() {
@@ -45,7 +42,7 @@ export function Hero() {
       />
 
       {/* ---------------- content ---------------- */}
-      <div className="container-site relative z-10 pb-10 pt-32 md:pb-14">
+      <div className="container-site relative z-10 pb-16 pt-32 md:pb-24 lg:pb-28">
         {/* disciplines */}
         <Reveal delay={0.15}>
           <ul className="mb-8 flex flex-wrap items-center gap-x-7 gap-y-3 tech text-white/55">
@@ -72,9 +69,8 @@ export function Hero() {
         <div className="mt-9 grid gap-8 lg:grid-cols-12 lg:items-end">
           <Reveal delay={0.5} className="lg:col-span-6">
             <p className="measure text-lead text-white/70">
-              From design and engineering to fabrication and erection, Darshan Steel
-              Infrastructure delivers complete Pre-Engineered Building solutions for modern
-              industrial spaces.
+              Darshan Steel Infrastructure delivers complete Pre-Engineered Building
+              solutions for modern industrial spaces.
             </p>
           </Reveal>
 
@@ -91,19 +87,6 @@ export function Hero() {
         </div>
       </div>
 
-      {/* ---------------- delivery chain strip ---------------- */}
-      <Reveal delay={0.7} className="relative z-10 border-t border-white/15">
-        <div className="container-site">
-          <ul className="flex flex-wrap items-center gap-x-5 gap-y-4 py-6 tech text-white/60 sm:gap-x-8">
-            {CHAIN.map((step, i) => (
-              <li key={step} className="flex items-center gap-5 sm:gap-8">
-                {i > 0 && <Arrow size={13} className="text-brand" />}
-                <span className={i === 0 ? 'text-white' : undefined}>{step}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Reveal>
 
       {/* entry zoom on the background only */}
       <style>{`

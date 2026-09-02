@@ -221,7 +221,7 @@ function MomentDiagram() {
 
 export function WhyPEB() {
   return (
-    <section className="bg-white py-24 md:py-32 lg:py-40" aria-label="Why pre-engineered buildings">
+    <section className="bg-white py-20 lg:pb-15 lg:pt-24" aria-label="Why pre-engineered buildings">
       <div className="container-site">
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
           {/* ---------------- argument ---------------- */}

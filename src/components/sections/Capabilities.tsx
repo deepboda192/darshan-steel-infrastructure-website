@@ -45,20 +45,39 @@ const LOCK_MS = 700
 
 type StepState = { index: number; prev: number | null; dir: 1 | -1 }
 
-/** The active stage panel — one markup, rendered for live and exiting stage. */
+/** One odometer column: digits 0–9 stacked 1em apart; the strip translates
+    to the active digit, and the eased roll between positions is the
+    steps-flow signature. Collapsed automatically under prefers-reduced-motion
+    by the global reduced-motion rule. */
+function RollingDigit({ digit }: { digit: number }) {
+  return (
+    <span className="inline-block h-[1em] overflow-hidden">
+      <span
+        className="block transition-transform duration-[900ms] ease-[var(--ease-expo)]"
+        style={{ transform: `translateY(-${digit}em)` }}
+      >
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => (
+          <span key={d} className="block h-[1em]">
+            {d}
+          </span>
+        ))}
+      </span>
+    </span>
+  )
+}
+
+/** The stage body — title, description, deliverables. Rendered for the live,
+    exiting and sizer copies; the stage number is NOT in here, because it
+    persists and rolls rather than crossfading with the text. */
 function StageDetail({ stage, className }: { stage: Stage; className?: string }) {
   return (
-    <div className={cn('grid gap-10 lg:grid-cols-12 lg:gap-16', className)}>
-      <div className="lg:col-span-2">
-        <p className="tech text-brand tabular">Stage {stage.index}</p>
-      </div>
-
+    <div className={cn('grid gap-10 lg:grid-cols-10 lg:gap-16', className)}>
       <div className="lg:col-span-6">
         <h3 className="text-display-4 font-display text-charcoal">{stage.title}</h3>
         <p className="measure mt-5 text-body text-muted">{stage.description}</p>
       </div>
 
-      <div className="lg:col-span-3 lg:col-start-10">
+      <div className="lg:col-span-3 lg:col-start-8">
         <p className="tech mb-5 text-muted">Deliverables</p>
         <ul className="flex flex-col gap-3">
           {stage.outputs.map((output) => (
@@ -340,7 +359,13 @@ export function Capabilities() {
   const flowIndex = Math.min(LAST, Math.floor(progress * STAGES.length))
   const activeIndex = enhanced ? step.index : (pinnedClick ?? flowIndex)
   const passedIndex = enhanced ? step.index : flowIndex
-  const fill = enhanced ? step.index / LAST : progress
+  // The fill must END on the active node, never sweep past it. The dots sit
+  // on an 8-column grid — column i opens at i/8 of the rail plus the 12px
+  // gaps crossed so far, and the 10px dot centres 5px in — while the old
+  // index/LAST mapping reached 100% at a dot standing at 87.5%, so the line
+  // visibly overran the point at every stage. This resolves the active dot's
+  // centre exactly; it is tied to grid-cols-8 + gap-3 + the h-2.5 dot.
+  const fillWidth = `calc(${activeIndex * 12.5}% + ${(activeIndex * 1.5 + 5).toFixed(1)}px)`
   const active = STAGES[activeIndex]
 
   return (
@@ -353,7 +378,7 @@ export function Capabilities() {
         className={cn(
           'bg-white',
           enhanced
-            ? 'sticky top-0 flex h-screen min-h-0 flex-col overflow-hidden pb-6 pt-[88px]'
+            ? 'sticky top-0 flex h-screen min-h-0 flex-col overflow-hidden pb-3 pt-[88px]'
             : 'py-24 md:py-32 lg:py-40',
         )}
         aria-label="Our integrated workflow"
@@ -388,7 +413,7 @@ export function Capabilities() {
               <div aria-hidden="true" className="absolute inset-x-0 top-[62px] h-px bg-charcoal/15">
                 <span
                   className="absolute inset-y-0 left-0 block bg-brand transition-[width] duration-500 ease-[var(--ease-expo)]"
-                  style={{ width: `${fill * 100}%` }}
+                  style={{ width: fillWidth }}
                 />
               </div>
 
@@ -407,7 +432,7 @@ export function Capabilities() {
                         <span
                           className={cn(
                             'font-display wdth-wide block text-display-4 tabular transition-colors duration-500',
-                            isPassed ? 'text-charcoal' : 'text-steel',
+                            isActive ? 'text-brand' : isPassed ? 'text-charcoal' : 'text-steel',
                           )}
                         >
                           {stage.index}
@@ -455,10 +480,40 @@ export function Capabilities() {
                 : 'mt-14 pt-12 md:mt-16',
             )}
           >
-            <div
-              aria-live="polite"
-              className={cn('relative', enhanced && 'min-h-[clamp(200px,28vh,280px)]')}
-            >
+            <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+              {/* Persistent stage number. One element for all stages — the
+                  digits roll to the new index while the text panel beside it
+                  fades and slides, so the number never double-exposes. */}
+              <div className="lg:col-span-2">
+                <p className="tech text-brand tabular">
+                  Stage<span className="sr-only"> {active.index}</span>
+                </p>
+                <div
+                  aria-hidden="true"
+                  className="mt-3 flex font-display wdth-wide tabular text-display-3 leading-none text-charcoal"
+                >
+                  <RollingDigit digit={Math.floor((activeIndex + 1) / 10)} />
+                  <RollingDigit digit={(activeIndex + 1) % 10} />
+                </div>
+              </div>
+
+              <div aria-live="polite" className="relative lg:col-span-10">
+              {/* Reserving the panel with a viewport clamp left up to ~110px of
+                  dead space under short stages, which read as a lopsided plate.
+                  Instead every stage is stacked invisibly in one grid cell, so
+                  the panel is exactly as tall as the tallest stage — no height
+                  jump between steps, and no guessed slack. */}
+              {enhanced && (
+                <div aria-hidden="true" className="invisible grid">
+                  {STAGES.map((stage) => (
+                    <StageDetail
+                      key={stage.index}
+                      stage={stage}
+                      className="col-start-1 row-start-1"
+                    />
+                  ))}
+                </div>
+              )}
               {enhanced && step.prev !== null && (
                 <StageDetail
                   stage={STAGES[step.prev]}
@@ -470,14 +525,12 @@ export function Capabilities() {
               )}
               <StageDetail
                 stage={active}
-                className={
-                  enhanced && step.prev !== null
-                    ? step.dir > 0
-                      ? 'stage-enter-up'
-                      : 'stage-enter-down'
-                    : undefined
-                }
+                className={cn(
+                  enhanced && 'absolute inset-x-0 top-0',
+                  enhanced && step.prev !== null && (step.dir > 0 ? 'stage-enter-up' : 'stage-enter-down'),
+                )}
               />
+              </div>
             </div>
           </div>
         </div>

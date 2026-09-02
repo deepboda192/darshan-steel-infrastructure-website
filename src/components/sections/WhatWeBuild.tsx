@@ -9,8 +9,9 @@ import { cn } from '@/lib/cn'
 /**
  * What we build.
  *
- * Six building types in one viewport: on desktop the section is exactly a
- * screen tall — a compact header, then a uniform 3×2 grid that flexes to fill
+ * Six building types in one viewport: on desktop the section is exactly the
+ * visible screen — 100vh minus the fixed site header — a compact header, then
+ * a uniform 3×2 grid that flexes to fill
  * the remaining height, each tile's photograph stretched to its cell with
  * `ratio="fill"`. The earlier editorial spread of unequal spans ran to three
  * viewports; the uniform plate trades that variety for a section a visitor
@@ -23,7 +24,11 @@ import { cn } from '@/lib/cn'
 export function WhatWeBuild() {
   return (
     <section
-      className="flex flex-col bg-offwhite py-16 md:py-20 lg:h-screen lg:min-h-[800px] lg:py-12"
+      // The site header is fixed and 76px tall once scrolled, so a plain
+      // h-screen section always hangs 76px past the fold. The visible screen
+      // for content is 100vh minus the header; the floor protects the tiles
+      // from being crushed on very short windows (the section then scrolls).
+      className="flex flex-col bg-offwhite py-16 md:py-20 lg:h-[calc(100vh-76px)] lg:min-h-[700px] lg:py-16"
       aria-label="What we build"
     >
       <div className="container-site flex w-full flex-1 flex-col lg:min-h-0">
@@ -82,17 +87,16 @@ export function WhatWeBuild() {
                     {/* blue rule opens on hover */}
                     <span
                       aria-hidden="true"
-                      className="mb-4 block h-0.5 w-10 origin-left bg-brand transition-transform duration-[600ms] ease-[var(--ease-expo)] group-hover:scale-x-[3.2]"
+                      className="mb-3 block h-0.5 w-8 origin-left bg-brand transition-transform duration-[600ms] ease-[var(--ease-expo)] group-hover:scale-x-[3.2]"
                     />
                     <div className="flex items-end justify-between gap-6">
                       <div>
-                        <h3 className="font-display wdth-wide text-display-4 text-white transition-transform duration-[600ms] ease-[var(--ease-expo)] group-hover:-translate-y-0.5">
+                        <h3 className="font-display wdth-wide text-[1.35rem] leading-[1.15] text-white transition-transform duration-[600ms] ease-[var(--ease-expo)] group-hover:-translate-y-0.5">
                           {solution.title}
                         </h3>
-                        <p className="measure mt-2 text-small text-white/70">{solution.short}</p>
                       </div>
                       <Arrow
-                        size={20}
+                        size={18}
                         className="mb-1 shrink-0 text-white transition-transform duration-[600ms] ease-[var(--ease-expo)] group-hover:translate-x-2"
                       />
                     </div>

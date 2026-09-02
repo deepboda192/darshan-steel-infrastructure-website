@@ -12,7 +12,7 @@ import { Reveal } from '@/components/animations/Reveal'
  */
 export function Process() {
   return (
-    <section className="bg-white py-24 md:py-32" aria-label="How a project runs">
+    <section className="bg-white py-20 lg:py-24" aria-label="How a project runs">
       <div className="container-site">
         <SectionHeader
           index="10"

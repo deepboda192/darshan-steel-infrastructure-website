@@ -406,49 +406,49 @@ export const whyChooseDsi: Differentiator[] = [
     index: '01',
     title: 'Single Window Solution',
     description:
-      'DSI offers the complete process of a high-quality steel structure — consultancy, design, fabrication and erection. This integrated production process brings the advantages of an optimal solution, high-quality products and perfect customer service.',
+      'Consultancy, design, fabrication and erection from one team — an optimal solution, high-quality products and reliable service throughout.',
   },
   {
     index: '02',
     title: 'Safe & Cost-Effective Design Solution',
     description:
-      'Advanced and customised software determines the exact position of each part of the structure, combining structural strength with the optimum use of steel to ensure the safety and longevity of the building.',
+      'Advanced design software positions every part precisely, balancing structural strength with optimum steel use for a safe, long-lasting building.',
   },
   {
     index: '03',
     title: 'Standard & High-Quality Material',
     description:
-      'DSI uses high-grade materials for every building component, with specifications that meet or exceed industry requirements. High-strength steel of 345 MPa yield strength is used for all primary and secondary members; 550 MPa grade material is used for roofing.',
+      'High-grade materials that meet or exceed industry standards — 345 MPa steel for all primary and secondary members, 550 MPa grade for roofing.',
   },
   {
     index: '04',
     title: 'Future Expansion',
     description:
-      'Because columns, endwall posts, rafters and other main support members are bolted together, a PEB structure is easy to extend by adding bays. Expansion in width and height is also possible when the building is pre-designed for it.',
+      'Bolted columns, rafters and endwall posts make adding bays simple; width and height can also grow when pre-designed for expansion.',
   },
   {
     index: '05',
     title: 'Fast Delivery & Erection',
     description:
-      'Buildings are designed with low engineering complexity, so they can be designed, detailed, fabricated and shipped from our plant in less than 6 weeks. We work closely with our clients to meet their delivery targets.',
+      'Low engineering complexity means a building can be designed, detailed, fabricated and shipped in under 6 weeks, working to your delivery targets.',
   },
   {
     index: '06',
     title: 'Advanced Manufacturing Facility',
     description:
-      'A state-of-the-art factory manufactures all PEB components under one roof, using advanced CNC-based cutting, welding and forming machines for precise, fast production under strict quality control.',
+      'Every PEB component is made under one roof on CNC-based cutting, welding and forming lines — precise, fast and under strict quality control.',
   },
   {
     index: '07',
     title: 'Quality Assurance',
     description:
-      'Strength and appearance are checked at every stage and on every piece, from manufacturing through to execution, to ensure an excellent, highly durable end product.',
+      'Strength and finish are checked on every piece at every stage, from manufacturing to execution, for a durable end product.',
   },
   {
     index: '08',
     title: 'Perfect Customer Support & Service',
     description:
-      'The project management board attends regularly to serve customers from the start of a project to its final stage, so clients can be sure of quality, on-schedule progress and guaranteed service.',
+      'A dedicated project management team stays with you from the first stage to the last — quality, on-schedule progress and guaranteed service.',
   },
 ]
 

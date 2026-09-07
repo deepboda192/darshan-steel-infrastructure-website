@@ -49,12 +49,6 @@ const PROJECT_RECORDS = [
 /** Two-digit section counts, read from the data rather than written by hand. */
 const pad = (n: number) => String(n).padStart(2, '0')
 
-const HERO_SPEC: { term: string; detail: string; numeric: boolean }[] = [
-  { term: 'Engineering disciplines', detail: pad(engineeringCapabilities.length), numeric: true },
-  { term: 'Inspection hold points', detail: pad(qualityChecks.length), numeric: true },
-  { term: 'Design codes', detail: 'Confirmed per project', numeric: false },
-]
-
 /**
  * Splits a data string on [BRACKETED PLACEHOLDERS] so the unconfirmed part is
  * flagged for `?audit=1` without breaking the sentence around it.
@@ -86,7 +80,6 @@ function QualityEngineeringPage() {
       />
 
       <PageHero
-        index="05"
         eyebrow="Quality & Engineering"
         title={
           <>
@@ -95,30 +88,7 @@ function QualityEngineeringPage() {
             then built.
           </>
         }
-        lead="Engineering, detailing and inspection are one continuous chain. The drawing that leaves the office is the drawing the shop builds to, and every member is verified against it before it is released."
         image={siteImages.pageBanners.quality}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Quality & Engineering' }]}
-        aside={
-          <dl className="border-y border-white/10">
-            {HERO_SPEC.map((item) => (
-              <div
-                key={item.term}
-                className="flex items-baseline justify-between gap-6 border-t border-white/10 py-5 first:border-t-0"
-              >
-                <dt className="tech text-white/55">{item.term}</dt>
-                <dd
-                  className={
-                    item.numeric
-                      ? 'font-display tabular text-display-4 text-white'
-                      : 'tech-lg text-right text-white/80'
-                  }
-                >
-                  {item.detail}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        }
       />
 
       {/* ================================================================== */}

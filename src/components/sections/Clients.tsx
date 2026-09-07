@@ -5,16 +5,16 @@ import { Reveal } from '@/components/animations/Reveal'
 /**
  * Our clients — a hairline logo wall.
  *
- * Twenty marks of wildly different shapes, colours and resolutions, so the
+ * Thirty marks of wildly different shapes, colours and resolutions, so the
  * grid does the unifying: every logo sits centred in an identical white cell,
  * capped to the same height, and the cells are separated by 1px of the rule
  * colour showing through a `gap-px` grid rather than per-cell borders (no
  * doubled lines, no odd-row arithmetic). Logos stay in full colour and lift
  * slightly on hover.
  *
- * Three across below desktop, seven across on desktop — 21 logos make exact
- * rows at both steps, so the plate never ends on a ragged row (which the
- * `gap-px` technique would show as a tinted empty cell).
+ * Two across on phones, three on tablets, six on desktop — 30 logos make
+ * exact rows at every step, so the plate never ends on a ragged row (which
+ * the `gap-px` technique would show as a tinted empty cell).
  */
 export function Clients() {
   return (
@@ -36,12 +36,9 @@ export function Clients() {
         />
 
         <Reveal>
-          <ul className="grid grid-cols-3 gap-px border border-charcoal/10 bg-charcoal/10 lg:grid-cols-7">
-            {clients.map((client, i) => (
-              <li
-                key={client.src}
-                className="group flex h-24 items-center justify-center bg-white px-4 sm:h-28 lg:h-32 lg:px-6"
-              >
+          <ul className="grid grid-cols-2 gap-px border border-charcoal/10 bg-charcoal/10 sm:grid-cols-3 lg:grid-cols-6">
+            {clients.map((client, i) => {
+              const logo = (
                 <img
                   src={client.src}
                   alt={client.name}
@@ -50,10 +47,31 @@ export function Clients() {
                   height={client.height}
                   loading={i < 10 ? 'eager' : 'lazy'}
                   decoding="async"
-                  className="h-auto max-h-14 w-auto max-w-[80%] object-contain transition-transform duration-500 ease-[var(--ease-expo)] group-hover:scale-110 lg:max-h-16"
+                  className="h-auto max-h-16 w-auto max-w-[85%] object-contain transition-transform duration-500 ease-[var(--ease-expo)] group-hover:scale-110 sm:max-h-20 lg:max-h-24"
                 />
-              </li>
-            ))}
+              )
+              // Only marks with a confirmed site are links; the rest stay
+              // plain images so nothing on the wall is a dead end.
+              return (
+                <li key={client.src} className="bg-white">
+                  {client.url ? (
+                    <a
+                      href={client.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${client.name} (opens in a new tab)`}
+                      className="group flex h-28 items-center justify-center px-5 sm:h-32 lg:h-40 lg:px-8"
+                    >
+                      {logo}
+                    </a>
+                  ) : (
+                    <div className="group flex h-28 items-center justify-center px-5 sm:h-32 lg:h-40 lg:px-8">
+                      {logo}
+                    </div>
+                  )}
+                </li>
+              )
+            })}
           </ul>
         </Reveal>
       </div>

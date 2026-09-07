@@ -1,4 +1,3 @@
-
 import {
   useMemo,
   useRef,
@@ -7,12 +6,11 @@ import {
   type FormEvent,
   type ReactNode,
 } from 'react'
+import { AlertCircle, CheckCircle2, ChevronDown } from 'lucide-react'
 import { useSearchParams } from '@/lib/next-navigation'
 import { company } from '@/data/company'
 import { solutions } from '@/data/solutions'
 import { Button } from '@/components/site/Button'
-import { TechLabel } from '@/components/site/TechLabel'
-import { Arrow } from '@/components/site/Arrow'
 import { cn } from '@/lib/cn'
 
 /* -------------------------------------------------------------------------- */
@@ -20,7 +18,7 @@ import { cn } from '@/lib/cn'
 /* -------------------------------------------------------------------------- */
 
 /**
- * Where the enquiry is posted. Set NEXT_PUBLIC_ENQUIRY_ENDPOINT to hand the
+ * Where the enquiry is posted. Set VITE_ENQUIRY_ENDPOINT to hand the
  * submission to a CRM or form service instead of the built-in route handler.
  */
 const ENDPOINT = import.meta.env.VITE_ENQUIRY_ENDPOINT || '/api/public/enquiry'
@@ -29,6 +27,8 @@ const ENDPOINT = import.meta.env.VITE_ENQUIRY_ENDPOINT || '/api/public/enquiry'
 const PROJECT_TYPES: string[] = [...solutions.map((s) => s.title), 'Other']
 
 const DEFAULT_SUBJECT = 'General Enquiry'
+
+const MESSAGE_MAX = 4000
 
 /** `?intent=` presets the subject line and the note above the fields. */
 const INTENTS = {
@@ -125,8 +125,8 @@ function validate(values: FormValues): Partial<Record<FieldName, string>> {
     errors.email = 'That address is missing an @ or a domain.'
   }
 
-  if (values.message.length > 4000) {
-    errors.message = 'Keep the message under 4000 characters.'
+  if (values.message.length > MESSAGE_MAX) {
+    errors.message = `Keep the message under ${MESSAGE_MAX} characters.`
   }
 
   return errors
@@ -142,39 +142,49 @@ type FieldShellProps = {
   required?: boolean
   error?: string
   hint?: string
+  /** Right-aligned slot beside the label — used for the message counter. */
+  meta?: ReactNode
   children: ReactNode
   className?: string
 }
 
-/** Label, control slot and inline error — one rhythm for every field. */
-function FieldShell({ id, label, required, error, hint, children, className }: FieldShellProps) {
+/**
+ * Label, control slot, hint and inline error — one rhythm for every field.
+ * Only required fields carry a mark; an "optional" tag on every other label
+ * was more noise than signal, so the rule is stated once above the form.
+ */
+function FieldShell({ id, label, required, error, hint, meta, children, className }: FieldShellProps) {
   return (
-    <div className={className}>
-      <label htmlFor={id} className="tech mb-3.5 flex items-baseline gap-2 text-muted">
-        <span>{label}</span>
-        {required ? (
-          <>
-            <span aria-hidden="true" className="text-brand">
-              *
-            </span>
-            <span className="sr-only">(required)</span>
-          </>
-        ) : (
-          <span className="text-muted">Optional</span>
-        )}
-      </label>
+    <div className={cn('flex flex-col', className)}>
+      <div className="mb-2 flex items-baseline justify-between gap-4">
+        <label htmlFor={id} className="text-small font-medium text-charcoal">
+          {label}
+          {required && (
+            <>
+              <span aria-hidden="true" className="ml-1 text-brand">
+                *
+              </span>
+              <span className="sr-only">(required)</span>
+            </>
+          )}
+        </label>
+        {meta}
+      </div>
 
       {children}
 
       {hint && !error && (
-        <p id={`${id}-hint`} className="mt-2.5 text-small text-muted">
+        <p id={`${id}-hint`} className="mt-2 text-[0.8125rem] leading-relaxed text-muted">
           {hint}
         </p>
       )}
 
       {error && (
-        <p id={`${id}-error`} className="mt-3 flex gap-2.5 text-small text-brand">
-          <span aria-hidden="true" className="mt-[0.7em] h-px w-3.5 shrink-0 bg-brand" />
+        <p
+          id={`${id}-error`}
+          className="mt-2 flex items-start gap-1.5 text-[0.8125rem] leading-relaxed text-error"
+        >
+          <AlertCircle aria-hidden="true" className="mt-[3px] h-3.5 w-3.5 shrink-0" strokeWidth={2} />
           <span>{error}</span>
         </p>
       )}
@@ -182,16 +192,20 @@ function FieldShell({ id, label, required, error, hint, children, className }: F
   )
 }
 
-/** Hairline-underline control. Blue only while the field is focused or invalid. */
+/**
+ * Boxed control. A quiet hairline at rest, darker on hover, brand blue with a
+ * soft halo on focus; invalid fields swap to the error colour so they never
+ * read as "focused".
+ */
 function controlClass(invalid: boolean, extra?: string) {
   return cn(
-    'w-full rounded-none border-0 border-b bg-transparent px-0 py-3.5',
-    'text-body text-charcoal placeholder:text-muted',
-    'transition-colors duration-300 ease-[var(--ease-power)]',
+    'w-full rounded-md border bg-white px-4 py-3 text-body text-charcoal placeholder:text-muted/70',
+    'transition-[border-color,box-shadow,background-color] duration-200 ease-[var(--ease-power)]',
+    'focus:outline-none focus-visible:outline-none focus:ring-[3px]',
     invalid
-      ? 'border-brand'
-      : 'border-muted hover:border-charcoal/70 focus:border-brand',
-    'disabled:opacity-50',
+      ? 'border-error bg-error-tint/50 focus:border-error focus:ring-error/15'
+      : 'border-charcoal/15 hover:border-charcoal/35 focus:border-brand focus:ring-brand/15',
+    'disabled:cursor-not-allowed disabled:opacity-50',
     extra,
   )
 }
@@ -205,7 +219,7 @@ function controlClass(invalid: boolean, extra?: string) {
  *
  * Uses `useSearchParams`, so every page that renders it must wrap it in a
  * <Suspense> boundary. Validation runs client-side for the inline messages and
- * again server-side in app/api/enquiry/route.ts — the client check is a
+ * again server-side in routes/api/public/enquiry.ts — the client check is a
  * courtesy, not a gate.
  */
 export function ContactForm() {
@@ -311,30 +325,33 @@ export function ContactForm() {
     setStatus('idle')
   }
 
+  const card =
+    'rounded-lg border border-charcoal/10 bg-white p-6 shadow-[0_12px_48px_-20px_rgba(38,35,36,0.22)] sm:p-8 lg:p-10'
+
   /* ---------------------------------------------------------------- success */
 
   if (status === 'success') {
     return (
-      <div
-        role="status"
-        className="rounded-[4px] border border-charcoal/15 bg-offwhite p-8 md:p-12"
-      >
-        <TechLabel rule tone="brand" className="mb-8">
-          Enquiry received
-        </TechLabel>
+      <div role="status" className={card}>
+        <div className="flex items-start gap-4">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-tint text-brand">
+            <CheckCircle2 aria-hidden="true" className="h-6 w-6" strokeWidth={1.75} />
+          </span>
+          <div>
+            <p className="tech text-brand">Enquiry received</p>
+            <h3 className="font-display wdth-wide mt-2 text-display-4 text-charcoal">
+              Thank you — we have your brief.
+            </h3>
+            {/* Deliberately states only what is true at submit time. Delivery is
+                wired in routes/api/public/enquiry.ts — see the TODO block there. */}
+            <p className="measure mt-3 text-body text-muted">
+              Your enquiry has been submitted. An engineer will review it and reply on the
+              phone number or email address you gave us.
+            </p>
+          </div>
+        </div>
 
-        <h3 className="font-display wdth-wide text-display-4 uppercase text-charcoal">
-          Thank you — we have your brief.
-        </h3>
-
-        {/* Deliberately states only what is true at submit time. Delivery is
-            wired in app/api/enquiry/route.ts — see the TODO block there. */}
-        <p className="measure mt-6 text-body text-muted">
-          Your enquiry has been submitted. An engineer will review it and reply on the phone
-          number or email address you gave us.
-        </p>
-
-        <ol className="mt-10 border-t border-charcoal/10">
+        <ol className="mt-8 grid gap-4 border-t border-charcoal/10 pt-8 sm:grid-cols-3">
           {[
             {
               index: '01',
@@ -352,20 +369,15 @@ export function ContactForm() {
               note: 'Once the scope is settled, a structural approach and a quotation follow.',
             },
           ].map((step) => (
-            <li
-              key={step.index}
-              className="flex gap-5 border-b border-charcoal/10 py-5 sm:gap-8"
-            >
-              <span className="tabular tech mt-1.5 shrink-0 text-brand">{step.index}</span>
-              <span>
-                <span className="block text-body text-charcoal">{step.title}</span>
-                <span className="mt-1 block text-small text-muted">{step.note}</span>
-              </span>
+            <li key={step.index} className="rounded-md bg-offwhite p-5">
+              <span className="tabular tech text-brand">{step.index}</span>
+              <span className="mt-2 block text-body font-medium text-charcoal">{step.title}</span>
+              <span className="mt-1 block text-small text-muted">{step.note}</span>
             </li>
           ))}
         </ol>
 
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
           <Button variant="secondary" onClick={reset}>
             Send another enquiry
           </Button>
@@ -379,14 +391,23 @@ export function ContactForm() {
 
   /* ------------------------------------------------------------------- form */
 
+  const messageLength = values.message.length
+
   return (
-    <form onSubmit={handleSubmit} noValidate aria-labelledby="enq-subject">
-      {/* ---------------- subject line ---------------- */}
-      <div className="mb-10 flex flex-col gap-4 border-b border-charcoal/10 pb-8 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10">
-        <p id="enq-subject" className="tech-lg text-charcoal">
+    <form onSubmit={handleSubmit} noValidate aria-labelledby="enq-subject" className={card}>
+      {/* ---------------- heading ---------------- */}
+      <div className="mb-8 border-b border-charcoal/10 pb-6">
+        <h3 id="enq-subject" className="font-display wdth-wide text-display-4 text-charcoal">
           {subject}
+        </h3>
+        <p className="mt-2 text-small text-muted">
+          {intent?.note ?? (
+            <>
+              Fields marked <span className="text-brand">*</span> are required. Everything else
+              helps us give a sharper first answer.
+            </>
+          )}
         </p>
-        {intent && <p className="measure text-small text-muted">{intent.note}</p>}
       </div>
 
       {/* ---------------- error summary ---------------- */}
@@ -395,31 +416,34 @@ export function ContactForm() {
           ref={summaryRef}
           tabIndex={-1}
           role="alert"
-          className="mb-10 rounded-[4px] border border-brand/35 bg-brand-tint px-6 py-6"
+          className="mb-8 flex gap-3 rounded-md border border-error/25 bg-error-tint px-5 py-4"
         >
-          <p className="tech text-brand">
-            {errorList.length === 1
-              ? '1 field needs attention'
-              : `${errorList.length} fields need attention`}
-          </p>
-          <ul className="mt-5 flex flex-col gap-2.5">
-            {errorList.map(([name, message]) => (
-              <li key={name}>
-                <button
-                  type="button"
-                  onClick={() => document.getElementById(fid(name))?.focus()}
-                  className="text-left text-small text-charcoal underline decoration-brand/40 underline-offset-4 transition-colors hover:decoration-brand"
-                >
-                  {LABELS[name]} — {message}
-                </button>
-              </li>
-            ))}
-          </ul>
+          <AlertCircle aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-error" strokeWidth={1.75} />
+          <div>
+            <p className="text-small font-medium text-charcoal">
+              {errorList.length === 1
+                ? 'One field needs attention'
+                : `${errorList.length} fields need attention`}
+            </p>
+            <ul className="mt-2 flex flex-col gap-1.5">
+              {errorList.map(([name, message]) => (
+                <li key={name}>
+                  <button
+                    type="button"
+                    onClick={() => document.getElementById(fid(name))?.focus()}
+                    className="text-left text-small text-charcoal/80 underline decoration-error/40 underline-offset-4 transition-colors hover:text-error hover:decoration-error"
+                  >
+                    {LABELS[name]} — {message}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
 
       {/* ---------------- fields ---------------- */}
-      <div className="grid gap-x-10 gap-y-9 sm:grid-cols-2">
+      <div className="grid gap-x-6 gap-y-6 sm:grid-cols-2">
         <FieldShell id={fid('name')} label="Name" required error={errors.name}>
           <input
             id={fid('name')}
@@ -467,7 +491,7 @@ export function ContactForm() {
             value={values.phone}
             onChange={update('phone')}
             disabled={submitting}
-            placeholder="+91"
+            placeholder="+91 98765 43210"
             className={controlClass(Boolean(errors.phone))}
           />
         </FieldShell>
@@ -490,7 +514,6 @@ export function ContactForm() {
             className={controlClass(Boolean(errors.email))}
           />
         </FieldShell>
-
         <FieldShell
           id={fid('projectType')}
           label="Project type"
@@ -507,10 +530,7 @@ export function ContactForm() {
               disabled={submitting}
               className={controlClass(
                 false,
-                cn(
-                  'appearance-none pr-9',
-                  values.projectType === '' && 'text-muted',
-                ),
+                cn('appearance-none pr-11', values.projectType === '' && 'text-muted/70'),
               )}
             >
               <option value="">Select a building type</option>
@@ -520,10 +540,10 @@ export function ContactForm() {
                 </option>
               ))}
             </select>
-            <Arrow
-              angle={90}
-              size={14}
-              className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-charcoal/70"
+            <ChevronDown
+              aria-hidden="true"
+              className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal/60"
+              strokeWidth={2}
             />
           </div>
         </FieldShell>
@@ -558,6 +578,7 @@ export function ContactForm() {
             id={fid('area')}
             name="area"
             type="text"
+            inputMode="numeric"
             aria-describedby={describedBy('area', true)}
             value={values.area}
             onChange={update('area')}
@@ -573,18 +594,29 @@ export function ContactForm() {
           error={errors.message}
           className="sm:col-span-2"
           hint="Span, eave height, crane duty, programme — whatever you already know."
+          meta={
+            <span
+              aria-live="polite"
+              className={cn(
+                'tabular text-[0.8125rem]',
+                messageLength > MESSAGE_MAX ? 'text-error' : 'text-muted',
+              )}
+            >
+              {messageLength.toLocaleString('en-IN')} / {MESSAGE_MAX.toLocaleString('en-IN')}
+            </span>
+          }
         >
           <textarea
             id={fid('message')}
             name="message"
-            rows={6}
+            rows={5}
             aria-invalid={errors.message ? true : undefined}
             aria-describedby={describedBy('message', true)}
             value={values.message}
             onChange={update('message')}
             disabled={submitting}
             placeholder="Tell us about the structure and what it has to carry."
-            className={controlClass(Boolean(errors.message), 'resize-y min-h-[9rem]')}
+            className={controlClass(Boolean(errors.message), 'min-h-[8.5rem] resize-y')}
           />
         </FieldShell>
       </div>
@@ -604,37 +636,39 @@ export function ContactForm() {
       </div>
 
       {/* ---------------- submit ---------------- */}
-      <div className="mt-12 flex flex-col gap-6 border-t border-charcoal/10 pt-9 sm:flex-row sm:items-center sm:justify-between sm:gap-10">
-        <Button type="submit" size="lg" arrow disabled={submitting}>
+      <div className="mt-10 border-t border-charcoal/10 pt-8">
+        <Button
+          type="submit"
+          size="lg"
+          arrow
+          disabled={submitting}
+          className="w-full sm:w-auto"
+        >
           {submitting ? 'Sending…' : 'Send Enquiry'}
         </Button>
-
-        <p className="measure text-small text-muted/85">
-          Your details are used to answer this enquiry and nothing else.{' '}
-          <span aria-hidden="true">
-            Fields marked <span className="text-brand">*</span> are required.
-          </span>
-        </p>
       </div>
 
       {/* ---------------- delivery failure ---------------- */}
       {status === 'error' && (
         <div
           role="alert"
-          className="mt-9 rounded-[4px] border border-charcoal/20 bg-offwhite px-6 py-6"
+          className="mt-6 flex gap-3 rounded-md border border-error/25 bg-error-tint px-5 py-4"
         >
-          <p className="tech mb-3 text-brand">Not sent</p>
-          <p className="text-small text-muted">
-            {submitError} Try again in a moment, or write to us directly at{' '}
-            <a
-              href={`mailto:${company.email.enquiries.value}`}
-              data-placeholder={company.email.enquiries.placeholder}
-              className="break-all text-charcoal underline decoration-charcoal/30 underline-offset-4 transition-colors hover:decoration-brand"
-            >
-              {company.email.enquiries.value}
-            </a>
-            .
-          </p>
+          <AlertCircle aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-error" strokeWidth={1.75} />
+          <div>
+            <p className="text-small font-medium text-charcoal">Not sent</p>
+            <p className="mt-1 text-small text-muted">
+              {submitError} Try again in a moment, or write to us directly at{' '}
+              <a
+                href={`mailto:${company.email.enquiries.value}`}
+                data-placeholder={company.email.enquiries.placeholder}
+                className="break-all text-charcoal underline decoration-charcoal/30 underline-offset-4 transition-colors hover:decoration-brand"
+              >
+                {company.email.enquiries.value}
+              </a>
+              .
+            </p>
+          </div>
         </div>
       )}
     </form>

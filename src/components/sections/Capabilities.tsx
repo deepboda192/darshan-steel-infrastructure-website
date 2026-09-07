@@ -17,7 +17,7 @@ export function Capabilities() {
     <section className="bg-white py-20 lg:py-24" aria-label="Our integrated workflow">
       <div className="container-site">
         <SectionHeader
-          index="04"
+          index="05"
           eyebrow="Capabilities"
           title={
             <>

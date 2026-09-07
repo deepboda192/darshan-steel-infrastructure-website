@@ -99,13 +99,6 @@ function ProjectDetailPage() {
     label: `FIG. ${project.index} — PROJECT RECORD`,
   }
 
-  const facts = [
-    { label: 'Building type', value: project.buildingType },
-    { label: 'Location', value: project.location },
-    { label: 'Year', value: project.year },
-    { label: 'Built-up area', value: project.area },
-  ].filter((f) => f.value)
-
   const chapters = [
     { index: '01', id: 'overview', title: 'Overview', body: project.study.overview },
     { index: '02', id: 'challenge', title: 'Challenge', body: project.study.challenge },
@@ -132,41 +125,9 @@ function ProjectDetailPage() {
 
       {/* ==================================================== 00 — PROJECT HERO */}
       <PageHero
-        index={project.index}
         eyebrow={project.buildingType}
         title={<span data-placeholder={pendingAttr(project.name)}>{project.name}</span>}
-        lead={`The engineering record for a ${project.buildingType.toLowerCase()}: what the structure had to carry, how the frame was resolved, and how it reached site.`}
         image={heroImage}
-        breadcrumbs={[
-          { label: 'Home', href: '/' },
-          { label: 'Projects', href: '/projects' },
-          { label: project.name, placeholder: !project.verified },
-        ]}
-        aside={
-          <div>
-            <p className="tech mb-6 text-white/55">Key facts</p>
-
-            <dl className="divide-y divide-white/10 border-y border-white/15">
-              {facts.map((fact) => (
-                <div key={fact.label} className="flex items-baseline justify-between gap-6 py-5">
-                  <dt className="tech shrink-0 text-white/55">{fact.label}</dt>
-                  <dd
-                    className="tabular text-right text-small text-white/85"
-                    data-placeholder={pendingAttr(fact.value)}
-                  >
-                    {fact.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-
-            {!project.verified && (
-              <p className="tech mt-6 text-white/55" data-placeholder="true">
-                [PROJECT RECORD AWAITING CONFIRMATION BY DSI]
-              </p>
-            )}
-          </div>
-        }
       />
 
       {/* ========================================================= SCOPE OF WORK */}

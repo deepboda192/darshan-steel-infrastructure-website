@@ -191,7 +191,6 @@ function IndustriesPage() {
       />
 
       <PageHero
-        index="02"
         eyebrow="Industries"
         title={
           <>
@@ -200,32 +199,7 @@ function IndustriesPage() {
             that keep business moving.
           </>
         }
-        lead={
-          <>
-            {industries.length} sectors, one engineering discipline. What changes between them is
-            the loading, the envelope and the tolerance the frame has to hold — not the way it is
-            designed, fabricated or erected.
-          </>
-        }
         image={siteImages.pageBanners.industries}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Industries' }]}
-        aside={
-          <dl className="divide-y divide-white/10 border-y border-white/15">
-            {[
-              { term: 'Sectors listed', detail: String(industries.length) },
-              { term: 'Scope per sector', detail: 'Design · Fabrication · Delivery · Erection' },
-              {
-                term: 'Based in',
-                detail: `${company.address.state.value}, ${company.address.country.value}`,
-              },
-            ].map((item) => (
-              <div key={item.term} className="py-5">
-                <dt className="tech mb-2.5 text-white/55">{item.term}</dt>
-                <dd className="tabular text-small text-white/85">{item.detail}</dd>
-              </div>
-            ))}
-          </dl>
-        }
       />
 
       {/* ==================================================================== */}

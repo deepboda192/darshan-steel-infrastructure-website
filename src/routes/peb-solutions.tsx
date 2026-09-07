@@ -41,7 +41,6 @@ function PebSolutionsPage() {
       {/* 01 — PAGE HERO                                                      */}
       {/* ================================================================== */}
       <PageHero
-        index="01"
         eyebrow="PEB Solutions"
         title={
           <>
@@ -50,32 +49,7 @@ function PebSolutionsPage() {
             what they carry.
           </>
         }
-        lead="Six building types, one engineering process. Every structure is sized from its own loading, span and operating conditions — then fabricated and erected by the team that designed it."
         image={siteImages.pageBanners.solutions}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'PEB Solutions' }]}
-        aside={
-          <nav aria-label="Solution types" className="border-t border-white/15">
-            <ul>
-              {solutions.map((solution) => (
-                <li key={solution.slug} className="border-b border-white/10">
-                  <a
-                    href={`#${solution.slug}`}
-                    className="group flex items-center gap-4 py-3.5 tech text-white/60 transition-colors hover:text-white"
-                  >
-                    <span className="tabular text-white/55 transition-colors group-hover:text-brand">
-                      {solution.index}
-                    </span>
-                    <span className="flex-1">{solution.title}</span>
-                    <Arrow
-                      size={13}
-                      className="text-white/55 transition-transform duration-[400ms] ease-[var(--ease-expo)] group-hover:translate-x-1 group-hover:text-white/60"
-                    />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        }
       />
 
       {/* ================================================================== */}

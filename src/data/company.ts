@@ -84,14 +84,15 @@ export const company = {
   /* ------------------------------------------------------------------ CONTACT */
   /** Registered head office. */
   address: {
-    line1: real('501, Lotus Arcade, 8-Royal Park'),
-    line2: real('Nr. KKV Circle, 150-ft. Ring Road'),
+    line1: real('810, Aqua Coral'),
+    line2: real('New 150 ft Ring Road, Katariya Chokdi'),
     city: real('Rajkot'),
     state: real('Gujarat'),
-    postalCode: real('360005'),
+    // Not supplied with the new office address; left blank rather than guessed.
+    postalCode: real(''),
     country: real('India'),
     mapsQuery: real(
-      'https://www.google.com/maps/search/?api=1&query=Lotus+Arcade+Royal+Park+KKV+Circle+150+Feet+Ring+Road+Rajkot+360005',
+      'https://www.google.com/maps/search/?api=1&query=Aqua+Coral+New+150+Feet+Ring+Road+Katariya+Chokdi+Rajkot',
     ),
   },
 
@@ -120,7 +121,7 @@ export const company = {
   email: {
     general: real('info@darshansteelinfra.com'),
     enquiries: real('info@darshansteelinfra.com'),
-    careers: todo('[careers@darshansteelinfra.com]'),
+    careers: real('hr@darshansteelinfra.com'),
   },
 
   hours: todo('[MON – SAT · 09:00 – 18:00 IST]'),
@@ -216,9 +217,15 @@ export const company = {
 /** Formatted single-line address, skipping any unfilled parts. */
 export function formattedAddress(): string {
   const a = company.address
-  return [a.line1.value, a.line2.value, a.city.value, `${a.state.value} ${a.postalCode.value}`, a.country.value]
+  return [a.line1.value, a.line2.value, a.city.value, `${a.state.value} ${a.postalCode.value}`.trim(), a.country.value]
     .filter(Boolean)
     .join(', ')
+}
+
+/** Street-level address only — building, road, city — as DSI writes it. */
+export function shortAddress(): string {
+  const a = company.address
+  return [a.line1.value, a.line2.value, a.city.value].filter(Boolean).join(', ')
 }
 
 /** Social links that actually point somewhere. */

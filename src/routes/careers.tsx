@@ -129,7 +129,6 @@ function CareersPage() {
       />
 
       <PageHero
-        index="07"
         eyebrow="Careers"
         title={
           <>
@@ -140,36 +139,7 @@ function CareersPage() {
             a building.
           </>
         }
-        lead="Detailing desk, shop floor, erection site — the same structure passes through all three. We hire people who want their work measured against a drawing and a date."
         image={siteImages.pageBanners.careers}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Careers' }]}
-        aside={
-          <dl className="divide-y divide-white/10 border-y border-white/10">
-            <div className="py-6">
-              <dt className="tech mb-2.5 text-white/55">Apply to</dt>
-              <dd>
-                <a
-                  href={mailto}
-                  className="group flex items-center justify-between gap-6 text-white/85 transition-colors hover:text-white"
-                >
-                  <span className="break-all" data-placeholder={careersEmail.placeholder}>
-                    {careersEmail.value}
-                  </span>
-                  <Arrow
-                    angle={-45}
-                    className="shrink-0 text-white/55 transition-transform duration-[400ms] ease-[var(--ease-expo)] group-hover:-translate-y-1 group-hover:translate-x-1"
-                  />
-                </a>
-              </dd>
-            </div>
-            <div className="py-6">
-              <dt className="tech mb-2.5 text-white/55">Based at</dt>
-              <dd className="text-white/85" data-placeholder={company.address.city.placeholder}>
-                {company.address.city.value}, {company.address.state.value}
-              </dd>
-            </div>
-          </dl>
-        }
       />
 
       {/* ==================================================== 01 — THE WORK */}

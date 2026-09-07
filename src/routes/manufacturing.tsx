@@ -90,7 +90,6 @@ function ManufacturingPage() {
       />
 
       <PageHero
-        index="03"
         eyebrow="Manufacturing"
         title={
           <>
@@ -99,29 +98,7 @@ function ManufacturingPage() {
             becomes structure.
           </>
         }
-        lead="Plate arrives, structure leaves. Cutting, welding, finishing and dispatch run as one controlled sequence, driven by the same model that produced the drawings."
         image={siteImages.pageBanners.manufacturing}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Manufacturing' }]}
-        aside={
-          <dl className="divide-y divide-white/10 border-y border-white/10">
-            <div className="flex items-baseline justify-between gap-6 py-5">
-              <dt className="tech text-white/55">Shop capabilities</dt>
-              <dd className="font-display wdth-wide tabular text-display-4 text-white">
-                {String(shopCapabilities.length).padStart(2, '0')}
-              </dd>
-            </div>
-            <div className="flex items-baseline justify-between gap-6 py-5">
-              <dt className="tech text-white/55">Workflow stages</dt>
-              <dd className="font-display wdth-wide tabular text-display-4 text-white">
-                {String(workflowStages.length).padStart(2, '0')}
-              </dd>
-            </div>
-            <div className="flex items-baseline justify-between gap-6 py-5">
-              <dt className="tech text-white/55">Scope</dt>
-              <dd className="tech-lg text-white">Design to erection</dd>
-            </div>
-          </dl>
-        }
       />
 
       {/* ================================================================== */}

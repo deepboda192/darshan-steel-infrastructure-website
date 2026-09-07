@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { Suspense } from 'react'
 import Link from '@/components/site/NextLink'
 
-import { company, formattedAddress } from '@/data/company'
+import { company, formattedAddress, shortAddress } from '@/data/company'
 import { siteImages } from '@/data/images'
 import { PageHero } from '@/components/layout/PageHero'
 import { Section } from '@/components/site/Section'
@@ -14,18 +14,6 @@ import { Arrow } from '@/components/site/Arrow'
 import { Reveal } from '@/components/animations/Reveal'
 import { ContactForm } from '@/components/site/ContactForm'
 import { JsonLd, breadcrumbSchema } from '@/lib/schema'
-
-/* -------------------------------------------------------------------------- */
-/* Hero aside — what makes a first message useful                              */
-/* -------------------------------------------------------------------------- */
-
-const BRIEF_ITEMS = [
-  'What the building is used for',
-  'Site location and plot constraints',
-  'Approximate span, length and eave height',
-  'Crane, mezzanine or process loads',
-  'Target start and handover dates',
-]
 
 /* -------------------------------------------------------------------------- */
 /* Small building blocks                                                       */
@@ -91,7 +79,6 @@ function ContactPage() {
       />
 
       <PageHero
-        index="08"
         eyebrow="Contact"
         title={
           <>
@@ -100,27 +87,7 @@ function ContactPage() {
             you are building.
           </>
         }
-        lead="Use, span, site and programme are enough to start. Send those and an engineer will come back to you on the structure — not with a brochure."
         image={siteImages.pageBanners.contact}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
-        aside={
-          <div className="border-t border-white/15 pt-8">
-            <TechLabel tone="light" className="mb-6">
-              Useful in a first message
-            </TechLabel>
-            <ul className="flex flex-col gap-4">
-              {BRIEF_ITEMS.map((item) => (
-                <li key={item} className="flex gap-4 text-small text-white/70">
-                  <span
-                    aria-hidden="true"
-                    className="mt-[0.75em] h-px w-4 shrink-0 bg-brand"
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        }
       />
 
       {/* ==================================================================== */}
@@ -181,9 +148,6 @@ function ContactPage() {
                         </a>
                       </li>
                     </ul>
-                    <p className="mt-3.5 text-small text-muted">
-                      If the enquiry is urgent, call rather than write.
-                    </p>
                   </PanelRow>
 
                   <PanelRow label="Email us">
@@ -196,17 +160,6 @@ function ContactPage() {
                         >
                           {company.email.enquiries.value}
                         </a>
-                        <span className="tech mt-1.5 block text-muted/70">Projects</span>
-                      </li>
-                      <li>
-                        <a
-                          href={`mailto:${company.email.general.value}`}
-                          className={panelLink}
-                          data-placeholder={company.email.general.placeholder}
-                        >
-                          {company.email.general.value}
-                        </a>
-                        <span className="tech mt-1.5 block text-muted/70">General</span>
                       </li>
                       <li>
                         <a
@@ -216,7 +169,6 @@ function ContactPage() {
                         >
                           {company.email.careers.value}
                         </a>
-                        <span className="tech mt-1.5 block text-muted/70">Careers</span>
                       </li>
                     </ul>
                   </PanelRow>
@@ -226,14 +178,8 @@ function ContactPage() {
                       className="not-italic leading-relaxed"
                       data-placeholder={company.address.line1.placeholder}
                     >
-                      {formattedAddress()}
+                      {shortAddress()}
                     </address>
-                  </PanelRow>
-
-                  <PanelRow label="Hours">
-                    <span data-placeholder={company.hours.placeholder}>
-                      {company.hours.value}
-                    </span>
                   </PanelRow>
                 </dl>
               </aside>

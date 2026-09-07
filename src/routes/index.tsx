@@ -7,7 +7,7 @@ import { Metrics } from '@/components/sections/Metrics'
 import { WhyDSI } from '@/components/sections/WhyDSI'
 import { Clients } from '@/components/sections/Clients'
 import { ProjectsShowcase } from '@/components/sections/ProjectsShowcase'
-import { Process } from '@/components/sections/Process'
+import { Capabilities } from '@/components/sections/Capabilities'
 import { CTASection } from '@/components/sections/CTASection'
 import { JsonLd, websiteSchema } from '@/lib/schema'
 
@@ -29,7 +29,7 @@ function HomePage() {
       <WhyDSI />
       <Clients />
       <ProjectsShowcase />
-      <Process />
+      <Capabilities />
       <CTASection />
     </>
   )

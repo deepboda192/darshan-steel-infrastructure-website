@@ -16,7 +16,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
 
-import { GridLines } from "@/components/layout/GridLines";
 import { Loader } from "@/components/layout/Loader";
 import { organizationSchema } from "@/lib/schema";
 import { NotFoundPage } from "@/components/site/NotFoundPage";
@@ -94,7 +93,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Inter:wght@400..700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@400..700&display=swap",
       },
     ],
     scripts: [
@@ -131,7 +130,6 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Loader />
-      <GridLines />
       <Navbar />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <main id="main">

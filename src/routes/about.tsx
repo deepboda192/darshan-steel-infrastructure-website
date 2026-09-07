@@ -104,7 +104,6 @@ function AboutPage() {
       />
 
       <PageHero
-        index="06"
         eyebrow="About DSI"
         title={
           <>
@@ -113,30 +112,7 @@ function AboutPage() {
             Driven by engineering.
           </>
         }
-        lead="Darshan Steel Infrastructure engineers, manufactures and erects pre-engineered steel buildings for industrial and commercial use — one drawing set, one line of responsibility, concept to handover."
         image={siteImages.pageBanners.about}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]}
-        aside={
-          <dl className="divide-y divide-white/12 border-y border-white/12">
-            <div className="flex items-baseline justify-between gap-6 py-4">
-              <dt className="tech text-white/55">Discipline</dt>
-              <dd className="text-small text-white/85">PEB &amp; Structural Steel</dd>
-            </div>
-            <div className="flex items-baseline justify-between gap-6 py-4">
-              <dt className="tech text-white/55">Scope</dt>
-              <dd className="text-small text-white/85">Design · Fabrication · Erection</dd>
-            </div>
-            <div className="flex items-baseline justify-between gap-6 py-4">
-              <dt className="tech text-white/55">Base</dt>
-              <dd
-                className="text-small text-white/85"
-                data-placeholder={company.address.city.placeholder}
-              >
-                {company.address.city.value}, {company.address.state.value}
-              </dd>
-            </div>
-          </dl>
-        }
       />
 
       {/* ================================================================== */}

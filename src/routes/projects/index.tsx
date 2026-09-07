@@ -23,12 +23,8 @@ import { cn } from '@/lib/cn'
 /* Derived from the data layer — no counts or claims are written by hand.      */
 /* -------------------------------------------------------------------------- */
 
-const pad = (n: number) => String(n).padStart(2, '0')
-
 /** The delivery scope carried on every record, in order. */
 const scopeStagesOf = (list: Project[]) => Array.from(new Set(list.flatMap((p) => p.scope)))
-
-const buildingTypeCountOf = (list: Project[]) => new Set(list.map((p) => p.buildingType)).size
 
 /** Each record's own cover photograph. See `photo` in data/projects.ts. */
 function coverImage(project: Project): SiteImage {
@@ -152,7 +148,6 @@ const RELATED = [
 function ProjectsPage() {
   const { data: projects } = useSuspenseQuery(projectsQueryOptions)
   const scopeStages = scopeStagesOf(projects)
-  const buildingTypeCount = buildingTypeCountOf(projects)
 
   return (
     <>
@@ -164,40 +159,9 @@ function ProjectsPage() {
       />
 
       <PageHero
-        index="04"
         eyebrow="Projects"
         title={<>Built across industries.</>}
         image={siteImages.pageBanners.projects}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Projects' }]}
-        lead={
-          <p>
-            {buildingTypeCount} building types, one delivery chain. Each record sets out what
-            the structure had to do, what governed its design, and how it was fabricated and
-            erected.
-          </p>
-        }
-        aside={
-          <dl className="grid grid-cols-2 gap-x-8 gap-y-8 border-t border-white/15 pt-8">
-            {/* Counts what this page currently publishes, not how much DSI has
-                built — the record set is still provisional, so it is flagged. */}
-            <div data-placeholder="true">
-              <dt className="tech text-white/55">Records published</dt>
-              <dd className="tabular mt-3 font-display text-display-4 text-white">
-                {pad(projects.length)}
-              </dd>
-            </div>
-            <div>
-              <dt className="tech text-white/55">Building types</dt>
-              <dd className="tabular mt-3 font-display text-display-4 text-white">
-                {pad(buildingTypeCount)}
-              </dd>
-            </div>
-            <div className="col-span-2 border-t border-white/15 pt-7">
-              <dt className="tech text-white/55">Scope on every record</dt>
-              <dd className="mt-3.5 text-small text-white/75">{scopeStages.join(' → ')}</dd>
-            </div>
-          </dl>
-        }
       />
 
       {/* ==================================================== RECORD INDEX == */}

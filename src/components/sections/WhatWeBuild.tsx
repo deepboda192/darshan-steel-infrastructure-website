@@ -28,7 +28,7 @@ export function WhatWeBuild() {
       // h-screen section always hangs 76px past the fold. The visible screen
       // for content is 100vh minus the header; the floor protects the tiles
       // from being crushed on very short windows (the section then scrolls).
-      className="flex flex-col bg-offwhite py-20 lg:h-[calc(100vh-76px)] lg:min-h-[700px] lg:py-16"
+      className="flex flex-col bg-offwhite py-20 lg:min-h-[calc(100vh-76px)] lg:py-24"
       aria-label="What we build"
     >
       <div className="container-site flex w-full flex-1 flex-col lg:min-h-0">
@@ -37,12 +37,12 @@ export function WhatWeBuild() {
           eyebrow="What we build"
           title={
             <>
-              Steel structures built
+              PEB Structures Built
               {' '}<br />
-              around your business.
+              for Every Industry
             </>
           }
-          lead="Every building starts from what happens inside it — the process, the material flow, the equipment. The structure follows."
+          lead="One pre-engineered building system, adapted to the industry it serves — from factories and warehouses to cold storage and commercial spaces, each structure is designed around what happens inside it."
           aside={
             <Button href="/peb-solutions" variant="secondary" arrow>
               All Solutions
@@ -64,7 +64,7 @@ export function WhatWeBuild() {
               <Link
                 key={solution.slug}
                 href={`/peb-solutions#${solution.slug}`}
-                className={cn('group relative block overflow-hidden', 'aspect-[16/10] lg:aspect-auto')}
+                className={cn('group relative block overflow-hidden', 'aspect-[16/10] lg:aspect-auto lg:min-h-[13.5rem]')}
                 aria-label={`${solution.title} — ${solution.short}`}
               >
                 <ImageFrame

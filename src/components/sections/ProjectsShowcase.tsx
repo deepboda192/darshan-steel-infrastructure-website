@@ -222,12 +222,12 @@ export function ProjectsShowcase() {
 
   return (
     <section
-      className="overflow-hidden bg-white py-20 lg:flex lg:h-[calc(100vh-76px)] lg:min-h-[680px] lg:flex-col lg:justify-center lg:py-10"
+      className="overflow-hidden bg-white py-20 lg:flex lg:min-h-[calc(100vh-76px)] lg:flex-col lg:justify-center lg:py-24"
       aria-label="Selected projects"
     >
       <div className="container-site">
         <SectionHeader
-          index="07"
+          index="04"
           eyebrow="Projects"
           title={
             <>
@@ -253,7 +253,7 @@ export function ProjectsShowcase() {
           role="group"
           aria-roledescription="carousel"
           aria-label="Project carousel — drag to rotate"
-          className="relative h-[26rem] w-full cursor-grab select-none touch-pan-y sm:h-[30rem] lg:h-full"
+          className="relative h-[26rem] w-full cursor-grab select-none touch-pan-y sm:h-[30rem] lg:h-[32rem]"
           style={{ perspective: '1150px' }}
         >
           <div

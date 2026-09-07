@@ -15,7 +15,7 @@ import { Button } from '@/components/site/Button'
 export function Manufacturing() {
   return (
     <section
-      className="overflow-hidden bg-offwhite py-20 lg:flex lg:h-[calc(100vh-76px)] lg:min-h-[700px] lg:items-center lg:py-10"
+      className="overflow-hidden bg-offwhite py-20 lg:flex lg:min-h-[calc(100vh-76px)] lg:items-center lg:py-24"
       aria-label="Manufacturing"
     >
       <div className="container-site w-full">

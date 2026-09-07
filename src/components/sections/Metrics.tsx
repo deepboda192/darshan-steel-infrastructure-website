@@ -1,16 +1,19 @@
-import { Building2, CalendarDays, Factory, Layers } from 'lucide-react'
+import { Building2, CalendarDays, Factory, Layers, Lightbulb, TrendingUp } from 'lucide-react'
 import { company } from '@/data/company'
 import { Counter } from '@/components/animations/Counter'
 import { Reveal } from '@/components/animations/Reveal'
-import { TechLabel } from '@/components/site/TechLabel'
+import { SectionHeader } from '@/components/site/SectionHeader'
 import { cn } from '@/lib/cn'
 
 import type { LucideIcon } from 'lucide-react'
 
 /**
- * Scale band — a data plate of one ruled row of four figures. A single row
- * doesn't earn a full viewport, so the band sits on its own padding rather
- * than min-h-screen.
+ * About + Scale — the company introduction, then a data plate of one ruled row
+ * of four figures that stands as its evidence.
+ *
+ * The About half is two columns on desktop: who DSI is on the left (heading
+ * and positioning paragraph), vision and mission on the right. All copy comes
+ * from data/company.ts.
  *
  * The homepage shows a curated four of the full metric set (established,
  * projects, capacity, industries) in that order; the about page still renders
@@ -48,17 +51,53 @@ export function Metrics() {
   )
 
   return (
-    <section className="relative bg-white" aria-label="Scale and experience">
+    <section className="relative bg-white" aria-label="About Darshan Steel Infrastructure">
       <div className="container-site w-full py-20 lg:py-24">
-        <Reveal>
-          <TechLabel index="01" rule>
-            Scale
-          </TechLabel>
-        </Reveal>
+        {/* ------------------------------------------------------ about us */}
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-7">
+            <SectionHeader
+              index="01"
+              eyebrow="About us"
+              title={
+                <>
+                  Darshan Steel
+                  {' '}<br />
+                  Infrastructure
+                </>
+              }
+              lead={company.about}
+            />
+          </div>
+
+          {/* Vision and mission sit as a pair, aligned to the heading's top so
+              the two columns read as one composition. */}
+          <div className="flex flex-col gap-10 lg:col-span-5 lg:pt-[3.75rem]">
+            {[
+              { icon: Lightbulb, label: 'Vision', text: company.vision },
+              { icon: TrendingUp, label: 'Mission', text: company.mission },
+            ].map((item, i) => {
+              const Icon = item.icon
+              return (
+                <Reveal key={item.label} delay={0.1 + 0.08 * i}>
+                  <div className="border-t border-charcoal/10 pt-7">
+                    <div className="flex items-center gap-3">
+                      <Icon aria-hidden="true" className="h-5 w-5 text-brand" strokeWidth={1.5} />
+                      <h3 className="font-display wdth-wide text-display-4 text-charcoal">
+                        {item.label}
+                      </h3>
+                    </div>
+                    <p className="mt-4 text-body text-charcoal/80">{item.text}</p>
+                  </div>
+                </Reveal>
+              )
+            })}
+          </div>
+        </div>
 
         {/* Stacked on phones, paired on tablets, one ruled row of four on
             desktop. Cell 1 opens the row, so 4n+1 drops the divider. */}
-        <dl className="mt-8 grid sm:grid-cols-2 md:mt-10 lg:grid-cols-4 lg:border-b lg:border-charcoal/10">
+        <dl className="mt-16 grid sm:grid-cols-2 md:mt-20 lg:grid-cols-4 lg:border-b lg:border-charcoal/10">
           {metrics.map((metric, i) => {
             // Every current figure is live, so TS narrows this to `false` —
             // the cast keeps the pending path for future unsupplied stats.

@@ -15,7 +15,7 @@ export function Process() {
     <section className="bg-white py-20 lg:py-24" aria-label="How a project runs">
       <div className="container-site">
         <SectionHeader
-          index="10"
+          index="05"
           eyebrow="Process"
           title="How a project runs."
           lead="Seven stages from first conversation to handover, with a single point of responsibility across all of them."

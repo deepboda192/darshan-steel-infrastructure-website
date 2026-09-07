@@ -53,17 +53,20 @@ export const company = {
   summary:
     'Engineering and manufacturing steel structures for modern industry.',
 
-  /** Longer positioning paragraph — About page and Organization schema. */
+  /**
+   * Longer positioning paragraph — homepage About block, About page and
+   * Organization schema. Wording supplied by DSI on 2026-09-07.
+   */
   about:
-    'Darshan Steel Infrastructure is a trusted name in pre-engineered steel buildings and structural steel solutions. We deliver end-to-end services — from consulting and design through fabrication and erection — using the latest technology and advanced manufacturing facilities, so that responsibility for the structure stays with one team from drawing to handover.',
+    'Darshan Steel Infrastructure (DSI) is a leading PEB and structural steel solutions provider in Rajkot, Gujarat. Established in 2018, we offer end-to-end design, engineering, fabrication, and erection for factories, warehouses, industrial sheds, commercial buildings, and infrastructure projects.',
 
-  /** Vision, as published in the company catalogue. */
+  /** Vision, wording supplied by DSI. */
   vision:
-    'To delight clients by building the future together — through precise designing, superior products, and unmatched customer service. We aim to create lasting value by shaping modern infrastructure and strengthening communities.',
+    'To build a stronger, smarter, and more sustainable future through innovative steel infrastructure.',
 
-  /** Mission, as published in the company catalogue. */
+  /** Mission, wording supplied by DSI. */
   mission:
-    'To deliver high-quality steel products and services that exceed expectations. We are committed to sustainable growth, empowering employees, and building long-term partnerships with customers through innovation, reliability, and excellence.',
+    'To deliver reliable PEB and structural steel solutions with precision, quality, and innovation — from engineering to erection.',
 
   /**
    * Fast-track, turnkey construction for non-residential projects.

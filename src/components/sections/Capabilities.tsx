@@ -26,7 +26,7 @@ export function Capabilities() {
               One integrated system.
             </>
           }
-          lead="Eight stages, one team. Nothing is handed to a third party at the point where responsibility usually gets lost."
+          lead="From engineering and detailing to fabrication, quality inspection, dispatch, and site erection, every stage is managed by our integrated team — keeping quality, coordination, and timelines under control."
           aside={
             <Button href="/manufacturing" variant="secondary" arrow>
               View Capabilities

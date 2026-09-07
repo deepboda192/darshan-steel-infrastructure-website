@@ -396,7 +396,7 @@ export const claddingColours: { name: string; hex: string }[] = [
 ]
 
 /* -------------------------------------------------------------------------- */
-/* WHY DSI — catalogue "Why to choose Darshan"                                 */
+/* WHY DSI — wording supplied by DSI (2026-09-07), homepage "Why DSI?" block   */
 /* -------------------------------------------------------------------------- */
 
 export type Differentiator = { index: string; title: string; description: string }
@@ -406,49 +406,49 @@ export const whyChooseDsi: Differentiator[] = [
     index: '01',
     title: 'Single Window Solution',
     description:
-      'Complete pre-engineered building solutions under one roof — design, detailing, fabrication and erection. One integrated team means smooth coordination, timely execution and structures customised to the brief.',
+      'DSI offers the complete process of a high-quality steel structure — consultancy, design, fabrication and erection. This integrated production process brings the advantages of an optimal solution, high-quality products and perfect customer service.',
   },
   {
     index: '02',
-    title: 'Fast Delivery & Erection',
+    title: 'Safe & Cost-Effective Design Solution',
     description:
-      'Simplified designs and streamlined processes move a project quickly from detailing to fabrication and dispatch, so demanding delivery schedules are met without giving up quality or safety.',
+      'Advanced and customised software determines the exact position of each part of the structure, combining structural strength with the optimum use of steel to ensure the safety and longevity of the building.',
   },
   {
     index: '03',
-    title: 'Safe & Cost-Effective Designs',
+    title: 'Standard & High-Quality Material',
     description:
-      'Advanced design software gives precision in every structural component. Optimising steel usage while maximising strength delivers safety, durability and long-term cost savings.',
+      'DSI uses high-grade materials for every building component, with specifications that meet or exceed industry requirements. High-strength steel of 345 MPa yield strength is used for all primary and secondary members; 550 MPa grade material is used for roofing.',
   },
   {
     index: '04',
-    title: 'Advanced Manufacturing Facility',
+    title: 'Future Expansion',
     description:
-      'A modern plant equipped with CNC-based cutting, welding and forming machines. Producing every PEB component in-house keeps quality control tight and the structure consistent.',
+      'Because columns, endwall posts, rafters and other main support members are bolted together, a PEB structure is easy to extend by adding bays. Expansion in width and height is also possible when the building is pre-designed for it.',
   },
   {
     index: '05',
-    title: 'Premium-Grade Materials',
+    title: 'Fast Delivery & Erection',
     description:
-      'Primary and secondary members are made with 345 MPa steel; 550 MPa grade is used for roofing. Only high-strength, industry-standard steel goes into a building.',
+      'Buildings are designed with low engineering complexity, so they can be designed, detailed, fabricated and shipped from our plant in less than 6 weeks. We work closely with our clients to meet their delivery targets.',
   },
   {
     index: '06',
-    title: 'Quality Assurance',
+    title: 'Advanced Manufacturing Facility',
     description:
-      'From raw material to final execution, every stage is tested for strength, finish and performance, so each structure meets the same standard before it is released.',
+      'A state-of-the-art factory manufactures all PEB components under one roof, using advanced CNC-based cutting, welding and forming machines for precise, fast production under strict quality control.',
   },
   {
     index: '07',
-    title: 'Future Expansion',
+    title: 'Quality Assurance',
     description:
-      'The bolted connection system makes expansion straightforward. Additional bays, width or height can be added later without structural rework.',
+      'Strength and appearance are checked at every stage and on every piece, from manufacturing through to execution, to ensure an excellent, highly durable end product.',
   },
   {
     index: '08',
-    title: 'Customer Support & Services',
+    title: 'Perfect Customer Support & Service',
     description:
-      'A dedicated project management team supports the client from concept to completion, covering quality, timely execution and service at every stage.',
+      'The project management board attends regularly to serve customers from the start of a project to its final stage, so clients can be sure of quality, on-schedule progress and guaranteed service.',
   },
 ]
 

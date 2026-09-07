@@ -4,14 +4,9 @@ import { projectsQueryOptions } from '@/lib/projects-query'
 
 import { Hero } from '@/components/sections/Hero'
 import { Metrics } from '@/components/sections/Metrics'
-import { WhatWeBuild } from '@/components/sections/WhatWeBuild'
-import { WhyPEB } from '@/components/sections/WhyPEB'
-import { Capabilities } from '@/components/sections/Capabilities'
-import { Manufacturing } from '@/components/sections/Manufacturing'
-import { Engineering } from '@/components/sections/Engineering'
+import { WhyDSI } from '@/components/sections/WhyDSI'
+import { Clients } from '@/components/sections/Clients'
 import { ProjectsShowcase } from '@/components/sections/ProjectsShowcase'
-import { Industries } from '@/components/sections/Industries'
-import { Quality } from '@/components/sections/Quality'
 import { Process } from '@/components/sections/Process'
 import { CTASection } from '@/components/sections/CTASection'
 import { JsonLd, websiteSchema } from '@/lib/schema'
@@ -31,14 +26,9 @@ function HomePage() {
 
       <Hero />
       <Metrics />
-      <WhatWeBuild />
-      <WhyPEB />
-      <Capabilities />
-      <Manufacturing />
-      <Engineering />
+      <WhyDSI />
+      <Clients />
       <ProjectsShowcase />
-      <Industries />
-      <Quality />
       <Process />
       <CTASection />
     </>

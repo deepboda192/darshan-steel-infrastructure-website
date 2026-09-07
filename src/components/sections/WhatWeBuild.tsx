@@ -28,7 +28,7 @@ export function WhatWeBuild() {
       // h-screen section always hangs 76px past the fold. The visible screen
       // for content is 100vh minus the header; the floor protects the tiles
       // from being crushed on very short windows (the section then scrolls).
-      className="flex flex-col bg-offwhite py-16 md:py-20 lg:h-[calc(100vh-76px)] lg:min-h-[700px] lg:py-16"
+      className="flex flex-col bg-offwhite py-20 lg:h-[calc(100vh-76px)] lg:min-h-[700px] lg:py-16"
       aria-label="What we build"
     >
       <div className="container-site flex w-full flex-1 flex-col lg:min-h-0">

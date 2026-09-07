@@ -221,7 +221,7 @@ function MomentDiagram() {
 
 export function WhyPEB() {
   return (
-    <section className="bg-white py-20 lg:pb-15 lg:pt-24" aria-label="Why pre-engineered buildings">
+    <section className="bg-white py-20 lg:py-24" aria-label="Why pre-engineered buildings">
       <div className="container-site">
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-20">
           {/* ---------------- argument ---------------- */}
@@ -255,7 +255,7 @@ export function WhyPEB() {
             Ten cards sit as two rules-topped rows of five on desktop. The
             title drops to body size here because a display-4 heading in a
             fifth-width column wraps to four ragged lines. */}
-        <div className="mt-20 grid gap-x-8 sm:grid-cols-2 md:mt-24 lg:grid-cols-5">
+        <div className="mt-16 grid gap-x-8 sm:grid-cols-2 md:mt-20 lg:grid-cols-5">
           {pebAdvantages.map((advantage, i) => (
             <Reveal key={advantage.index} delay={0.04 * i} className="h-full">
               <article className="flex h-full flex-col border-t border-charcoal/15 pb-9 pt-6">

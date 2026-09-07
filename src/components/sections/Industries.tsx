@@ -32,7 +32,7 @@ export function Industries() {
               All Industries
             </Button>
           }
-          className="mb-14 md:mb-16"
+          className="mb-12 md:mb-16"
         />
 
         <div className="mb-8 flex items-center gap-3 tech text-muted">

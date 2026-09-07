@@ -51,7 +51,7 @@ export function Quality() {
         </div>
 
         {/* ---------------- hold points ---------------- */}
-        <div className="mt-20 grid border-t border-white/12 md:mt-24 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid border-t border-white/12 md:mt-20 md:grid-cols-2 lg:grid-cols-3">
           {qualityChecks.map((check, i) => (
             <Reveal key={check.index} delay={0.05 * i}>
               <article className="h-full border-b border-white/12 py-9 pr-8 md:pr-12 lg:[&:nth-child(3n+2)]:pl-10 lg:[&:nth-child(3n+3)]:pl-10 lg:[&:nth-child(3n+2)]:border-l lg:[&:nth-child(3n+3)]:border-l lg:[&:nth-child(3n+2)]:border-l-white/12 lg:[&:nth-child(3n+3)]:border-l-white/12">
@@ -67,7 +67,7 @@ export function Quality() {
         </div>
 
         <Reveal delay={0.12}>
-          <div className="mt-14">
+          <div className="mt-12">
             <Button href="/quality-engineering" variant="secondary" tone="dark" arrow>
               Quality & Engineering
             </Button>

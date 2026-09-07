@@ -49,7 +49,7 @@ export function Metrics() {
 
   return (
     <section className="relative bg-white" aria-label="Scale and experience">
-      <div className="container-site w-full py-20 lg:pb-15 lg:pt-24">
+      <div className="container-site w-full py-20 lg:py-24">
         <Reveal>
           <TechLabel index="01" rule>
             Scale

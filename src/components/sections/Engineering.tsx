@@ -53,7 +53,7 @@ export function Engineering() {
             </Reveal>
 
             <Reveal delay={0.3}>
-              <dl className="mt-12 border-t border-white/12">
+              <dl className="mt-10 border-t border-white/12">
                 {engineeringCapabilities.map((capability) => (
                   <div
                     key={capability.index}
@@ -70,7 +70,7 @@ export function Engineering() {
             </Reveal>
 
             <Reveal delay={0.36}>
-              <div className="mt-11">
+              <div className="mt-10">
                 <Button href="/quality-engineering" variant="secondary" tone="dark" arrow>
                   Quality & Engineering
                 </Button>

@@ -42,7 +42,7 @@ export function Hero() {
       />
 
       {/* ---------------- content ---------------- */}
-      <div className="container-site relative z-10 pb-16 pt-32 md:pb-24 lg:pb-28">
+      <div className="container-site relative z-10 pb-16 pt-32 md:pb-20 lg:pb-24">
         {/* disciplines */}
         <Reveal delay={0.15}>
           <ul className="mb-8 flex flex-wrap items-center gap-x-7 gap-y-3 tech text-white/55">
@@ -66,7 +66,7 @@ export function Hero() {
           </Reveal>
         </h1>
 
-        <div className="mt-9 grid gap-8 lg:grid-cols-12 lg:items-end">
+        <div className="mt-10 grid gap-8 lg:grid-cols-12 lg:items-end">
           <Reveal delay={0.5} className="lg:col-span-6">
             <p className="measure text-lead text-white/70">
               Darshan Steel Infrastructure delivers complete Pre-Engineered Building

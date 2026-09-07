@@ -20,7 +20,7 @@ export function Process() {
           title="How a project runs."
           lead="Seven stages from first conversation to handover, with a single point of responsibility across all of them."
           size="md"
-          className="mb-16 md:mb-20"
+          className="mb-12 md:mb-16"
         />
 
         <ol className="relative grid grid-cols-2 gap-y-10 border-t border-charcoal/15 pt-10 sm:grid-cols-4 lg:grid-cols-7 lg:gap-y-0">

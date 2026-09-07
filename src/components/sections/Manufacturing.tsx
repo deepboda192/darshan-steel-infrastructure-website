@@ -15,7 +15,7 @@ import { Button } from '@/components/site/Button'
 export function Manufacturing() {
   return (
     <section
-      className="overflow-hidden bg-offwhite py-24 md:py-32 lg:flex lg:h-[calc(100vh-76px)] lg:min-h-[700px] lg:items-center lg:py-10"
+      className="overflow-hidden bg-offwhite py-20 lg:flex lg:h-[calc(100vh-76px)] lg:min-h-[700px] lg:items-center lg:py-10"
       aria-label="Manufacturing"
     >
       <div className="container-site w-full">
@@ -73,7 +73,7 @@ export function Manufacturing() {
             </Reveal>
 
             <Reveal delay={0.3}>
-              <ul className="mt-11 grid grid-cols-1 gap-x-8 border-t border-charcoal/10 sm:grid-cols-2 lg:mt-8">
+              <ul className="mt-10 grid grid-cols-1 gap-x-8 border-t border-charcoal/10 sm:grid-cols-2 lg:mt-8">
                 {shopCapabilities.map((capability) => (
                   <li
                     key={capability.index}
@@ -87,7 +87,7 @@ export function Manufacturing() {
             </Reveal>
 
             <Reveal delay={0.36}>
-              <div className="mt-11 lg:mt-6">
+              <div className="mt-10 lg:mt-6">
                 <Button href="/manufacturing" arrow>
                   Inside the Facility
                 </Button>

@@ -222,7 +222,7 @@ export function ProjectsShowcase() {
 
   return (
     <section
-      className="overflow-hidden bg-white py-24 md:py-32 lg:flex lg:h-[calc(100vh-76px)] lg:min-h-[680px] lg:flex-col lg:justify-center lg:py-10"
+      className="overflow-hidden bg-white py-20 lg:flex lg:h-[calc(100vh-76px)] lg:min-h-[680px] lg:flex-col lg:justify-center lg:py-10"
       aria-label="Selected projects"
     >
       <div className="container-site">

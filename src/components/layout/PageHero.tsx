@@ -67,10 +67,10 @@ export function PageHero({
         className="blueprint pointer-events-none absolute inset-0 text-white opacity-[0.05]"
       />
 
-      <div className="container-site relative z-10 pb-16 pt-[168px] md:pb-24 md:pt-[220px]">
+      <div className="container-site relative z-10 pb-16 pt-[150px] md:pb-20 md:pt-[184px]">
         {breadcrumbs && breadcrumbs.length > 0 && (
           <Reveal>
-            <nav aria-label="Breadcrumb" className="mb-9">
+            <nav aria-label="Breadcrumb" className="mb-8">
               <ol className="flex flex-wrap items-center gap-2.5 tech text-white/55">
                 {breadcrumbs.map((crumb, i) => (
                   <li key={crumb.label} className="flex items-center gap-2.5">

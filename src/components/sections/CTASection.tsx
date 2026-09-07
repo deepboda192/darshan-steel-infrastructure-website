@@ -44,7 +44,7 @@ export function CTASection({
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <Reveal>
-              <TechLabel rule tone="light" className="mb-8">
+              <TechLabel rule tone="light" className="mb-7">
                 Start a conversation
               </TechLabel>
             </Reveal>
@@ -60,7 +60,7 @@ export function CTASection({
             </Reveal>
 
             <Reveal delay={0.26}>
-              <div className="mt-11 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
                 <Button href={primaryHref} size="lg" arrow>
                   {primaryLabel}
                 </Button>

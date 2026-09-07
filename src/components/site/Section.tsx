@@ -21,11 +21,17 @@ const tones: Record<Tone, string> = {
   ink: 'bg-ink text-white on-dark',
 }
 
+/**
+ * One spacing scale for the whole site. `lg` is the standard band and matches
+ * the homepage sections exactly (py-20 → lg:py-24); `md` and `sm` step down
+ * from it for secondary and utility bands. Values are deliberately tighter
+ * than they once were — the page should feel composed, not inflated.
+ */
 const spaces = {
   none: '',
-  sm: 'py-16 md:py-20',
-  md: 'py-20 md:py-28 lg:py-32',
-  lg: 'py-24 md:py-36 lg:py-44',
+  sm: 'py-12 md:py-16',
+  md: 'py-16 md:py-20',
+  lg: 'py-20 lg:py-24',
 }
 
 /**

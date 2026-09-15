@@ -29,9 +29,10 @@ import type { LucideIcon } from 'lucide-react'
  * foot of the band says so. Both go live by filling `value` in
  * data/company.ts; the pending state and the note retire themselves.
  *
- * Layout note: the divider classes live on the <Reveal>, because the Reveal is
- * the grid child. Put on the inner div, `nth-child` arithmetic sees only that
- * div inside its own wrapper and every divider silently disappears.
+ * Each figure sits in its own fully bordered card (icon chip, numeral, label).
+ * The per-metric `note` strings are deliberately not rendered here — the label
+ * alone carries the meaning; the about page still shows the full annotated
+ * list.
  */
 // The four figures the homepage leads with, in band order.
 const HOME_METRIC_KEYS = ['years', 'projects', 'capacity', 'industries']
@@ -95,37 +96,37 @@ export function Metrics() {
           </div>
         </div>
 
-        {/* Stacked on phones, paired on tablets, one ruled row of four on
-            desktop. Cell 1 opens the row, so 4n+1 drops the divider. */}
-        <dl className="mt-16 grid sm:grid-cols-2 md:mt-20 lg:grid-cols-4 lg:border-b lg:border-charcoal/10">
+        {/* One joined plate: a single bordered rectangle whose cells share
+            1px hairlines (the `gap-px` over a tinted ground technique, as on
+            the client logo wall) — no gaps between cells. Stacked on phones,
+            paired on tablets, one row of four on desktop. */}
+        <dl className="mt-16 grid gap-px border border-charcoal/10 bg-charcoal/10 sm:grid-cols-2 md:mt-20 lg:grid-cols-4">
           {metrics.map((metric, i) => {
             // Every current figure is live, so TS narrows this to `false` —
             // the cast keeps the pending path for future unsupplied stats.
             const pending = (metric.value as number) === 0
             const Icon = METRIC_ICONS[metric.key]
             return (
-              <Reveal
-                key={metric.key}
-                delay={0.05 * (i % 4)}
-                className={cn(
-                  'border-b border-charcoal/10 py-6 sm:py-8 lg:border-b-0 lg:border-charcoal/10 lg:py-9 lg:pl-8',
-                  'lg:border-l lg:[&:nth-child(4n+1)]:border-l-0 lg:[&:nth-child(4n+1)]:pl-0',
-                  'lg:[&:nth-child(n+5)]:border-t',
-                )}
-              >
-                <div className="flex h-full flex-col" data-placeholder={metric.placeholder}>
-                  {/* A quiet pictogram, not a badge — thin stroke, brand blue,
-                      sitting on the cell's own baseline grid above the numeral. */}
+              <Reveal key={metric.key} delay={0.05 * (i % 4)} className="h-full bg-white">
+                <div
+                  className="flex h-full flex-col bg-white p-6 lg:p-7"
+                  data-placeholder={metric.placeholder}
+                >
+                  {/* The pictogram sits in a soft brand-tint chip so the card
+                      reads at a glance before the numeral is parsed. */}
                   {Icon && (
-                    <span aria-hidden="true" className="order-0 mb-5 block">
-                      <Icon className="h-6 w-6 text-brand" strokeWidth={1.5} />
+                    <span
+                      aria-hidden="true"
+                      className="order-0 mb-6 flex h-11 w-11 items-center justify-center rounded-lg bg-brand-tint"
+                    >
+                      <Icon className="h-5 w-5 text-brand" strokeWidth={1.5} />
                     </span>
                   )}
                   <dd className="order-1 m-0">
                     <span className="flex flex-wrap items-baseline gap-x-2">
                       <span
                         className={cn(
-                          'font-display wdth-wide tabular text-display-3 leading-[0.9]',
+                          'font-display wdth-wide tabular text-display-3 leading-none',
                           pending ? 'text-steel' : 'text-charcoal',
                         )}
                       >
@@ -155,11 +156,10 @@ export function Metrics() {
                     </span>
                   </dd>
 
-                  <dt className="order-2 mt-5">
+                  <dt className="order-2 mt-3">
                     <span className="block text-small font-medium text-charcoal">
                       {metric.label}
                     </span>
-                    <span className="tech mt-2.5 block text-muted">{metric.note}</span>
                   </dt>
                 </div>
               </Reveal>

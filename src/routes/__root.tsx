@@ -92,8 +92,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
+        // One variable file serves both site faces: Inter for text, and
+        // Inter Display for headings via the optical-size axis (opsz 32),
+        // pinned on h1–h4 in styles.css.
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@400..700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap",
       },
     ],
     scripts: [

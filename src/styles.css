@@ -43,13 +43,18 @@
   --color-current: currentColor;
 
   /* --- typography -------------------------------------------------------- */
-  /* The three families are loaded by the Google Fonts <link> in routes/__root.tsx.
-     Do NOT reintroduce a var(--font-archivo) style indirection here: that is a
-     next/font idiom and nothing defines those properties in this stack. A var()
+  /* Two faces only, both loaded by the ONE Google Fonts <link> in
+     routes/__root.tsx: Inter (variable, with the optical-size axis) for
+     everything, and Inter Display for headings. Google Fonts ships no
+     separate "Inter Display" family — Inter Display IS Inter at optical
+     size 32, so headings pin `font-variation-settings: 'opsz' 32` in the
+     base layer below. The literal 'Inter Display' name leads the display
+     stack only so a locally-installed copy is used when present.
+     Do NOT reintroduce a var(--font-archivo) style indirection here: a var()
      pointing at an undefined property with no fallback makes the WHOLE token
      guaranteed-invalid, so every rule using it resolves to unset and the site
      silently falls back to the UA default face. */
-  --font-display: 'Geist', 'Geist Placeholder', sans-serif;
+  --font-display: 'Inter Display', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   /* The technical-annotation voice (`tech`, `font-mono`) is set in the body
      face by request — one family for all small text, no monospace loaded. */
@@ -67,55 +72,58 @@
      SectionHeader picks the display step from its `as` prop; hand-rolled
      headings follow the same map.
 
-     Hero tops out at ~132px, page heads at ~80px, section heads at ~60px.
-     The display-1 steps are set so that "PRE-ENGINEERED" — the widest single
-     word in the hero — stays on one line at every width. It is 35% wider than
-     the "ENGINEERED" this scale was originally tuned for, which is why the vw
-     step and the floor are lower than they look like they should be.
-     Re-measure both if that headline ever changes: the word has a hyphen, so
-     it does not clip when too wide, it breaks — leaving "PRE-" dangling on a
-     line of its own. */
-  --text-display-1: clamp(1.7rem, 7.9vw, 7rem);
-  --text-display-1--line-height: 0.9;
-  --text-display-1--letter-spacing: -0.029em;
+     Deliberately restrained: the hero tops out at ~68px, page heads at ~52px,
+     section heads at ~38px, and body sits on the 16px accessibility baseline.
+     Each step is roughly 1.25× the one below it, so the hierarchy reads
+     through weight and space rather than sheer size.
 
-  --text-display-2: clamp(2.35rem, 5.9vw, 5rem);
-  --text-display-2--line-height: 0.94;
-  --text-display-2--letter-spacing: -0.029em;
+     The display-1 floor keeps "PRE-ENGINEERED" — the widest single word in
+     the hero — on one line down to a 320px viewport (the word measures
+     ≈8.1em in Inter Display at -0.02em tracking). Re-measure if that
+     headline ever changes: the word has a hyphen, so when too wide it does
+     not clip, it breaks — leaving "PRE-" dangling on a line of its own. */
+  --text-display-1: clamp(2.125rem, 5vw, 4.25rem);
+  --text-display-1--line-height: 1.05;
+  --text-display-1--letter-spacing: -0.02em;
 
-  /* Used for section headings that sit inside a split layout, where an
-     80px display-2 line would be wider than its column. */
-  --text-display-3: clamp(1.85rem, 4.1vw, 3.75rem);
-  --text-display-3--line-height: 1.02;
-  --text-display-3--letter-spacing: -0.029em;
+  --text-display-2: clamp(2rem, 3.6vw, 3.25rem);
+  --text-display-2--line-height: 1.08;
+  --text-display-2--letter-spacing: -0.02em;
+
+  /* Used for section headings that sit inside a split layout, where a
+     52px display-2 line would be wider than its column. */
+  --text-display-3: clamp(1.625rem, 2.5vw, 2.375rem);
+  --text-display-3--line-height: 1.15;
+  --text-display-3--letter-spacing: -0.015em;
 
   /* The single h3 / card-title size. Tuned to survive the densest grid on
      the site (the seven-column process strip and the image tiles) while still
      reading as a heading in a split row. */
-  --text-display-4: clamp(1.25rem, 1.6vw, 1.5rem);
-  --text-display-4--line-height: 1.2;
-  --text-display-4--letter-spacing: -0.029em;
+  --text-display-4: clamp(1.125rem, 1.35vw, 1.3125rem);
+  --text-display-4--line-height: 1.35;
+  --text-display-4--letter-spacing: -0.01em;
 
-  --text-lead: clamp(1.0625rem, 1.35vw, 1.375rem);
-  --text-lead--line-height: 1.55;
+  --text-lead: clamp(1rem, 1.15vw, 1.125rem);
+  --text-lead--line-height: 1.6;
 
-  --text-body: 1.0625rem;
-  --text-body--line-height: 1.68;
+  --text-body: 1rem;
+  --text-body--line-height: 1.7;
 
-  --text-small: 0.9375rem;
+  --text-small: 0.875rem;
   --text-small--line-height: 1.6;
 
   --text-caption: 0.8125rem;
   --text-caption--line-height: 1.5;
 
-  /* Technical annotation type — uppercase, wide tracking, mono. */
+  /* Technical annotation type — uppercase micro-labels. Small caps need a
+     little positive tracking to stay legible at this size. */
   --text-tech: 0.6875rem;
   --text-tech--line-height: 1;
-  --text-tech--letter-spacing: 0;
+  --text-tech--letter-spacing: 0.07em;
 
   --text-tech-lg: 0.8125rem;
   --text-tech-lg--line-height: 1.1;
-  --text-tech-lg--letter-spacing: 0;
+  --text-tech-lg--letter-spacing: 0.04em;
 
   /* --- motion ------------------------------------------------------------ */
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -151,7 +159,7 @@
     color: var(--color-charcoal);
     font-family: var(--font-sans);
     font-size: var(--text-body);
-    line-height: 1.68;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
@@ -164,7 +172,12 @@
   h4 {
     font-family: var(--font-display);
     font-weight: 600;
-    letter-spacing: -0.029em;
+    letter-spacing: -0.01em;
+    /* Inter Display = Inter at optical size 32. Pinning the axis (rather
+       than leaving `auto`) keeps every heading on the Display cut, card
+       titles at 18px included. */
+    font-optical-sizing: auto;
+    font-variation-settings: 'opsz' 32;
     text-wrap: balance;
   }
 
@@ -223,7 +236,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-tech);
   line-height: 1;
-  letter-spacing: 0;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   font-weight: 500;
 }
@@ -232,18 +245,22 @@
   font-family: var(--font-mono);
   font-size: var(--text-tech-lg);
   line-height: 1.1;
-  letter-spacing: 0;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   font-weight: 500;
 }
 
-/** Slightly expanded display width — used on the largest headlines. */
+/** Legacy width utilities, kept because nearly every heading carries one.
+    Inter has no width axis — and `font-variation-settings` does not merge,
+    so a 'wdth' value here would silently REPLACE the base layer's
+    'opsz' 32 and knock those headings off the Inter Display cut. Both
+    therefore restate the optical-size pin instead. */
 @utility wdth-wide {
-  font-variation-settings: 'wdth' 108;
+  font-variation-settings: 'opsz' 32;
 }
 
 @utility wdth-normal {
-  font-variation-settings: 'wdth' 100;
+  font-variation-settings: 'opsz' 32;
 }
 
 /** Blueprint grid. Inherits colour from `color`, so it works light or dark. */

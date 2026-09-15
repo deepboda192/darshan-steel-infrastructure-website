@@ -5,12 +5,13 @@ import { Button } from '@/components/site/Button'
 import { Reveal } from '@/components/animations/Reveal'
 
 /**
- * The integrated workflow, shown whole.
+ * The integrated workflow as a numbered plate.
  *
- * Eight stages on a single hairline — number, node and name, all visible at
- * once. No pinning, no scroll stepping, no per-stage detail panel: the rail
- * states the sequence and the capability pages carry the depth. The only
- * motion is the site's standard entrance reveal, staggered across the rail.
+ * Eight stages in one joined hairline grid — two rows of four on desktop,
+ * matching the metrics plate above it. Each cell carries its step number in
+ * a brand chip, the stage name and the stage's one-line summary; the
+ * numbering alone carries the sequence. The capability pages still carry
+ * the depth.
  */
 export function Capabilities() {
   return (
@@ -35,36 +36,27 @@ export function Capabilities() {
           className="mb-12 md:mb-16"
         />
 
-        {/* The rail scrolls sideways on narrow screens rather than wrapping —
-            eight stages read as one line or not at all. */}
-        <div className="-mx-gutter overflow-x-auto px-gutter pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="relative min-w-[860px] lg:min-w-0">
-            {/* the hairline through every node */}
-            <div aria-hidden="true" className="absolute inset-x-0 top-[62px] h-px bg-charcoal/15" />
+        {/* One bordered rectangle whose cells share 1px hairlines — the same
+            gap-px plate as the metrics band, so the two read as one system. */}
+        <ol className="grid gap-px border border-charcoal/10 bg-charcoal/10 sm:grid-cols-2 lg:grid-cols-4">
+          {workflowStages.map((stage, i) => (
+            <Reveal
+              as="li"
+              key={stage.index}
+              delay={0.05 * (i % 4)}
+              className="h-full bg-white"
+            >
+              <div className="flex h-full flex-col bg-white p-6 lg:p-7">
+                <span className="tabular flex h-11 w-11 items-center justify-center rounded-lg bg-brand-tint text-small font-semibold text-brand">
+                  {stage.index}
+                </span>
 
-            <ol className="relative grid grid-cols-8 gap-3">
-              {workflowStages.map((stage, i) => (
-                <li key={stage.index}>
-                  <Reveal delay={0.05 * i} className="pr-2">
-                    <span className="font-display wdth-wide block text-display-4 text-charcoal tabular">
-                      {stage.index}
-                    </span>
-
-                    {/* node on the rail */}
-                    <span
-                      aria-hidden="true"
-                      className="mt-[18px] block h-2.5 w-2.5 rounded-full border-2 border-brand bg-white"
-                    />
-
-                    <span className="mt-6 block text-small font-medium leading-snug text-charcoal/70">
-                      {stage.title}
-                    </span>
-                  </Reveal>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
+                <h3 className="mt-6 font-display text-display-4 text-charcoal">{stage.title}</h3>
+                <p className="mt-2 text-small text-muted">{stage.short}</p>
+              </div>
+            </Reveal>
+          ))}
+        </ol>
       </div>
     </section>
   )

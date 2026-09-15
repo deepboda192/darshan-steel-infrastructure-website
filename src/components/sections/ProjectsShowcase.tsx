@@ -10,13 +10,13 @@ import { Reveal } from '@/components/animations/Reveal'
 import { cn } from '@/lib/cn'
 
 /**
- * Selected projects — a 3D loop carousel, viewed from INSIDE the cylinder.
+ * Selected projects — a 3D loop carousel, viewed from OUTSIDE the cylinder.
  *
- * Cards are placed on the far wall of a ring around the camera: each rotated
- * i·(360/N)° and pushed AWAY by the radius, so the card ahead is the farthest
- * and smallest, and cards toward the screen edges swing nearer, larger and
- * angled inward — the concave band of the reference. Cards that pass beside
- * and behind the camera face away and are culled by backface-visibility.
+ * Cards stand on the near wall of a ring in front of the camera: each rotated
+ * i·(360/N)° and pushed OUT by the radius, with the whole ring set back by
+ * that same radius — so the card in the middle sits closest and largest, and
+ * cards toward both screen edges curve away, smaller as they go. Cards on
+ * the far side of the ring face away and are culled by backface-visibility.
  * The list is repeated until the ring holds ~18 cards, keeping the arc
  * shallow and dense; the loop shows repeats by design. The ring turns slowly
  * on its own, pauses under the pointer, can be dragged, and steps one card
@@ -59,9 +59,9 @@ export function ProjectsShowcase() {
   const [frontIndex, setFrontIndex] = useState(0)
   // Radius from the chord between neighbours (card width + breathing room).
   const radius = Math.round((cardW + 36) / 2 / Math.sin(Math.PI / count))
-  // Camera sits inside the ring, pushed toward its far wall: ahead is far and
-  // small, the edges of the band come close — the concave look.
-  const ringZ = Math.round(radius * 0.52)
+  // The ring is set back by its own radius, so the front card's plane lands
+  // at z≈0 — closest and largest — and the sides curve away and shrink.
+  const ringZ = -radius
   const cardH = Math.round(cardW * 1.08)
 
   /* ----------------------------------------------------------- measurement */
@@ -69,11 +69,12 @@ export function ProjectsShowcase() {
     const stage = stageRef.current
     if (!stage) return
     const measure = () => {
-      const byWidth = stage.clientWidth * 0.26
-      // cardH = 1.08·cardW must sit inside the stage with headroom for the
-      // perspective-enlarged edge cards, so height also bounds the card.
-      const byHeight = (stage.clientHeight * 0.78) / 1.08
-      setCardW(Math.round(Math.min(380, Math.max(200, byWidth), Math.max(200, byHeight))))
+      const byWidth = stage.clientWidth * 0.3
+      // cardH = 1.08·cardW must sit inside the stage. The front card is the
+      // largest thing on stage (the sides only ever shrink), so it can take
+      // most of the height.
+      const byHeight = (stage.clientHeight * 0.92) / 1.08
+      setCardW(Math.round(Math.min(400, Math.max(200, byWidth), Math.max(200, byHeight))))
     }
     const ro = new ResizeObserver(measure)
     ro.observe(stage)
@@ -275,7 +276,7 @@ export function ProjectsShowcase() {
                   height: cardH,
                   left: -cardW / 2,
                   top: -cardH / 2,
-                  transform: `rotateY(${i * step}deg) translateZ(${-radius}px)`,
+                  transform: `rotateY(${i * step}deg) translateZ(${radius}px)`,
                   backfaceVisibility: 'hidden',
                 }}
               >

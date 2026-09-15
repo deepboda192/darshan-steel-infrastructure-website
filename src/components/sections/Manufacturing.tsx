@@ -65,7 +65,7 @@ export function Manufacturing() {
             </h2>
 
             <Reveal delay={0.22}>
-              <p className="measure mt-8 text-lead text-muted lg:mt-5">
+              <p className="measure mt-7 text-lead text-muted lg:mt-5">
                 Precision begins long before the steel reaches the site. Members are cut, welded,
                 drilled and finished in the shop, then inspected and marked against the erection
                 drawings — so assembly on site is bolting, not fitting.

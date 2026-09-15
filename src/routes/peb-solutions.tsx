@@ -199,7 +199,7 @@ function PebSolutionsPage() {
                   </Reveal>
 
                   <Reveal delay={0.14}>
-                    <p className="mt-8 text-lead text-charcoal">{solution.short}</p>
+                    <p className="measure mt-7 text-lead text-charcoal">{solution.short}</p>
                     <p className="measure mt-5 text-body body-muted">{solution.description}</p>
                   </Reveal>
 
@@ -313,7 +313,7 @@ function PebSolutionsPage() {
                 <h3 className="font-display wdth-wide text-display-4 uppercase text-white">
                   {stage.title}
                 </h3>
-                <p className="mt-4 text-small">{stage.description}</p>
+                <p className="mt-3 text-body">{stage.description}</p>
               </Reveal>
             ))}
           </ol>
@@ -334,7 +334,6 @@ function PebSolutionsPage() {
           <SectionHeader
             index="04"
             eyebrow="Framing systems"
-            size="md"
             title={
               <>
                 Eight primary
@@ -357,7 +356,7 @@ function PebSolutionsPage() {
                   <span className="tech tabular text-brand">{system.code}</span>
                   <span aria-hidden="true" className="h-px flex-1 bg-charcoal/12" />
                 </div>
-                <h3 className="mt-4 text-body font-medium text-charcoal">{system.name}</h3>
+                <h3 className="mt-4 font-display wdth-wide text-display-4 text-charcoal">{system.name}</h3>
                 <p className="tech mt-2.5 text-muted">{system.width}</p>
               </Reveal>
             ))}
@@ -374,7 +373,6 @@ function PebSolutionsPage() {
               <SectionHeader
                 index="05"
                 eyebrow="Applications"
-                size="md"
                 title={
                   <>
                     Where a PEB
@@ -405,7 +403,6 @@ function PebSolutionsPage() {
               <SectionHeader
                 index="06"
                 eyebrow="Industries we serve"
-                size="md"
                 title={
                   <>
                     Fourteen sectors,

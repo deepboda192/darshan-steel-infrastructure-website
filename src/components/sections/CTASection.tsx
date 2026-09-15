@@ -49,14 +49,14 @@ export function CTASection({
               </TechLabel>
             </Reveal>
 
-            <h2 className="font-display wdth-wide text-display-2 uppercase text-white">
+            <h2 className="font-display wdth-wide text-display-3 uppercase text-white">
               <Reveal variant="line" delay={0.08}>
                 {title}
               </Reveal>
             </h2>
 
             <Reveal delay={0.18}>
-              <p className="measure mt-8 text-lead text-white/65">{lead}</p>
+              <p className="measure mt-7 text-lead text-white/65">{lead}</p>
             </Reveal>
 
             <Reveal delay={0.26}>

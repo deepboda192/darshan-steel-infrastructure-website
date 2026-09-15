@@ -174,7 +174,7 @@ function FieldShell({ id, label, required, error, hint, meta, children, classNam
       {children}
 
       {hint && !error && (
-        <p id={`${id}-hint`} className="mt-2 text-[0.8125rem] leading-relaxed text-muted">
+        <p id={`${id}-hint`} className="mt-2 text-caption leading-relaxed text-muted">
           {hint}
         </p>
       )}
@@ -182,7 +182,7 @@ function FieldShell({ id, label, required, error, hint, meta, children, classNam
       {error && (
         <p
           id={`${id}-error`}
-          className="mt-2 flex items-start gap-1.5 text-[0.8125rem] leading-relaxed text-error"
+          className="mt-2 flex items-start gap-1.5 text-caption leading-relaxed text-error"
         >
           <AlertCircle aria-hidden="true" className="mt-[3px] h-3.5 w-3.5 shrink-0" strokeWidth={2} />
           <span>{error}</span>
@@ -400,7 +400,7 @@ export function ContactForm() {
         <h3 id="enq-subject" className="font-display wdth-wide text-display-4 text-charcoal">
           {subject}
         </h3>
-        <p className="mt-2 text-small text-muted">
+        <p className="mt-3 text-body text-muted">
           {intent?.note ?? (
             <>
               Fields marked <span className="text-brand">*</span> are required. Everything else
@@ -598,7 +598,7 @@ export function ContactForm() {
             <span
               aria-live="polite"
               className={cn(
-                'tabular text-[0.8125rem]',
+                'tabular text-caption',
                 messageLength > MESSAGE_MAX ? 'text-error' : 'text-muted',
               )}
             >

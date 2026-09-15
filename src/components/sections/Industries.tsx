@@ -67,7 +67,7 @@ export function Industries() {
                 <div className="mt-6">
                   <p className="tech text-muted tabular">{industry.index}</p>
 
-                  <h3 className="mt-3.5 flex items-center gap-3 text-display-4 font-display text-charcoal">
+                  <h3 className="mt-3.5 flex items-center gap-3 font-display wdth-wide text-display-4 text-charcoal">
                     {industry.name}
                     <Arrow
                       size={16}
@@ -82,7 +82,7 @@ export function Industries() {
                     <span className="block h-full w-full origin-left scale-x-0 bg-brand transition-transform duration-[600ms] ease-[var(--ease-expo)] group-hover:scale-x-100" />
                   </span>
 
-                  <p className="mt-4 text-small text-muted">{industry.short}</p>
+                  <p className="mt-3 text-body text-muted">{industry.short}</p>
                 </div>
               </Link>
             </li>

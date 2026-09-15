@@ -91,7 +91,7 @@ export function WhatWeBuild() {
                     />
                     <div className="flex items-end justify-between gap-6">
                       <div>
-                        <h3 className="font-display wdth-wide text-[1.35rem] leading-[1.15] text-white transition-transform duration-[600ms] ease-[var(--ease-expo)] group-hover:-translate-y-0.5">
+                        <h3 className="font-display wdth-wide text-display-4 text-white transition-transform duration-[600ms] ease-[var(--ease-expo)] group-hover:-translate-y-0.5">
                           {solution.title}
                         </h3>
                       </div>

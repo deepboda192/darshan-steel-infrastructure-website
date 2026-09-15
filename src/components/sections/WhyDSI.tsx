@@ -64,8 +64,8 @@ export function WhyDSI() {
                 )}
               >
                 {Icon && <Icon aria-hidden="true" className="h-6 w-6 text-brand" strokeWidth={1.5} />}
-                <h3 className="mt-6 text-lead font-medium leading-snug text-charcoal">{item.title}</h3>
-                <p className="mt-3 text-small text-muted">{item.description}</p>
+                <h3 className="mt-6 font-display wdth-wide text-display-4 text-charcoal">{item.title}</h3>
+                <p className="mt-3 text-body text-muted">{item.description}</p>
               </Reveal>
             )
           })}

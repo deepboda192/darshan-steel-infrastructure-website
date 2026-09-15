@@ -252,8 +252,7 @@ function ProjectsPage() {
                       {/* --- title ---------------------------------------- */}
                       <h3
                         className={cn(
-                          'mt-8 font-display wdth-wide uppercase text-charcoal',
-                          layout.feature ? 'text-display-3' : 'text-display-4',
+                          'mt-8 font-display wdth-wide text-display-4 uppercase text-charcoal',
                         )}
                         data-placeholder={flag}
                       >
@@ -322,7 +321,6 @@ function ProjectsPage() {
               <SectionHeader
                 eyebrow="Record structure"
                 tone="light"
-                size="md"
                 title={
                   <>
                     Every record answers
@@ -381,7 +379,6 @@ function ProjectsPage() {
             <div className="lg:col-span-5">
               <SectionHeader
                 eyebrow="Where to next"
-                size="md"
                 title={
                   <>
                     Start from the

@@ -101,7 +101,6 @@ function ContactPage() {
               <SectionHeader
                 index="01"
                 eyebrow="Enquiry"
-                size="md"
                 title={
                   <>
                     Send us
@@ -198,7 +197,6 @@ function ContactPage() {
               <SectionHeader
                 index="03"
                 eyebrow="Location"
-                size="md"
                 as="h2"
                 title={
                   <>

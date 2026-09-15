@@ -141,7 +141,7 @@ function ManufacturingPage() {
               </h2>
 
               <Reveal delay={0.14}>
-                <p className="mt-8 text-lead text-white/65">
+                <p className="measure mt-7 text-lead text-white/65">
                   Every member is cut, drilled, welded and marked against a released drawing.
                   What leaves the shop is not raw steel — it is a numbered set of parts
                   detailed for one frame, in one erection sequence.
@@ -213,7 +213,7 @@ function ManufacturingPage() {
                     >
                       {capability.index}
                     </span>
-                    <h3 className="font-display text-display-4 text-charcoal md:col-span-4">
+                    <h3 className="font-display wdth-wide text-display-4 text-charcoal md:col-span-4">
                       {capability.title}
                     </h3>
                     <p className="measure body-muted text-body md:col-span-6">
@@ -275,11 +275,11 @@ function ManufacturingPage() {
                     <span aria-hidden="true" className="h-px flex-1 bg-white/12" />
                   </div>
 
-                  <h3 className="mt-5 font-display text-[1.15rem] leading-[1.2] tracking-[-0.01em] text-white">
+                  <h3 className="mt-5 font-display wdth-wide text-display-4 text-white">
                     {stage.title}
                   </h3>
 
-                  <p className="mt-3 text-small text-white/55">{stage.short}</p>
+                  <p className="mt-3 text-body text-white/55">{stage.short}</p>
 
                   <ul className="mt-6 flex flex-col gap-2">
                     {stage.outputs.map((output) => (

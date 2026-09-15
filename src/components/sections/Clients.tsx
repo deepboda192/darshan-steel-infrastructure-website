@@ -31,7 +31,6 @@ export function Clients() {
             </>
           }
           lead="A selection of the businesses DSI has built for — across paper, beverages, ceramics, forging, energy, automotive and more."
-          size="md"
           className="mb-12 md:mb-16"
         />
 

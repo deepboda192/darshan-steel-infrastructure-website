@@ -42,7 +42,7 @@ function ClauseBlock({ index, id, title, body }: Clause) {
         <div>
           <h2
             id={`${id}-heading`}
-            className="font-display wdth-wide text-display-4 text-charcoal"
+            className="font-display wdth-wide text-display-3 text-charcoal"
           >
             {title}
           </h2>
@@ -466,7 +466,7 @@ function TermsPage() {
                 </h2>
               </Reveal>
               <Reveal delay={0.12}>
-                <p className="measure mt-7 text-body text-muted">
+                <p className="measure mt-7 text-lead text-muted">
                   Notices under these terms, and any question about permitted use of this
                   site&rsquo;s content, should be sent to the contact below and marked for the
                   attention of the management.

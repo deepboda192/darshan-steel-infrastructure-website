@@ -299,7 +299,7 @@ export function ProjectsShowcase() {
                       aria-hidden="true"
                       className="mb-3 block h-0.5 w-8 origin-left bg-brand transition-transform duration-[600ms] ease-[var(--ease-expo)] group-hover:scale-x-[2.5]"
                     />
-                    <h3 className="font-display wdth-wide text-[1.15rem] leading-[1.15] text-white">
+                    <h3 className="font-display wdth-wide text-display-4 text-white">
                       {project.name}
                     </h3>
                     <p className="tech mt-2 text-white/60">{project.buildingType}</p>

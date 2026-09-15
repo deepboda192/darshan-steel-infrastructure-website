@@ -229,7 +229,6 @@ export function WhyPEB() {
             <SectionHeader
               index="03"
               eyebrow="Why PEB"
-              size="md"
               title={
                 <>
                   Built smarter.
@@ -262,10 +261,10 @@ export function WhyPEB() {
                 <span className="font-display wdth-wide block text-display-4 leading-none text-steel tabular">
                   {advantage.index}
                 </span>
-                <h3 className="mt-5 text-body font-medium leading-snug text-charcoal">
+                <h3 className="mt-5 font-display wdth-wide text-display-4 text-charcoal">
                   {advantage.title}
                 </h3>
-                <p className="mt-3 text-small text-muted">{advantage.description}</p>
+                <p className="mt-3 text-body text-muted">{advantage.description}</p>
               </article>
             </Reveal>
           ))}

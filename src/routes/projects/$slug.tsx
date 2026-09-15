@@ -217,7 +217,7 @@ function ProjectDetailPage() {
                   </Reveal>
 
                   <Reveal delay={0.05}>
-                    <h2 className="font-display wdth-wide text-display-4 uppercase text-charcoal">
+                    <h2 className="font-display wdth-wide text-display-3 uppercase text-charcoal">
                       {chapter.title}
                     </h2>
                   </Reveal>
@@ -300,7 +300,6 @@ function ProjectDetailPage() {
               </>
             }
             lead="The parameters that governed the structure — span, height, grid and the loads the frame was sized against."
-            size="md"
             aside={
               <Button href="/contact" variant="secondary" size="md" arrow>
                 Discuss a similar structure

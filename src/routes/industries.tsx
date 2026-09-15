@@ -260,7 +260,6 @@ function IndustriesPage() {
               <SectionHeader
                 index="02"
                 eyebrow="Sector variables"
-                size="md"
                 tone="light"
                 title={
                   <>
@@ -304,7 +303,6 @@ function IndustriesPage() {
               <SectionHeader
                 index="03"
                 eyebrow="Constant"
-                size="md"
                 title={
                   <>
                     What does not

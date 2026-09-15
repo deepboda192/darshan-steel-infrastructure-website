@@ -42,7 +42,7 @@ function ClauseBlock({ index, id, title, body }: Clause) {
         <div>
           <h2
             id={`${id}-heading`}
-            className="font-display wdth-wide text-display-4 text-charcoal"
+            className="font-display wdth-wide text-display-3 text-charcoal"
           >
             {title}
           </h2>
@@ -483,7 +483,7 @@ function PrivacyPage() {
                 </h2>
               </Reveal>
               <Reveal delay={0.12}>
-                <p className="measure mt-7 text-body text-muted">
+                <p className="measure mt-7 text-lead text-muted">
                   Questions about this policy, a request for a copy of what we hold, or a complaint
                   about how information has been handled — send them to the contact below and mark
                   the subject line &ldquo;Data request&rdquo;.

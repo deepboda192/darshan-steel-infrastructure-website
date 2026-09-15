@@ -39,10 +39,10 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-[70svh] items-center justify-center px-6">
       <div className="max-w-md text-center">
-        <h1 className="font-display text-3xl tracking-tight text-charcoal">
+        <h1 className="font-display wdth-wide text-display-3 text-charcoal">
           This page didn&apos;t load
         </h1>
-        <p className="mt-3 text-sm text-muted">
+        <p className="mt-3 text-small text-muted">
           Something went wrong on our end. Try again or head back to the homepage.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -51,13 +51,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center bg-brand px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-hi"
+            className="inline-flex items-center justify-center bg-brand px-5 py-3 text-small font-medium text-white transition-colors hover:bg-brand-hi"
           >
             Try again
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center border border-steel px-5 py-3 text-sm font-medium text-charcoal transition-colors hover:bg-offwhite"
+            className="inline-flex items-center justify-center border border-steel px-5 py-3 text-small font-medium text-charcoal transition-colors hover:bg-offwhite"
           >
             Go home
           </a>

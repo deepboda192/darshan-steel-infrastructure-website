@@ -14,13 +14,20 @@ type SectionHeaderProps = {
   /** Right-hand slot — usually a CTA on desktop. */
   aside?: ReactNode
   className?: string
-  size?: 'lg' | 'md'
   as?: 'h1' | 'h2' | 'h3'
 }
 
+/** One display step per heading level. Hand-rolled headings use the same map. */
+const headingSize = {
+  h1: 'text-display-2',
+  h2: 'text-display-3',
+  h3: 'text-display-4',
+} as const
+
 /**
- * Standard section opening: technical label, large display headline, optional
- * lead paragraph. Used on every section so headings share one rhythm.
+ * Standard section opening: technical label, display headline, optional lead
+ * paragraph. Used on every section so headings share one rhythm: an h2 is
+ * always display-3 and its lead always text-lead, whatever page it sits on.
  */
 export function SectionHeader({
   index,
@@ -31,7 +38,6 @@ export function SectionHeader({
   align = 'left',
   aside,
   className,
-  size = 'lg',
   as: Heading = 'h2',
 }: SectionHeaderProps) {
   return (
@@ -55,7 +61,7 @@ export function SectionHeader({
           <Heading
             className={cn(
               'font-display wdth-wide',
-              size === 'lg' ? 'text-display-2' : 'text-display-3',
+              headingSize[Heading],
               tone === 'light' ? 'text-white' : 'text-charcoal',
             )}
           >

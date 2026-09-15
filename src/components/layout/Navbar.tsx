@@ -106,7 +106,7 @@ export function Navbar() {
                       href={item.href}
                       aria-current={isActive(item.href) ? 'page' : undefined}
                       className={cn(
-                        'group relative block py-2 text-[0.9rem] font-medium transition-colors duration-300',
+                        'group relative block py-2 text-small font-medium transition-colors duration-300',
                         solid
                           ? isActive(item.href)
                             ? 'text-brand'

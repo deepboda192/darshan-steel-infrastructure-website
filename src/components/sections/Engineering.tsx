@@ -45,7 +45,7 @@ export function Engineering() {
             </h2>
 
             <Reveal delay={0.22}>
-              <p className="measure mt-8 text-lead text-white/65">
+              <p className="measure mt-7 text-lead text-white/65">
                 A frame is only as good as the joints that hold it together. Every connection is
                 analysed, detailed and drawn — bolt group, plate thickness, weld size and stiffener
                 position — before a single plate is cut.

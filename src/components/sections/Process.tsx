@@ -19,7 +19,6 @@ export function Process() {
           eyebrow="Process"
           title="How a project runs."
           lead="Seven stages from first conversation to handover, with a single point of responsibility across all of them."
-          size="md"
           className="mb-12 md:mb-16"
         />
 
@@ -32,8 +31,8 @@ export function Process() {
                 className="absolute -top-10 left-0 h-2.5 w-px bg-charcoal/30"
               />
               <span className="tech block text-brand tabular">{step.index}</span>
-              <h3 className="mt-4 text-body font-medium text-charcoal">{step.title}</h3>
-              <p className="mt-2.5 text-small text-muted">{step.description}</p>
+              <h3 className="mt-4 font-display wdth-wide text-display-4 text-charcoal">{step.title}</h3>
+              <p className="mt-3 text-body text-muted">{step.description}</p>
             </Reveal>
           ))}
         </ol>

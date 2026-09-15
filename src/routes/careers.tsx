@@ -150,7 +150,6 @@ function CareersPage() {
               <SectionHeader
                 index="01"
                 eyebrow="The work"
-                size="md"
                 title={
                   <>
                     What the
@@ -210,7 +209,7 @@ function CareersPage() {
               >
                 <div className="grid gap-x-8 gap-y-4 py-8 md:grid-cols-12 md:items-baseline lg:py-10">
                   <span className="tech tabular text-brand md:col-span-1">{d.index}</span>
-                  <h3 className="font-display text-display-4 text-white md:col-span-4">
+                  <h3 className="font-display wdth-wide text-display-4 text-white md:col-span-4">
                     {d.title}
                   </h3>
                   <p className="text-body md:col-span-5">{d.description}</p>
@@ -326,7 +325,6 @@ function CareersPage() {
               <SectionHeader
                 index="04"
                 eyebrow="Safety & training"
-                size="md"
                 title={
                   <>
                     Safety is part

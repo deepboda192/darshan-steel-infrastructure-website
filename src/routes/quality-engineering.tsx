@@ -191,8 +191,8 @@ function QualityEngineeringPage() {
                   >
                     <span className="tech tabular pt-2 text-brand">{capability.index}</span>
                     <div>
-                      <h3 className="font-display text-display-4 text-white">{capability.title}</h3>
-                      <p className="measure mt-3 text-small text-white/60">
+                      <h3 className="font-display wdth-wide text-display-4 text-white">{capability.title}</h3>
+                      <p className="measure mt-3 text-body text-white/60">
                         {capability.description}
                       </p>
                     </div>
@@ -214,7 +214,6 @@ function QualityEngineeringPage() {
               <SectionHeader
                 index="02"
                 eyebrow="Design codes"
-                size="md"
                 title={
                   <>
                     Designed to
@@ -346,10 +345,10 @@ function QualityEngineeringPage() {
                     <span aria-hidden="true" className="h-2 w-2 shrink-0 bg-brand" />
                     <span className="tech tabular text-white/55">Hold point {check.index}</span>
                   </div>
-                  <h3 className="font-display text-display-4 text-white md:col-span-4">
+                  <h3 className="font-display wdth-wide text-display-4 text-white md:col-span-4">
                     {check.title}
                   </h3>
-                  <p className="text-small text-white/60 md:col-span-5">{check.description}</p>
+                  <p className="text-body text-white/60 md:col-span-5">{check.description}</p>
                 </Reveal>
               </li>
             ))}
@@ -373,7 +372,6 @@ function QualityEngineeringPage() {
               <SectionHeader
                 index="04"
                 eyebrow="Certification"
-                size="md"
                 title={
                   <>
                     Nothing claimed
@@ -455,7 +453,6 @@ function QualityEngineeringPage() {
               <SectionHeader
                 index="05"
                 eyebrow="Safety"
-                size="md"
                 title={
                   <>
                     Built safely.
@@ -482,8 +479,8 @@ function QualityEngineeringPage() {
                 {safetyPractices.map((practice, i) => (
                   <li key={practice.title} className="border-t border-charcoal/15">
                     <Reveal delay={0.05 * i} y={16} className="py-7">
-                      <h3 className="tech-lg text-charcoal">{practice.title}</h3>
-                      <p className="mt-3 text-small text-muted">
+                      <h3 className="font-display wdth-wide text-display-4 text-charcoal">{practice.title}</h3>
+                      <p className="mt-3 text-body text-muted">
                         {withPlaceholders(practice.description)}
                       </p>
                     </Reveal>

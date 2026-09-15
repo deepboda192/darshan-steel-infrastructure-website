@@ -62,7 +62,7 @@ export function NotFoundPage() {
               </h1>
 
               <Reveal delay={0.28}>
-                <p className="measure mt-8 text-lead text-white/65">
+                <p className="measure mt-7 text-lead text-white/65">
                   The address you followed does not match a page on this site. It may have been
                   moved, renamed, or typed incorrectly.
                 </p>
@@ -124,7 +124,6 @@ export function NotFoundPage() {
                 one of these.
               </>
             }
-            size="md"
             aside={
               <Button href="/contact" variant="secondary" size="md" arrow>
                 Talk to Our Team

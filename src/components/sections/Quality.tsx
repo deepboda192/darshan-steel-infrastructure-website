@@ -42,7 +42,7 @@ export function Quality() {
                 Quality is built into the process — not inspected into the product.
               </p>
             </blockquote>
-            <p className="measure mt-8 text-body text-white/60">
+            <p className="measure mt-7 text-lead text-white/65">
               Verification happens at fixed hold points, and work does not move to the next stage
               until the record for the current one is closed. Every member carries its mark back
               to the drawing it was made from.
@@ -59,8 +59,8 @@ export function Quality() {
                   <span className="tech text-brand tabular">{check.index}</span>
                   <span aria-hidden="true" className="h-px flex-1 bg-white/15" />
                 </div>
-                <h3 className="mt-6 text-display-4 font-display text-white">{check.title}</h3>
-                <p className="mt-3.5 text-small text-white/60">{check.description}</p>
+                <h3 className="mt-6 font-display wdth-wide text-display-4 text-white">{check.title}</h3>
+                <p className="mt-3 text-body text-white/60">{check.description}</p>
               </article>
             </Reveal>
           ))}

@@ -125,7 +125,6 @@ function AboutPage() {
               <SectionHeader
                 index="01"
                 eyebrow="Who we are"
-                size="md"
                 title={
                   <>
                     One team,
@@ -270,7 +269,6 @@ function AboutPage() {
           <SectionHeader
             index="03"
             eyebrow="By the numbers"
-            size="md"
             title={<>Scale of work.</>}
           />
 
@@ -356,7 +354,7 @@ function AboutPage() {
               </Reveal>
 
               <Reveal delay={0.12}>
-                <p className="measure mt-7 text-body body-muted">
+                <p className="measure mt-7 text-lead body-muted">
                   Work done under a roof is work that can be measured. Cutting, built-up assembly,
                   welding, blast cleaning and coating happen in controlled conditions, and every
                   member is checked against its drawing before it is cleared for dispatch.
@@ -428,7 +426,6 @@ function AboutPage() {
                 index="05"
                 eyebrow="How we work"
                 tone="light"
-                size="md"
                 title={
                   <>
                     Six rules
@@ -450,8 +447,8 @@ function AboutPage() {
                 >
                   <span className="tabular tech pt-2 text-brand">{principle.index}</span>
                   <div>
-                    <h3 className="font-display text-display-4 text-white">{principle.title}</h3>
-                    <p className="mt-4 text-body text-white/60">{principle.body}</p>
+                    <h3 className="font-display wdth-wide text-display-4 text-white">{principle.title}</h3>
+                    <p className="mt-3 text-body text-white/60">{principle.body}</p>
                   </div>
                 </Reveal>
               ))}
@@ -470,7 +467,6 @@ function AboutPage() {
               <SectionHeader
                 index="06"
                 eyebrow="Leadership"
-                size="md"
                 title={
                   <>
                     The people

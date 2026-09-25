@@ -112,19 +112,25 @@ export const siteImages = {
     ),
   },
 
-  /** About: the works, then the site. */
-  aboutPrimary: img(
-    'about-site-team',
-    'Two workers inside a large steel-framed building under construction',
-    'frames',
-    'DSI — WORKS',
-  ),
-  aboutSecondary: img(
-    'about-site-work',
-    'Workers on an active industrial construction site',
-    'erection',
-    'DSI — SITE',
-  ),
+  /**
+   * About: DSI's own photographs of the works — the drone view beside the stat
+   * plate, the shop floor beneath it. WebPs supplied by DSI, so they bypass
+   * the .jpg helper.
+   */
+  aboutPrimary: {
+    src: '/images/works-aerial.webp',
+    alt: 'Aerial view of the Darshan Steel Infrastructure works and yard at Rajkot, surrounded by farmland',
+    plate: 'aerial',
+    label: 'DSI — THE WORKS FROM ABOVE',
+    focus: '45% 50%',
+  } satisfies SiteImage,
+  aboutSecondary: {
+    src: '/images/works-interior.webp',
+    alt: 'Inside the DSI fabrication shop: a long steel-framed bay with overhead cranes and machinery either side of the aisle',
+    plate: 'plant',
+    label: 'DSI — SHOP FLOOR',
+    focus: '50% 50%',
+  } satisfies SiteImage,
 
   /** The works on the about page. */
   manufacturing: img(

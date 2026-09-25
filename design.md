@@ -97,7 +97,7 @@ and icon plates, **not for text**: links on dark bands use `.m-link.light`
 
 | Role | Family | Weights loaded | Notes |
 | --- | --- | --- | --- |
-| Headings, buttons, eyebrows, nav | **Radio Canada Big** (`--font-heading`) | 400–700 | Google Fonts, variable. `body { font-synthesis: style }` keeps browsers from faking weights. |
+| Headings, buttons, eyebrows, nav | **Rethink Sans** (`--font-heading`) | 400–700 | Google Fonts, variable. `body { font-synthesis: style }` keeps browsers from faking weights. |
 | Everything else | **Inter** (`--font-sans`) | 300–700 | Google Fonts, variable. |
 
 Both are loaded by one `<link>` in `src/routes/__root.tsx`.
@@ -143,11 +143,11 @@ Body default is Inter 16 / 1.6, weight 400. Add `.light` on dark surfaces.
 
 ### Labels and eyebrows
 
-- `.m-subtitle` — the section eyebrow: 16 px (14 on phones), Radio Canada Big 700,
+- `.m-subtitle` — the section eyebrow: 16 px (14 on phones), Rethink Sans 700,
   uppercase, with a 5 px accent rule on the left. `.light` on dark surfaces
   (adds +0.5 px tracking).
 - Small uppercase labels (hero disciplines, project category, form labels)
-  are 14–16 px Radio Canada Big with `tracking-[0.5px]`. This is the only positive
+  are 14–16 px Rethink Sans with `tracking-[0.5px]`. This is the only positive
   tracking on the site and exists for legibility of small caps.
 
 ---
@@ -265,13 +265,13 @@ Rules:
 
 | # | Section (`id`) | Reference pattern | Content source |
 | --- | --- | --- | --- |
-| 1 | Hero | one-viewport photo (`min-h-svh`; gaps, stat box and h1 compress on short screens), blur-in headline, certification marks + stat box | hero copy in `Hero.tsx`, `company.metrics`, `company.certifications` |
+| 1 | Hero | one-viewport photo (`min-h-svh`; gaps, stat box and h1 compress on short screens), blur-in headline, ISO chips (small mark beside standard + scope) under an “ISO certified” eyebrow + stat box | hero copy in `Hero.tsx`, `company.metrics`, `company.certifications` |
 | 2 | About (`#about`) | scrub statement, Vision/Mission, stat plate + photos | `company.about/vision/mission/metrics` |
 | 3 | Solutions (`#solutions`) | 3 × 2 service grid on the dark band, photo in every cell (zooms 6% on hover, clipped), summary on hover | `solutions` |
-| 4 | Why DSI (`#why-dsi`) | drone photo of the works under `black/70`, hairline cells, accent on hover | `whyChooseDsi` |
+| 4 | Why DSI (`#why-dsi`) | drone photo of the works under `black/75`; eight translucent `#141414/70` cards with accent icon plate, lift and fill accent on hover | `whyChooseDsi` |
 | 5 | Clients | ruled heading, then a hairline grid of marks (4 / 3 / 2 across) | `clients` |
 | 6 | Projects (`#projects`) | sticky stacked rows, covered row shrinks + fades (`data-stack`) | Supabase via route loader (`projectsQueryOptions`) |
-| 7 | Process (`#process`) | numbered step cards on neutral-1 | `workflowStages` |
+| 7 | Process (`#process`) | step cards on neutral-1: number on the accent plate, stage icon as a faint bottom-right watermark | `workflowStages` |
 | 8 | Contact (`#contact`) | info boxes, form on the light block, photo | `company` contact data, `ContactForm` |
 | — | Footer | closing CTA over a photo; white box in three labelled, left-aligned columns (brand + office/factory addresses · link groups under headings · email/phones/social) with copyright and back-to-top; watermark | footer copy, `footerNav` |
 

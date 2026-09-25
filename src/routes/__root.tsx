@@ -88,9 +88,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
-        // The two site faces: Radio Canada Big for display, Inter for copy.
+        // The two site faces: Rethink Sans for display, Inter for copy.
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Radio+Canada+Big:wght@400..700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Rethink+Sans:wght@400..700&display=swap",
       },
     ],
     scripts: [

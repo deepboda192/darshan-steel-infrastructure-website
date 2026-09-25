@@ -25,7 +25,7 @@ type ButtonProps = {
 }
 
 /**
- * The site's button: a 2px-radius accent block set in Radio Canada Big caps,
+ * The site's button: a 2px-radius accent block set in Rethink Sans caps,
  * with the reference's double-arrow hover. In-page anchors and external
  * targets render plain anchors; internal paths go through the router.
  */

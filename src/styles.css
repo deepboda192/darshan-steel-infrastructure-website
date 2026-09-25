@@ -3,7 +3,7 @@
 /* ==========================================================================
    DSI DESIGN SYSTEM — built on the Modera design language
    --------------------------------------------------------------------------
-   Radio Canada Big display type, Inter body copy, a blue accent
+   Rethink Sans display type, Inter body copy, a blue accent
    on white and near-black, 2px radii, a 1370px container and a 96px section
    rhythm. Only these tokens resolve to utilities: the stock Tailwind palette
    is cleared so an off-system class such as `bg-slate-900` produces no CSS
@@ -51,7 +51,7 @@
 
   /* --- typography -------------------------------------------------------- */
   /* Both faces are loaded by the Google Fonts <link> in routes/__root.tsx. */
-  --font-heading: 'Radio Canada Big', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Rethink Sans', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 
   /* Paragraph scale: para-1 is the lead, para-3 the body default. */

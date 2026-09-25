@@ -35,7 +35,10 @@ export function Hero() {
       </div>
 
       {/* ---------------- top: headline ---------------- */}
-      <div className="border-b border-white/30 py-[min(32px,3svh)] max-lg:border-b-0 max-lg:pb-[70px] max-md:pb-20">
+      {/* mt-auto pushes the headline block and the row beneath it to the foot of
+          the viewport together, so the spare height on tall screens sits above
+          the content; on short screens there is no slack. */}
+      <div className="mt-auto border-b border-white/30 py-[min(32px,3svh)] max-lg:border-b-0 max-lg:pb-[70px] max-md:pb-20">
         <div className="m-container">
           <div className="flex max-w-[700px] flex-col gap-[min(48px,4.5svh)] max-md:gap-6">
             <ul
@@ -74,26 +77,32 @@ export function Hero() {
       <div className="border-b border-white/30 max-lg:border-b-0">
         <div className="m-container">
           <div className="flex items-end justify-between max-md:flex-col max-md:items-start max-md:gap-8">
-            {/* the certification marks, on equal white plates */}
-            <ul
-              className="flex items-center gap-5 pb-8 max-lg:pb-0 max-xs:gap-4"
-              aria-label="Certifications"
-              data-reveal="up"
-            >
-              {certifications.map((cert) => (
-                <li
-                  key={cert.label}
-                  className="flex h-[min(180px,23svh)] w-[min(180px,23svh)] items-center justify-center max-lg:h-[156px] max-lg:w-[156px] max-xs:h-[100px] max-xs:w-[100px]"
-                >
-                  <img
-                    src={cert.logo}
-                    alt={`${cert.label} certified — ${cert.issuer}`}
-                    className="h-full w-full object-contain"
-                    decoding="async"
-                  />
-                </li>
-              ))}
-            </ul>
+            {/* the certification marks as compact chips: a caption that says what they
+                are, then each mark beside its standard and the system it covers */}
+            <div className="flex flex-col gap-[min(14px,1.4svh)] pb-8 max-lg:pb-0" data-reveal="up">
+              <p className="m-subtitle light">ISO certified</p>
+              <ul
+                className="flex flex-wrap items-center gap-x-8 gap-y-3 max-xs:flex-col max-xs:items-start max-xs:gap-y-2.5"
+                aria-label="Certifications"
+              >
+                {certifications.map((cert) => (
+                  <li key={cert.label} className="flex items-center gap-3.5">
+                    <img
+                      src={cert.logo}
+                      alt={`${cert.label} certified — ${cert.issuer}`}
+                      className="h-[min(76px,9svh)] w-[min(76px,9svh)] shrink-0 object-contain max-xs:h-14 max-xs:w-14"
+                      decoding="async"
+                    />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="font-heading text-[16px] font-semibold leading-[1.2] text-white">
+                        {cert.label}
+                      </span>
+                      <span className="text-[13px] leading-[1.3] text-neutral-2">{cert.scope}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             {projectsMetric && (
               <div

@@ -2,6 +2,7 @@ import { Building2, Factory, PencilRuler, Snowflake, Store, Warehouse } from 'lu
 import type { LucideIcon } from 'lucide-react'
 import { solutions } from '@/data/solutions'
 import { SectionIntro } from '@/components/site/SectionIntro'
+import { Button } from '@/components/site/Button'
 
 // One pictogram per building type, keyed by slug. Presentation only, so the
 // mapping lives here rather than in data/solutions.ts.
@@ -78,15 +79,8 @@ export function Solutions() {
             </ul>
           </div>
 
-          <div className="flex justify-center">
-            <p className="max-w-[760px] text-center text-[18px] leading-[1.5] text-white max-md:text-[16px] max-md:leading-[1.6]">
-              One pre-engineered building system, adapted to the industry it serves — from factories
-              and warehouses to cold storage and commercial spaces, each structure is designed
-              around what happens inside it.{' '}
-              <a href="/#contact" className="m-link light">
-                Start your project
-              </a>
-            </p>
+          <div className="flex justify-center" data-reveal="up">
+            <Button href="/#contact">Start Your Project</Button>
           </div>
         </div>
       </div>

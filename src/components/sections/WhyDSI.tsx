@@ -28,10 +28,11 @@ const ICONS: Record<string, LucideIcon> = {
 
 /**
  * Why DSI — the eight reasons, set like the about page's "how we work"
- * plate, over DSI's drone photograph of the works under a black wash: the
- * heading and call to action across the top, then a plate of cells divided
- * by hairlines, each with its icon, the reason and its explanation, filling
- * with the accent on hover, edge to edge.
+ * band, over DSI's drone photograph of the works under a black wash: the
+ * heading and call to action across the top, then eight translucent dark
+ * cards — accent icon plate at the head, the reason and its
+ * explanation — that lift and fill with the accent on hover. The plates keep
+ * the copy legible over the photograph.
  * Four across on desktop, two on tablets, one on phones.
  */
 export function WhyDSI() {
@@ -50,7 +51,7 @@ export function WhyDSI() {
           loading="lazy"
           decoding="async"
         />
-        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-black/75" />
       </div>
 
       <div className="m-container">
@@ -72,25 +73,25 @@ export function WhyDSI() {
           </div>
 
           <ul
-            className="grid w-full grid-cols-4 border-l border-t border-white/20 max-lg:grid-cols-2 max-md:grid-cols-1"
-            data-reveal="fade"
+            className="grid w-full grid-cols-4 gap-4 max-lg:grid-cols-2 max-md:grid-cols-1"
+            data-reveal-stagger
           >
             {whyChooseDsi.map((item) => {
               const Icon = ICONS[item.index]
               return (
                 <li
                   key={item.index}
-                  className="border-b border-r border-white/20 transition-colors duration-300 hover:bg-accent"
+                  className="group flex flex-col border border-white/10 bg-[#141414]/70 p-7 backdrop-blur-[2px] transition-[background-color,border-color,transform] duration-300 ease-out hover:-translate-y-1 hover:border-accent hover:bg-accent max-xs:p-6"
                 >
-                  <div className="w-fit p-[34px]">
-                    {Icon && <Icon size={40} strokeWidth={1.5} aria-hidden="true" />}
-                  </div>
-                  <div className="px-[34px] pb-[34px] pt-[42px] max-xs:px-6 max-xs:pb-6 max-xs:pt-8">
-                    <h3 className="font-heading text-[26px] font-semibold leading-(--lh-sm)">
-                      {item.title}
-                    </h3>
-                    <p className="m-paragraph medium light mt-4">{item.description}</p>
-                  </div>
+                  <span className="m-icon-box mb-7 h-12 w-12 transition-colors duration-300 group-hover:bg-white group-hover:text-accent">
+                    {Icon && <Icon size={22} strokeWidth={1.8} aria-hidden="true" />}
+                  </span>
+                  <h3 className="font-heading text-[22px] font-semibold leading-(--lh-sm) text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-[15px] leading-[1.6] text-neutral-2 transition-colors duration-300 group-hover:text-white">
+                    {item.description}
+                  </p>
                 </li>
               )
             })}

@@ -194,9 +194,9 @@ export const company = {
    * files live in public/images/certifications/ and are shown in the hero.
    */
   certifications: [
-    { label: 'ISO 9001',  issuer: 'TÜV SÜD', verified: true, logo: '/images/certifications/tuv-sud-iso-9001.png' },
-    { label: 'ISO 14001', issuer: 'TÜV SÜD', verified: true, logo: '/images/certifications/tuv-sud-iso-14001.png' },
-    { label: 'ISO 45001', issuer: 'TÜV SÜD', verified: true, logo: '/images/certifications/tuv-sud-iso-45001.png' },
+    { label: 'ISO 9001',  issuer: 'TÜV SÜD', verified: true, scope: 'Quality management', logo: '/images/certifications/tuv-sud-iso-9001.png' },
+    { label: 'ISO 14001', issuer: 'TÜV SÜD', verified: true, scope: 'Environmental management', logo: '/images/certifications/tuv-sud-iso-14001.png' },
+    { label: 'ISO 45001', issuer: 'TÜV SÜD', verified: true, scope: 'Occupational health & safety', logo: '/images/certifications/tuv-sud-iso-45001.png' },
   ],
 
   /**

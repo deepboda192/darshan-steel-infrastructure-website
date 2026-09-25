@@ -15,14 +15,15 @@ import { company } from "@/data/company";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { Button } from "@/components/site/Button";
+import { usePathname } from "@/lib/next-navigation";
 
-import { Loader } from "@/components/layout/Loader";
 import { organizationSchema } from "@/lib/schema";
 import { NotFoundPage } from "@/components/site/NotFoundPage";
 
 /**
- * Runs before paint: marks that JS is available (which arms the scroll-reveal
- * CSS) and enables placeholder audit mode when ?audit=1 is present.
+ * Runs before paint: marks that JS is available (which arms the scroll-driven
+ * motion CSS) and enables placeholder audit mode when ?audit=1 is present.
  */
 const BOOT_SCRIPT = `
 document.documentElement.classList.add('js');
@@ -38,29 +39,24 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
   return (
     <div className="flex min-h-[70svh] items-center justify-center px-6">
-      <div className="max-w-md text-center">
-        <h1 className="font-display wdth-wide text-display-3 text-charcoal">
-          This page didn&apos;t load
-        </h1>
-        <p className="mt-3 text-small text-muted">
+      <div className="flex max-w-md flex-col items-center text-center">
+        <h1 className="m-h3">This page didn&apos;t load</h1>
+        <p className="m-paragraph medium mt-3">
           Something went wrong on our end. Try again or head back to the homepage.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <button
+          <Button
+            arrow={false}
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center bg-brand px-5 py-3 text-small font-medium text-white transition-colors hover:bg-brand-hi"
           >
             Try again
-          </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center border border-steel px-5 py-3 text-small font-medium text-charcoal transition-colors hover:bg-offwhite"
-          >
+          </Button>
+          <Button href="/" variant="outline" arrow={false}>
             Go home
-          </a>
+          </Button>
         </div>
       </div>
     </div>
@@ -80,7 +76,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { name: "application-name", content: company.name },
       { name: "author", content: company.name },
-      { name: "theme-color", content: "#262324" },
+      { name: "theme-color", content: "#141414" },
       { property: "og:site_name", content: company.name },
       { property: "og:locale", content: "en_IN" },
       { property: "og:type", content: "website" },
@@ -92,11 +88,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
-        // One variable file serves both site faces: Inter for text, and
-        // Inter Display for headings via the optical-size axis (opsz 32),
-        // pinned on h1–h4 in styles.css.
+        // The two site faces: Radio Canada Big for display, Inter for copy.
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Radio+Canada+Big:wght@400..700&display=swap",
       },
     ],
     scripts: [
@@ -129,18 +123,21 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = usePathname();
+
+  // The admin and sign-in screens are tools, not pages of the site: they get
+  // the shell without the marketing navigation and footer.
+  const bare = pathname.startsWith("/admin") || pathname.startsWith("/auth");
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Loader />
-      <Navbar />
+      {!bare && <Navbar />}
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <main id="main">
         <Outlet />
       </main>
-      <Footer />
+      {!bare && <Footer />}
       <Toaster />
     </QueryClientProvider>
-
   );
 }

@@ -1,21 +1,22 @@
 import Link from '@/components/site/NextLink'
+import { ArrowRight } from 'lucide-react'
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import { cn } from '@/lib/cn'
-import { Arrow } from './Arrow'
 
-type Variant = 'primary' | 'secondary' | 'ghost'
+type Variant = 'primary' | 'outline' | 'link'
 type Tone = 'light' | 'dark'
 
 type ButtonProps = {
   children: ReactNode
+  /** `primary` = solid accent. `outline` = hairline that fills on hover.
+      `link` = underlined accent text. */
   variant?: Variant
-  /** `light` = sits on a light surface. `dark` = sits on charcoal. */
+  /** `light` = sits on a light surface. `dark` = sits on a dark one. */
   tone?: Tone
-  /** Appends the technical arrow and animates it on hover. */
+  /** Trailing arrow with the swap-on-hover motion. On by default. */
   arrow?: boolean
-  size?: 'md' | 'lg'
   className?: string
-  /** Renders an anchor / next Link instead of a button. */
+  /** Renders an anchor / router Link instead of a button. */
   href?: string
   type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
@@ -23,36 +24,16 @@ type ButtonProps = {
   'aria-label'?: string
 }
 
-const base =
-  'group/btn relative inline-flex shrink-0 items-center justify-center gap-3 whitespace-nowrap rounded-[4px] tech-lg ' +
-  'transition-colors duration-300 ease-[var(--ease-power)] disabled:opacity-45 disabled:pointer-events-none'
-
-const sizes: Record<'md' | 'lg', string> = {
-  md: 'px-6 py-3.5',
-  lg: 'px-8 py-[1.15rem]',
-}
-
-function variantClasses(variant: Variant, tone: Tone) {
-  if (variant === 'primary') {
-    // Blue is the site's only saturated fill — reserved for the main action.
-    return 'bg-brand text-white hover:bg-brand-hi active:bg-brand-deep'
-  }
-  if (variant === 'secondary') {
-    return tone === 'dark'
-      ? 'border border-white/25 text-white hover:border-white/60 hover:bg-white/[0.06]'
-      : 'border border-charcoal/20 text-charcoal hover:border-charcoal/45 hover:bg-charcoal/[0.03]'
-  }
-  return tone === 'dark'
-    ? 'text-white/75 hover:text-white'
-    : 'text-charcoal/75 hover:text-brand'
-}
-
+/**
+ * The site's button: a 2px-radius accent block set in Radio Canada Big caps,
+ * with the reference's double-arrow hover. In-page anchors and external
+ * targets render plain anchors; internal paths go through the router.
+ */
 export function Button({
   children,
   variant = 'primary',
   tone = 'light',
-  arrow = false,
-  size = 'md',
+  arrow = true,
   className,
   href,
   type = 'button',
@@ -61,26 +42,31 @@ export function Button({
   'aria-label': ariaLabel,
 }: ButtonProps) {
   const classes = cn(
-    base,
-    variant === 'ghost' ? 'py-1' : sizes[size],
-    variantClasses(variant, tone),
+    variant === 'primary' && 'm-btn',
+    variant === 'outline' && cn('m-btn-outline', tone === 'dark' && 'light'),
+    variant === 'link' && 'm-link inline-flex items-center gap-2',
     className,
   )
 
   const inner = (
     <>
       <span>{children}</span>
-      {arrow && (
-        <Arrow className="transition-transform duration-[400ms] ease-[var(--ease-expo)] group-hover/btn:translate-x-1.5" />
+      {arrow && variant !== 'link' && (
+        <span className="m-btn-arrows" aria-hidden="true">
+          <ArrowRight size={16} strokeWidth={2.2} />
+          <ArrowRight size={16} strokeWidth={2.2} />
+        </span>
       )}
+      {arrow && variant === 'link' && <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />}
     </>
   )
 
   if (href) {
     const isExternal = /^(https?:)/.test(href)
     const isProtocol = /^(mailto:|tel:)/.test(href)
+    const isAnchor = href.includes('#')
 
-    if (isExternal || isProtocol) {
+    if (isExternal || isProtocol || isAnchor) {
       return (
         <a
           href={href}

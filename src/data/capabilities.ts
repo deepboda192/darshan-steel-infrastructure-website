@@ -495,3 +495,70 @@ export const projectWorkflow: { index: string; title: string; description: strin
     description: 'A project completion certificate is issued once the project is finished to the customer’s full satisfaction.',
   },
 ]
+
+/* -------------------------------------------------------------------------- */
+/* ABOUT PAGE — how we work and the integrated model                           */
+/* Copy carried over from the original About page.                            */
+/* -------------------------------------------------------------------------- */
+
+/** Operating principles, written as technical statements rather than values. */
+export const operatingPrinciples: { index: string; title: string; body: string }[] = [
+  {
+    index: '01',
+    title: 'Engineer before quoting.',
+    body: 'A price that is not backed by a load case is a guess. Span, height, loading and site access are established first, the structure is sized second, and the number follows from both.',
+  },
+  {
+    index: '02',
+    title: 'One model, one truth.',
+    body: 'Analysis, shop drawings, erection drawings and material schedules come from the same coordinated model. What arrives on site is what was designed, marked the way the drawing says.',
+  },
+  {
+    index: '03',
+    title: 'Inspect at hold points, not at the gate.',
+    body: 'Dimensional accuracy, weld quality, blast profile and film thickness are recorded while the member is being built. Nothing is signed off retrospectively.',
+  },
+  {
+    index: '04',
+    title: 'Load the truck in erection order.',
+    body: 'Dispatch is planned around the lift sequence rather than around truck convenience. Packing lists match the erection drawings mark for mark.',
+  },
+  {
+    index: '05',
+    title: 'The people who drew it answer for it.',
+    body: 'Detailing queries from site go back to the team that produced the drawing. Alignment is surveyed, snags are closed, and the as-built set goes with the handover.',
+  },
+  {
+    index: '06',
+    title: 'Publish only what is measured.',
+    body: 'Capacities, tonnages and project figures are stated once they are verified. Where a number has not been confirmed, it is marked as pending instead of rounded up.',
+  },
+]
+
+/** The integrated model — the workflow stages grouped into four bands. */
+export const integratedModel: { index: string; title: string; stages: string[]; body: string }[] = [
+  {
+    index: '01',
+    title: 'Engineering',
+    stages: ['01', '02', '03'],
+    body: 'Geometry, loading and site conditions are fixed with the client and the consultant. The frame is modelled and checked against the governing design codes, then detailed member by member — every plate, bolt and weld drawn before anything is cut.',
+  },
+  {
+    index: '02',
+    title: 'Manufacturing',
+    stages: ['04', '05'],
+    body: 'Plate, sections and fasteners are procured against released drawings, with mill documentation retained. Cutting, built-up section assembly, welding, drilling and fitting are carried out in the shop under controlled conditions.',
+  },
+  {
+    index: '03',
+    title: 'Inspection & Dispatch',
+    stages: ['06', '07'],
+    body: 'Dimensional checks, weld inspection, surface preparation and coating thickness are recorded at defined hold points. Members are then bundled and loaded so that what is needed first comes off the truck first.',
+  },
+  {
+    index: '04',
+    title: 'Execution',
+    stages: ['08'],
+    body: 'Setting out, column erection, rafter lifting, bracing, purlins and sheeting follow a planned sequence. The structure is surveyed, bolted to specification and handed over with its documentation.',
+  },
+]

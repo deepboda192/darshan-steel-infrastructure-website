@@ -36,7 +36,7 @@ const real = <T,>(value: T): Placeholder<T> => ({ value, placeholder: false })
 
 /** DSI was established in 2018; the experience figure is derived, not typed. */
 const ESTABLISHED_YEAR = 2018
-const yearsOfExperience = new Date().getFullYear() - ESTABLISHED_YEAR
+export const yearsOfExperience = new Date().getFullYear() - ESTABLISHED_YEAR
 
 export const company = {
   /* ---------------------------------------------------------------- IDENTITY */
@@ -59,6 +59,14 @@ export const company = {
    */
   about:
     'Darshan Steel Infrastructure (DSI) is a leading PEB and structural steel solutions provider in Rajkot, Gujarat. Established in 2018, we offer end-to-end design, engineering, fabrication, and erection for factories, warehouses, industrial sheds, commercial buildings, and infrastructure projects.',
+  /** Phrases of `about` that are set in bold wherever the paragraph is rendered. */
+  aboutEmphasis: [
+    'Darshan Steel Infrastructure (DSI)',
+    'PEB and structural steel solutions provider',
+    'Rajkot, Gujarat',
+    'Established in 2018',
+    'design, engineering, fabrication, and erection',
+  ],
 
   /** Vision, wording supplied by DSI. */
   vision:
@@ -104,12 +112,16 @@ export const company = {
     {
       unit: 'Unit 1',
       name: 'Darshan Steel Infrastructure',
-      address: 'At. Chhatar, Sr. No. 169, Rajkot–Morbi Highway, Rajkot, Gujarat 363650',
+      address: 'Survey No. 169/P4/P1, At, Rajkot - Morbi Hwy, Chhattar, Gujarat 363650',
+      mapsQuery:
+        'https://www.google.com/maps/search/?api=1&query=Survey+No.+169%2FP4%2FP1+Rajkot+Morbi+Hwy+Chhattar+Gujarat+363650',
     },
     {
       unit: 'Unit 2',
       name: 'Darshan Pre-Fab Pvt. Ltd.',
       address: 'At. Kagdadi, Sr. No. 225, Rajkot–Morbi Highway, Rajkot, Gujarat 360003',
+      mapsQuery:
+        'https://www.google.com/maps/search/?api=1&query=Kagdadi+Sr.+No.+225+Rajkot+Morbi+Highway+Rajkot+Gujarat+360003',
     },
   ],
 
@@ -131,8 +143,10 @@ export const company = {
 
   /** Only rendered if `url` is non-empty — remove entries DSI does not use. */
   social: [
-    { label: 'LinkedIn', url: '', handle: '[LINKEDIN PROFILE]' },
+    { label: 'Facebook', url: '', handle: '[FACEBOOK PAGE]' },
     { label: 'Instagram', url: '', handle: '[INSTAGRAM PROFILE]' },
+    { label: 'LinkedIn', url: '', handle: '[LINKEDIN PROFILE]' },
+    { label: 'X', url: '', handle: '[X PROFILE]' },
     { label: 'YouTube', url: '', handle: '[YOUTUBE CHANNEL]' },
   ] as { label: string; url: string; handle: string }[],
 
@@ -176,12 +190,13 @@ export const company = {
 
   /* ----------------------------------------------------------- CERTIFICATIONS */
   /**
-   * IMPORTANT: no certification is claimed until DSI supplies proof. The
-   * catalogue names material standards (below) but no certifying body.
+   * TÜV SÜD certification marks supplied by DSI on 2026-09-25. The badge
+   * files live in public/images/certifications/ and are shown in the hero.
    */
   certifications: [
-    { label: '[CERTIFICATION 1 — e.g. ISO 9001:2015]', issuer: '[ISSUING BODY]', verified: false },
-    { label: '[CERTIFICATION 2]',                      issuer: '[ISSUING BODY]', verified: false },
+    { label: 'ISO 9001',  issuer: 'TÜV SÜD', verified: true, logo: '/images/certifications/tuv-sud-iso-9001.png' },
+    { label: 'ISO 14001', issuer: 'TÜV SÜD', verified: true, logo: '/images/certifications/tuv-sud-iso-14001.png' },
+    { label: 'ISO 45001', issuer: 'TÜV SÜD', verified: true, logo: '/images/certifications/tuv-sud-iso-45001.png' },
   ],
 
   /**

@@ -6,11 +6,12 @@ import {
   type FormEvent,
   type ReactNode,
 } from 'react'
-import { AlertCircle, CheckCircle2, ChevronDown } from 'lucide-react'
+import { AlertCircle, CheckCircle2 } from 'lucide-react'
 import { useSearchParams } from '@/lib/next-navigation'
 import { company } from '@/data/company'
 import { solutions } from '@/data/solutions'
 import { Button } from '@/components/site/Button'
+import { Select } from '@/components/site/Select'
 import { cn } from '@/lib/cn'
 
 /* -------------------------------------------------------------------------- */
@@ -29,6 +30,10 @@ const PROJECT_TYPES: string[] = [...solutions.map((s) => s.title), 'Other']
 const DEFAULT_SUBJECT = 'General Enquiry'
 
 const MESSAGE_MAX = 4000
+
+/** Units offered for the built-up area; the chosen one is sent with the figure. */
+const AREA_UNITS = ['sq. ft.', 'sq. m'] as const
+type AreaUnit = (typeof AREA_UNITS)[number]
 
 /** `?intent=` presets the subject line and the note above the fields. */
 const INTENTS = {
@@ -150,18 +155,20 @@ type FieldShellProps = {
 
 /**
  * Label, control slot, hint and inline error — one rhythm for every field.
- * Only required fields carry a mark; an "optional" tag on every other label
- * was more noise than signal, so the rule is stated once above the form.
+ * Only required fields carry a mark; the rule is stated once above the form.
  */
 function FieldShell({ id, label, required, error, hint, meta, children, className }: FieldShellProps) {
   return (
     <div className={cn('flex flex-col', className)}>
       <div className="mb-2 flex items-baseline justify-between gap-4">
-        <label htmlFor={id} className="text-small font-medium text-charcoal">
+        <label
+          htmlFor={id}
+          className="font-heading text-[14px] font-semibold uppercase tracking-[0.5px] text-neutral-8"
+        >
           {label}
           {required && (
             <>
-              <span aria-hidden="true" className="ml-1 text-brand">
+              <span aria-hidden="true" className="ml-1 text-accent">
                 *
               </span>
               <span className="sr-only">(required)</span>
@@ -174,7 +181,7 @@ function FieldShell({ id, label, required, error, hint, meta, children, classNam
       {children}
 
       {hint && !error && (
-        <p id={`${id}-hint`} className="mt-2 text-caption leading-relaxed text-muted">
+        <p id={`${id}-hint`} className="mt-2 text-[13px] leading-relaxed text-neutral-6">
           {hint}
         </p>
       )}
@@ -182,7 +189,7 @@ function FieldShell({ id, label, required, error, hint, meta, children, classNam
       {error && (
         <p
           id={`${id}-error`}
-          className="mt-2 flex items-start gap-1.5 text-caption leading-relaxed text-error"
+          className="mt-2 flex items-start gap-1.5 text-[13px] leading-relaxed text-error"
         >
           <AlertCircle aria-hidden="true" className="mt-[3px] h-3.5 w-3.5 shrink-0" strokeWidth={2} />
           <span>{error}</span>
@@ -192,22 +199,9 @@ function FieldShell({ id, label, required, error, hint, meta, children, classNam
   )
 }
 
-/**
- * Boxed control. A quiet hairline at rest, darker on hover, brand blue with a
- * soft halo on focus; invalid fields swap to the error colour so they never
- * read as "focused".
- */
-function controlClass(invalid: boolean, extra?: string) {
-  return cn(
-    'w-full rounded-md border bg-white px-4 py-3 text-body text-charcoal placeholder:text-muted/70',
-    'transition-[border-color,box-shadow,background-color] duration-200 ease-[var(--ease-power)]',
-    'focus:outline-none focus-visible:outline-none focus:ring-[3px]',
-    invalid
-      ? 'border-error bg-error-tint/50 focus:border-error focus:ring-error/15'
-      : 'border-charcoal/15 hover:border-charcoal/35 focus:border-brand focus:ring-brand/15',
-    'disabled:cursor-not-allowed disabled:opacity-50',
-    extra,
-  )
+/** Boxed control on the dark block — see `.m-field` in styles.css. */
+function controlClass(extra?: string) {
+  return cn('m-field', extra)
 }
 
 /* -------------------------------------------------------------------------- */
@@ -229,6 +223,7 @@ export function ContactForm() {
   const subject = intent?.subject ?? DEFAULT_SUBJECT
 
   const [values, setValues] = useState<FormValues>(EMPTY)
+  const [areaUnit, setAreaUnit] = useState<AreaUnit>(AREA_UNITS[0])
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({})
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [submitError, setSubmitError] = useState('')
@@ -263,6 +258,16 @@ export function ContactForm() {
     }
   }
 
+  function set(name: FieldName, next: string) {
+    setValues((prev) => ({ ...prev, [name]: next }))
+    setErrors((prev) => {
+      if (!prev[name]) return prev
+      const rest = { ...prev }
+      delete rest[name]
+      return rest
+    })
+  }
+
   function describedBy(name: FieldName, hasHint = false) {
     const ids: string[] = []
     if (errors[name]) ids.push(`${fid(name)}-error`)
@@ -295,7 +300,12 @@ export function ContactForm() {
       const response = await fetch(ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...values, subject, website }),
+        body: JSON.stringify({
+          ...values,
+          area: values.area.trim() ? `${values.area.trim()} ${areaUnit}` : '',
+          subject,
+          website,
+        }),
       })
 
       const payload = (await response.json().catch(() => null)) as
@@ -319,39 +329,37 @@ export function ContactForm() {
 
   function reset() {
     setValues(EMPTY)
+    setAreaUnit(AREA_UNITS[0])
     setErrors({})
     setWebsite('')
     setSubmitError('')
     setStatus('idle')
   }
 
-  const card =
-    'rounded-lg border border-charcoal/10 bg-white p-6 shadow-[0_12px_48px_-20px_rgba(38,35,36,0.22)] sm:p-8 lg:p-10'
-
   /* ---------------------------------------------------------------- success */
 
   if (status === 'success') {
     return (
-      <div role="status" className={card}>
+      <div role="status" className="bg-white p-6 text-neutral-10 sm:p-8">
         <div className="flex items-start gap-4">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-tint text-brand">
+          <span className="m-icon-box h-12 w-12 shrink-0">
             <CheckCircle2 aria-hidden="true" className="h-6 w-6" strokeWidth={1.75} />
           </span>
           <div>
-            <p className="tech text-brand">Enquiry received</p>
-            <h3 className="font-display wdth-wide mt-2 text-display-4 text-charcoal">
+            <p className="m-subtitle">Enquiry received</p>
+            <h3 className="mt-4 font-heading text-[24px] font-bold leading-(--lh-sm) text-neutral-10 max-md:text-[22px]">
               Thank you — we have your brief.
             </h3>
             {/* Deliberately states only what is true at submit time. Delivery is
                 wired in routes/api/public/enquiry.ts — see the TODO block there. */}
-            <p className="measure mt-3 text-body text-muted">
+            <p className="m-paragraph medium mt-3">
               Your enquiry has been submitted. An engineer will review it and reply on the
               phone number or email address you gave us.
             </p>
           </div>
         </div>
 
-        <ol className="mt-8 grid gap-4 border-t border-charcoal/10 pt-8 sm:grid-cols-3">
+        <ol className="mt-8 grid gap-4 border-t border-black/10 pt-8 sm:grid-cols-3">
           {[
             {
               index: '01',
@@ -369,19 +377,21 @@ export function ContactForm() {
               note: 'Once the scope is settled, a structural approach and a quotation follow.',
             },
           ].map((step) => (
-            <li key={step.index} className="rounded-md bg-offwhite p-5">
-              <span className="tabular tech text-brand">{step.index}</span>
-              <span className="mt-2 block text-body font-medium text-charcoal">{step.title}</span>
-              <span className="mt-1 block text-small text-muted">{step.note}</span>
+            <li key={step.index} className="bg-neutral-1 p-5">
+              <span className="tabular font-heading text-[14px] font-bold text-accent">{step.index}</span>
+              <span className="mt-2 block font-heading text-[18px] font-bold text-neutral-10">
+                {step.title}
+              </span>
+              <span className="mt-1 block text-[14px] leading-[1.6] text-neutral-7">{step.note}</span>
             </li>
           ))}
         </ol>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <Button variant="secondary" onClick={reset}>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+          <Button variant="outline" onClick={reset} arrow={false}>
             Send another enquiry
           </Button>
-          <Button href="/projects" variant="ghost" arrow>
+          <Button href="/#projects" variant="link">
             Look at the work
           </Button>
         </div>
@@ -394,16 +404,24 @@ export function ContactForm() {
   const messageLength = values.message.length
 
   return (
-    <form onSubmit={handleSubmit} noValidate aria-labelledby="enq-subject" className={card}>
+    <form
+      onSubmit={handleSubmit}
+      noValidate
+      aria-labelledby="enq-subject"
+      className="flex flex-col gap-5"
+    >
       {/* ---------------- heading ---------------- */}
-      <div className="mb-8 border-b border-charcoal/10 pb-6">
-        <h3 id="enq-subject" className="font-display wdth-wide text-display-4 text-charcoal">
+      <div className="mb-3 border-b border-black/10 pb-6">
+        <h3
+          id="enq-subject"
+          className="font-heading text-[24px] font-bold leading-(--lh-sm) text-neutral-10 max-md:text-[22px]"
+        >
           {subject}
         </h3>
-        <p className="mt-3 text-body text-muted">
+        <p className="mt-3 text-[16px] leading-[1.6] text-neutral-7">
           {intent?.note ?? (
             <>
-              Fields marked <span className="text-brand">*</span> are required. Everything else
+              Fields marked <span className="text-accent">*</span> are required. Everything else
               helps us give a sharper first answer.
             </>
           )}
@@ -416,11 +434,11 @@ export function ContactForm() {
           ref={summaryRef}
           tabIndex={-1}
           role="alert"
-          className="mb-8 flex gap-3 rounded-md border border-error/25 bg-error-tint px-5 py-4"
+          className="flex gap-3 border border-error/40 bg-error/5 px-5 py-4"
         >
           <AlertCircle aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-error" strokeWidth={1.75} />
           <div>
-            <p className="text-small font-medium text-charcoal">
+            <p className="font-heading text-[14px] font-semibold uppercase tracking-[0.5px] text-neutral-10">
               {errorList.length === 1
                 ? 'One field needs attention'
                 : `${errorList.length} fields need attention`}
@@ -431,7 +449,7 @@ export function ContactForm() {
                   <button
                     type="button"
                     onClick={() => document.getElementById(fid(name))?.focus()}
-                    className="text-left text-small text-charcoal/80 underline decoration-error/40 underline-offset-4 transition-colors hover:text-error hover:decoration-error"
+                    className="text-left text-[14px] text-neutral-8 underline decoration-error/50 underline-offset-4 transition-colors hover:text-neutral-10 hover:decoration-error"
                   >
                     {LABELS[name]} — {message}
                   </button>
@@ -443,7 +461,7 @@ export function ContactForm() {
       )}
 
       {/* ---------------- fields ---------------- */}
-      <div className="grid gap-x-6 gap-y-6 sm:grid-cols-2">
+      <div className="grid gap-5 sm:grid-cols-2">
         <FieldShell id={fid('name')} label="Name" required error={errors.name}>
           <input
             id={fid('name')}
@@ -458,7 +476,7 @@ export function ContactForm() {
             onChange={update('name')}
             disabled={submitting}
             placeholder="Full name"
-            className={controlClass(Boolean(errors.name))}
+            className={controlClass()}
           />
         </FieldShell>
 
@@ -473,7 +491,7 @@ export function ContactForm() {
             onChange={update('company')}
             disabled={submitting}
             placeholder="Organisation name"
-            className={controlClass(false)}
+            className={controlClass()}
           />
         </FieldShell>
 
@@ -492,7 +510,7 @@ export function ContactForm() {
             onChange={update('phone')}
             disabled={submitting}
             placeholder="+91 98765 43210"
-            className={controlClass(Boolean(errors.phone))}
+            className={controlClass()}
           />
         </FieldShell>
 
@@ -511,60 +529,44 @@ export function ContactForm() {
             onChange={update('email')}
             disabled={submitting}
             placeholder="name@company.com"
-            className={controlClass(Boolean(errors.email))}
+            className={controlClass()}
           />
         </FieldShell>
+
         <FieldShell
           id={fid('projectType')}
           label="Project type"
           error={errors.projectType}
           className="sm:col-span-2"
         >
-          <div className="relative">
-            <select
-              id={fid('projectType')}
-              name="projectType"
-              aria-describedby={describedBy('projectType')}
-              value={values.projectType}
-              onChange={update('projectType')}
-              disabled={submitting}
-              className={controlClass(
-                false,
-                cn('appearance-none pr-11', values.projectType === '' && 'text-muted/70'),
-              )}
-            >
-              <option value="">Select a building type</option>
-              {PROJECT_TYPES.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              aria-hidden="true"
-              className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal/60"
-              strokeWidth={2}
-            />
-          </div>
+          <Select
+            id={fid('projectType')}
+            value={values.projectType}
+            onChange={(next) => set('projectType', next)}
+            options={PROJECT_TYPES.map((type) => ({ value: type, label: type }))}
+            placeholder="Select a building type"
+            disabled={submitting}
+            invalid={Boolean(errors.projectType)}
+            describedBy={describedBy('projectType')}
+          />
         </FieldShell>
 
         <FieldShell
           id={fid('location')}
           label="Location"
           error={errors.location}
-          hint="City or district where the building will stand."
         >
           <input
             id={fid('location')}
             name="location"
             type="text"
             autoComplete="address-level2"
-            aria-describedby={describedBy('location', true)}
+            aria-describedby={describedBy('location')}
             value={values.location}
             onChange={update('location')}
             disabled={submitting}
             placeholder="Site city / district"
-            className={controlClass(false)}
+            className={controlClass()}
           />
         </FieldShell>
 
@@ -572,20 +574,33 @@ export function ContactForm() {
           id={fid('area')}
           label="Approx. built-up area"
           error={errors.area}
-          hint="Sq. ft. or sq. m — an estimate is fine."
         >
-          <input
-            id={fid('area')}
-            name="area"
-            type="text"
-            inputMode="numeric"
-            aria-describedby={describedBy('area', true)}
-            value={values.area}
-            onChange={update('area')}
-            disabled={submitting}
-            placeholder="e.g. 40,000 sq. ft."
-            className={controlClass(false)}
-          />
+          <div className="flex">
+            <input
+              id={fid('area')}
+              name="area"
+              type="text"
+              inputMode="numeric"
+              aria-describedby={describedBy('area')}
+              value={values.area}
+              onChange={update('area')}
+              disabled={submitting}
+              placeholder="e.g. 40,000"
+              className={controlClass('min-w-0 flex-1 border-r-0')}
+            />
+            <div className="shrink-0">
+              <Select
+                id={fid('area') + '-unit'}
+                ariaLabel="Area unit"
+                value={areaUnit}
+                onChange={(next) => setAreaUnit(next as AreaUnit)}
+                options={AREA_UNITS.map((unit) => ({ value: unit, label: unit }))}
+                disabled={submitting}
+                className="w-[104px] pl-3.5 pr-3"
+                fitContent
+              />
+            </div>
+          </div>
         </FieldShell>
 
         <FieldShell
@@ -593,13 +608,12 @@ export function ContactForm() {
           label="Message"
           error={errors.message}
           className="sm:col-span-2"
-          hint="Span, eave height, crane duty, programme — whatever you already know."
           meta={
             <span
               aria-live="polite"
               className={cn(
-                'tabular text-caption',
-                messageLength > MESSAGE_MAX ? 'text-error' : 'text-muted',
+                'tabular text-[13px]',
+                messageLength > MESSAGE_MAX ? 'text-error' : 'text-neutral-5',
               )}
             >
               {messageLength.toLocaleString('en-IN')} / {MESSAGE_MAX.toLocaleString('en-IN')}
@@ -611,12 +625,12 @@ export function ContactForm() {
             name="message"
             rows={5}
             aria-invalid={errors.message ? true : undefined}
-            aria-describedby={describedBy('message', true)}
+            aria-describedby={describedBy('message')}
             value={values.message}
             onChange={update('message')}
             disabled={submitting}
             placeholder="Tell us about the structure and what it has to carry."
-            className={controlClass(Boolean(errors.message), 'min-h-[8.5rem] resize-y')}
+            className={controlClass('min-h-[140px] resize-none')}
           />
         </FieldShell>
       </div>
@@ -636,33 +650,26 @@ export function ContactForm() {
       </div>
 
       {/* ---------------- submit ---------------- */}
-      <div className="mt-10 border-t border-charcoal/10 pt-8">
-        <Button
-          type="submit"
-          size="lg"
-          arrow
-          disabled={submitting}
-          className="w-full sm:w-auto"
-        >
+      <div className="mt-2.5">
+        <Button type="submit" disabled={submitting} className="w-full justify-center sm:w-auto">
           {submitting ? 'Sending…' : 'Send Enquiry'}
         </Button>
       </div>
 
       {/* ---------------- delivery failure ---------------- */}
       {status === 'error' && (
-        <div
-          role="alert"
-          className="mt-6 flex gap-3 rounded-md border border-error/25 bg-error-tint px-5 py-4"
-        >
+        <div role="alert" className="flex gap-3 border border-error/40 bg-error/5 px-5 py-4">
           <AlertCircle aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-error" strokeWidth={1.75} />
           <div>
-            <p className="text-small font-medium text-charcoal">Not sent</p>
-            <p className="mt-1 text-small text-muted">
+            <p className="font-heading text-[14px] font-semibold uppercase tracking-[0.5px] text-neutral-10">
+              Not sent
+            </p>
+            <p className="mt-1 text-[14px] leading-[1.6] text-neutral-7">
               {submitError} Try again in a moment, or write to us directly at{' '}
               <a
                 href={`mailto:${company.email.enquiries.value}`}
                 data-placeholder={company.email.enquiries.placeholder}
-                className="break-all text-charcoal underline decoration-charcoal/30 underline-offset-4 transition-colors hover:decoration-brand"
+                className="break-all text-neutral-10 underline decoration-black/30 underline-offset-4 transition-colors hover:decoration-accent"
               >
                 {company.email.enquiries.value}
               </a>

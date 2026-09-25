@@ -1,116 +1,73 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { projectsQueryOptions } from '@/lib/projects-query'
-import Link from '@/components/site/NextLink'
-
-import { company } from '@/data/company'
-import type { SiteImage } from '@/data/images'
+import { Calendar, ClipboardList, Factory, MapPin, Ruler, User } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import { company, shortAddress } from '@/data/company'
+import { siteImages } from '@/data/images'
 import type { Project } from '@/data/projects'
-
-import { PageHero } from '@/components/layout/PageHero'
-import { CTASection } from '@/components/sections/CTASection'
-import { ImageFrame } from '@/components/media/ImageFrame'
-import { Reveal } from '@/components/animations/Reveal'
-import { Arrow } from '@/components/site/Arrow'
-import { Button } from '@/components/site/Button'
-import { Container } from '@/components/site/Container'
-import { Section } from '@/components/site/Section'
-import { SectionHeader } from '@/components/site/SectionHeader'
-import { TechLabel } from '@/components/site/TechLabel'
+import { projectsQueryOptions } from '@/lib/projects-query'
+import { useMotion } from '@/lib/motion'
 import { breadcrumbSchema, JsonLd } from '@/lib/schema'
 import { cn } from '@/lib/cn'
+import { InnerHero } from '@/components/site/InnerHero'
+import { Button } from '@/components/site/Button'
+import { ImageFrame } from '@/components/media/ImageFrame'
+import { Logo } from '@/components/layout/Logo'
+import { ProjectCard } from '@/components/projects/ProjectCard'
+import { Gallery } from '@/components/projects/Gallery'
 
-/* -------------------------------------------------------------------------- */
-/* Placeholder handling                                                        */
-/* -------------------------------------------------------------------------- */
+/** The case study, in the order the record tells it. */
+const STUDY: { key: keyof Project['study']; title: string }[] = [
+  { key: 'overview', title: 'Project overview' },
+  { key: 'challenge', title: 'The challenge' },
+  { key: 'approach', title: 'Engineering approach' },
+  { key: 'execution', title: 'Execution' },
+  { key: 'result', title: 'Result' },
+]
 
-/**
- * Every unconfirmed value in data/projects.ts is written in [SQUARE BRACKETS].
- * These two helpers are the only place this page decides what is real: values
- * containing a bracket are flagged with `data-placeholder` so `?audit=1`
- * outlines them, and are stripped out of metadata so no invented fact is ever
- * published to a search engine.
- */
-const isPending = (value: string) => value.includes('[')
+type DetailRow = { icon: LucideIcon; label: string; value: string }
 
-const pendingAttr = (value: string) => (isPending(value) ? 'true' : undefined)
-
-/** Removes bracketed placeholders from a sentence, leaving clean prose. */
-const stripPending = (value: string) =>
-  value
-    .replace(/\[[^\]]*\]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
+/** Strips a display number down to something a dialler accepts. */
+const dialable = (value: string) => value.replace(/[^+\d]/g, '')
 
 /**
- * Renders case-study prose, marking any bracketed run so it is visible in
- * audit mode and typographically distinct from confirmed copy.
+ * Project record — the reference's project page.
+ *
+ * The inner-page hero, the cover photograph, then two columns: the case study
+ * (overview through result, then the gallery) on the left; on the right, a
+ * sticky rail with the record's details, the standard specification and the
+ * contact card. "More projects" closes the page with the next two records.
+ * Everything comes from the record itself and data/company.ts.
  */
-function Prose({ text, className }: { text: string; className?: string }) {
-  const parts = text.split(/(\[[^\]]*\])/g).filter(Boolean)
-
-  return (
-    <p className={className}>
-      {parts.map((part, i) =>
-        part.startsWith('[') ? (
-          <span key={i} data-placeholder="true" className="text-charcoal/55">
-            {part}
-          </span>
-        ) : (
-          <span key={i}>{part}</span>
-        ),
-      )}
-    </p>
-  )
-}
-
-/* -------------------------------------------------------------------------- */
-/* Layout tables                                                               */
-/* -------------------------------------------------------------------------- */
-
-/** Gallery rhythm — 7/5 then 5/7, so no two rows read the same. */
-const GALLERY_LAYOUT = [
-  { span: 'lg:col-span-7', ratio: '3/2', sizes: '(min-width: 1024px) 56vw, 100vw' },
-  { span: 'lg:col-span-5', ratio: '4/5', sizes: '(min-width: 1024px) 40vw, 100vw' },
-  { span: 'lg:col-span-5', ratio: '4/5', sizes: '(min-width: 1024px) 40vw, 100vw' },
-  { span: 'lg:col-span-7', ratio: '3/2', sizes: '(min-width: 1024px) 56vw, 100vw' },
-] as const
-
-/* -------------------------------------------------------------------------- */
-/* Route                                                                       */
-/* -------------------------------------------------------------------------- */
-
-function ProjectDetailPage() {
+function ProjectPage() {
+  const projects = Route.useLoaderData()
   const { slug } = Route.useParams()
-  const { data: projects } = useSuspenseQuery(projectsQueryOptions)
-  const project = projects.find((p) => p.slug === slug)
+  // The loader has already thrown notFound() for an unknown slug.
+  const index = projects.findIndex((p) => p.slug === slug)
+  const project = projects[index] as Project
+  useMotion()
 
-  if (!project) throw notFound()
-
-  const position = projects.findIndex((p) => p.slug === project.slug)
-  const nextProject = projects[(position + 1) % projects.length]
-
-  /* The hero plate is built from the project's own scene so each record opens
-     on the structure type it describes. */
-  const heroImage: SiteImage = {
+  const pending = project.verified ? undefined : 'true'
+  const cover = {
     src: project.photo,
-    alt: `${project.buildingType} — pre-engineered steel structure delivered by ${company.name}`,
+    alt: `${project.name} — ${project.buildingType}, ${project.location}`,
     plate: project.plate,
-    label: `FIG. ${project.index} — PROJECT RECORD`,
+    label: `PLATE ${project.index}`,
   }
 
-  const chapters = [
-    { index: '01', id: 'overview', title: 'Overview', body: project.study.overview },
-    { index: '02', id: 'challenge', title: 'Challenge', body: project.study.challenge },
-    {
-      index: '03',
-      id: 'engineering-approach',
-      title: 'Engineering Approach',
-      body: project.study.approach,
-    },
-    { index: '04', id: 'execution', title: 'Execution', body: project.study.execution },
-    { index: '05', id: 'result', title: 'Result', body: project.study.result },
-  ]
+  const details: DetailRow[] = [
+    { icon: User, label: 'Client', value: project.name },
+    { icon: MapPin, label: 'Location', value: project.location },
+    { icon: Factory, label: 'Building type', value: project.buildingType },
+    { icon: Ruler, label: 'Built-up area', value: project.area },
+    ...(project.year ? [{ icon: Calendar, label: 'Year', value: project.year }] : []),
+    { icon: ClipboardList, label: 'Scope', value: project.scope.join(' · ') },
+  ].filter((row) => row.value.trim().length > 0)
+
+  // The next two records in list order, wrapping round at the end.
+  const more =
+    projects.length > 1
+      ? [1, 2].map((k) => projects[(index + k) % projects.length]).filter((p) => p.slug !== slug)
+      : []
 
   return (
     <>
@@ -118,288 +75,185 @@ function ProjectDetailPage() {
         data={breadcrumbSchema([
           { name: 'Home', path: '/' },
           { name: 'Projects', path: '/projects' },
-          // Unverified names are not emitted — the category is real data.
-          { name: project.verified ? project.name : project.buildingType, path: `/projects/${project.slug}` },
+          { name: project.name, path: `/projects/${project.slug}` },
         ])}
       />
 
-      {/* ==================================================== 00 — PROJECT HERO */}
-      <PageHero
-        eyebrow={project.buildingType}
-        title={<span data-placeholder={pendingAttr(project.name)}>{project.name}</span>}
-        image={heroImage}
+      <InnerHero
+        tall
+        title={project.name}
+        image={siteImages.projectHero}
+        crumbs={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }, { label: project.name }]}
       />
 
-      {/* ========================================================= SCOPE OF WORK */}
-      <Section tone="offwhite" space="none" ariaLabel="Scope of work">
-        <Container>
-          <div className="grid gap-10 py-14 md:py-16 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-3">
-              <Reveal>
-                <TechLabel rule>Scope of work</TechLabel>
-              </Reveal>
-              <Reveal delay={0.06}>
-                <p className="mt-5 text-small text-muted">
-                  Single-point responsibility from drawing to handover.
-                </p>
-              </Reveal>
+      <section className="m-section" aria-label="Project record">
+        <div className="m-container">
+          {/* ---------------- cover ---------------- */}
+          <div
+            className="relative overflow-hidden bg-neutral-1 pt-[54%] max-lg:pt-[58%] max-xs:pt-[64%]"
+            data-reveal="up"
+          >
+            <div className="absolute inset-0">
+              <ImageFrame image={cover} ratio="fill" priority sizes="(min-width: 1370px) 1310px, 100vw" />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-[1.72fr_1fr] items-start gap-[75px] pt-16 max-lg:grid-cols-1 max-lg:gap-16">
+            {/* ---------------- case study ---------------- */}
+            <div data-reveal="up">
+              {STUDY.map((section, i) => {
+                const body = project.study[section.key]
+                return (
+                  <div key={section.key}>
+                    {i > 0 && <hr className="my-12 border-0 border-b border-black/10" />}
+                    <h2 className="m-h4">{section.title}</h2>
+                    <p
+                      className="mt-4 text-[18px] leading-[1.6] text-neutral-8"
+                      data-placeholder={body.includes('[') ? 'true' : undefined}
+                    >
+                      {body}
+                    </p>
+                  </div>
+                )
+              })}
+
+              {project.gallery.length > 0 && (
+                <>
+                  <hr className="my-12 border-0 border-b border-black/10" />
+                  <Gallery images={project.gallery} />
+                </>
+              )}
             </div>
 
-            <Reveal delay={0.12} className="lg:col-span-9">
-              <ol className="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-                {project.scope.map((item, i) => (
-                  <li key={item} className="border-t border-charcoal/15 pt-5">
-                    <span className="tech tabular text-brand">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <p className="tech-lg mt-4 text-charcoal">{item}</p>
+            {/* ---------------- rail ---------------- */}
+            <aside className="flex flex-col gap-5 lg:sticky lg:top-6" data-reveal="up">
+              <div className="bg-neutral-1 px-[34px] pb-5 pt-8 max-xs:px-6">
+                <h2 className="m-h5">Project details</h2>
+                <dl className="mt-6">
+                  {details.map((row, i) => {
+                    const Icon = row.icon
+                    return (
+                      <div
+                        key={row.label}
+                        className={cn(
+                          'flex items-center justify-between gap-[18px] py-3.5',
+                          i < details.length - 1 && 'border-b border-black/10',
+                        )}
+                      >
+                        <dt className="flex items-center gap-3.5">
+                          <span className="m-icon-box h-[42px] w-[42px]">
+                            <Icon size={20} strokeWidth={1.8} aria-hidden="true" />
+                          </span>
+                          <span className="font-medium text-neutral-9">{row.label}</span>
+                        </dt>
+                        <dd className="text-right text-neutral-7" data-placeholder={pending}>
+                          {row.value}
+                        </dd>
+                      </div>
+                    )
+                  })}
+                </dl>
+              </div>
+
+              {project.technical.length > 0 && (
+                <div className="bg-neutral-1 px-[34px] pb-5 pt-8 max-xs:px-6">
+                  <h2 className="m-h5">Specification</h2>
+                  <dl className="mt-6">
+                    {project.technical.map((row, i) => (
+                      <div
+                        key={row.label}
+                        className={cn(
+                          'flex items-start justify-between gap-[18px] py-3.5',
+                          i < project.technical.length - 1 && 'border-b border-black/10',
+                        )}
+                      >
+                        <dt className="shrink-0 font-medium text-neutral-9">{row.label}</dt>
+                        <dd className="text-right text-neutral-7">{row.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              )}
+
+              {/* the reference's contact card */}
+              <div className="flex flex-col">
+                <div className="flex flex-col items-center gap-7 bg-secondary px-8 py-11 text-center text-white">
+                  <Logo variant="mark" tone="dark" height={56} />
+                  <div className="flex flex-col gap-2">
+                    <p className="m-h5 light">Let&apos;s work together</p>
+                    <a
+                      href={`tel:${dialable(company.phone.primary.value)}`}
+                      className="font-heading text-[26px] font-semibold leading-(--lh-sm) text-neutral-1 transition-colors duration-300 hover:text-accent"
+                      data-placeholder={company.phone.primary.placeholder}
+                    >
+                      {company.phone.primary.value}
+                    </a>
+                  </div>
+                  <div className="flex flex-col gap-1.5 text-neutral-1">
+                    <p data-placeholder={company.address.line1.placeholder}>{shortAddress()}</p>
+                    <a
+                      href={`mailto:${company.email.enquiries.value}`}
+                      className="transition-colors duration-300 hover:text-accent"
+                      data-placeholder={company.email.enquiries.placeholder}
+                    >
+                      {company.email.enquiries.value}
+                    </a>
+                    <p data-placeholder={company.hours.placeholder}>{company.hours.value}</p>
+                  </div>
+                </div>
+                <div className="relative bg-neutral-2 pt-[50%]">
+                  <div className="absolute inset-0">
+                    <ImageFrame image={siteImages.safety} ratio="fill" sizes="(min-width: 1024px) 30vw, 100vw" />
+                  </div>
+                </div>
+                <Button href="/#contact" arrow={false} className="w-full justify-center">
+                  Get in touch
+                </Button>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- more projects ---------------- */}
+      {more.length > 0 && (
+        <section className="m-section bg-neutral-1" aria-label="More projects">
+          <div className="m-container">
+            <div className="flex flex-col gap-20 max-md:gap-12">
+              <div
+                className="flex items-center justify-between gap-8 max-md:flex-col max-md:items-start"
+                data-reveal="up"
+              >
+                <h2 className="m-h2">More projects</h2>
+                <Button href="/projects">All projects</Button>
+              </div>
+              <ul className="grid grid-cols-2 gap-[30px] max-lg:grid-cols-1" data-reveal="up">
+                {more.map((p) => (
+                  <li key={p.slug}>
+                    <ProjectCard project={p} />
                   </li>
                 ))}
-              </ol>
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
-
-      {/* =========================================================== CASE STUDY */}
-      <Section tone="white" space="lg" ariaLabel="Case study">
-        <Container>
-          <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
-            {/* -------- sticky index -------- */}
-            <div className="lg:col-span-3">
-              <nav aria-label="Case study contents" className="lg:sticky lg:top-32">
-                <Reveal>
-                  <TechLabel rule className="mb-8">
-                    Case study
-                  </TechLabel>
-                </Reveal>
-
-                <Reveal delay={0.06}>
-                  <ol className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-3 lg:grid-cols-1 lg:gap-y-5">
-                    {chapters.map((chapter) => (
-                      <li key={chapter.id}>
-                        <a
-                          href={`#${chapter.id}`}
-                          className="group flex items-baseline gap-3 tech text-muted transition-colors hover:text-charcoal"
-                        >
-                          <span className="tabular text-charcoal/35 transition-colors group-hover:text-brand">
-                            {chapter.index}
-                          </span>
-                          <span>{chapter.title}</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ol>
-                </Reveal>
-
-                <Reveal delay={0.12}>
-                  <div className="mt-10 hidden border-t border-charcoal/12 pt-6 lg:block">
-                    <p className="tech text-muted">Delivered by</p>
-                    <p className="mt-3 text-small text-charcoal">{company.name}</p>
-                  </div>
-                </Reveal>
-              </nav>
-            </div>
-
-            {/* -------- body -------- */}
-            <div className="lg:col-span-8 lg:col-start-5">
-              {chapters.map((chapter, i) => (
-                <article
-                  key={chapter.id}
-                  id={chapter.id}
-                  className={cn(
-                    'scroll-mt-32',
-                    i > 0 && 'mt-14 border-t border-charcoal/12 pt-14 md:mt-20 md:pt-20',
-                  )}
-                >
-                  <Reveal>
-                    <p className="tech tabular mb-6 text-brand">{chapter.index}</p>
-                  </Reveal>
-
-                  <Reveal delay={0.05}>
-                    <h2 className="font-display wdth-wide text-display-3 uppercase text-charcoal">
-                      {chapter.title}
-                    </h2>
-                  </Reveal>
-
-                  <Reveal delay={0.1}>
-                    <div
-                      className={cn(
-                        'measure mt-6 text-lead text-muted',
-                        chapter.id === 'result' && 'border-l-2 border-brand pl-6 md:pl-8',
-                      )}
-                    >
-                      <Prose text={chapter.body} />
-                    </div>
-                  </Reveal>
-                </article>
-              ))}
+              </ul>
             </div>
           </div>
-        </Container>
-      </Section>
-
-      {/* ============================================================== GALLERY */}
-      <Section tone="charcoal" space="md" ariaLabel="Project gallery">
-        <Container>
-          <SectionHeader
-            eyebrow="Gallery"
-            tone="light"
-            title={
-              <>
-                On the drawing,
-                {' '}<br />
-                in the shop, on site.
-              </>
-            }
-            aside={
-              <p className="tech max-w-[24ch] text-white/55" data-placeholder="true">
-                [PROJECT PHOTOGRAPHY TO BE SUPPLIED BY DSI]
-              </p>
-            }
-          />
-
-          <div className="mt-14 grid grid-cols-1 items-start gap-x-8 gap-y-12 md:gap-y-16 lg:grid-cols-12">
-            {project.gallery.map((plate, i) => {
-              const layout = GALLERY_LAYOUT[i % GALLERY_LAYOUT.length]
-
-              return (
-                <figure key={plate.label} className={cn('group', layout.span)}>
-                  <ImageFrame
-                    image={plate}
-                    tone="dark"
-                    ratio={layout.ratio}
-                    sizes={layout.sizes}
-                    revealDelay={i % 2 === 0 ? 0 : 0.08}
-                    showLabel={false}
-                    captioned
-                    zoom
-                    grain
-                  />
-                  <figcaption className="mt-5 flex items-baseline gap-4 border-t border-white/12 pt-4">
-                    <span className="tech tabular shrink-0 text-brand">{plate.label}</span>
-                    <span className="text-small text-white/55">{plate.alt}</span>
-                  </figcaption>
-                </figure>
-              )
-            })}
-          </div>
-        </Container>
-      </Section>
-
-      {/* ==================================================== TECHNICAL DETAILS */}
-      <Section tone="offwhite" space="md" ariaLabel="Technical details">
-        <Container>
-          <SectionHeader
-            eyebrow="Technical details"
-            title={
-              <>
-                Frame geometry
-                {' '}<br />
-                and principal quantities.
-              </>
-            }
-            lead="The parameters that governed the structure — span, height, grid and the loads the frame was sized against."
-            aside={
-              <Button href="/contact" variant="secondary" size="md" arrow>
-                Discuss a similar structure
-              </Button>
-            }
-          />
-
-          <Reveal delay={0.1}>
-            <dl className="mt-14 grid grid-cols-1 border-t border-charcoal/15 md:grid-cols-2 md:gap-x-16">
-              {project.technical.map((row) => (
-                <div
-                  key={row.label}
-                  className="flex items-baseline justify-between gap-8 border-b border-charcoal/12 py-6"
-                >
-                  <dt className="tech shrink-0 text-muted">{row.label}</dt>
-                  <dd
-                    className="tabular text-right text-body text-charcoal"
-                    data-placeholder={pendingAttr(row.value)}
-                  >
-                    {row.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </Reveal>
-
-          <Reveal delay={0.16}>
-            <p className="tech mt-8 text-muted" data-placeholder="true">
-              [BRACKETED VALUES TO BE CONFIRMED BY DSI BEFORE PUBLICATION]
-            </p>
-          </Reveal>
-        </Container>
-      </Section>
-
-      {/* ========================================================= NEXT PROJECT */}
-      <Section tone="white" space="sm" ariaLabel="Next project">
-        <Container>
-          <div className="flex flex-col gap-10 border-t border-charcoal/15 pt-10 md:flex-row md:items-end md:justify-between md:gap-16">
-            <Reveal className="min-w-0">
-              <Link href={`/projects/${nextProject.slug}`} className="group block">
-                <TechLabel rule className="mb-6">
-                  Next project
-                </TechLabel>
-
-                <h2 className="font-display wdth-wide text-display-3 uppercase text-charcoal">
-                  <span
-                    className="rule-grow inline-block"
-                    data-placeholder={pendingAttr(nextProject.name)}
-                  >
-                    {nextProject.name}
-                  </span>
-                </h2>
-
-                <p className="mt-6 flex items-center gap-4 tech text-muted">
-                  <span>{nextProject.buildingType}</span>
-                  <Arrow
-                    size={14}
-                    className="text-brand transition-transform duration-[400ms] ease-[var(--ease-expo)] group-hover:translate-x-1.5"
-                  />
-                </p>
-              </Link>
-            </Reveal>
-
-            <Reveal delay={0.08} className="shrink-0">
-              <Button href="/projects" variant="secondary" size="md">
-                All Projects
-              </Button>
-            </Reveal>
-          </div>
-        </Container>
-      </Section>
-
-      <CTASection
-        title={
-          <>
-            Building something
-            {' '}<br />
-            like this?
-          </>
-        }
-        lead="Send us the use case, the site and the programme. We will come back with a structural approach and a scope."
-        primaryLabel="Request a Quotation"
-      />
+        </section>
+      )}
     </>
   )
 }
 
 export const Route = createFileRoute('/projects/$slug')({
-  loader: ({ context }) => context.queryClient.ensureQueryData(projectsQueryOptions),
+  loader: async ({ context, params }) => {
+    const projects = await context.queryClient.ensureQueryData(projectsQueryOptions)
+    if (!projects.some((p) => p.slug === params.slug)) throw notFound()
+    return projects
+  },
   head: ({ params, loaderData }) => {
-    const project = ((loaderData as Project[] | undefined) ?? []).find((p) => p.slug === params.slug)
-    const title = project
-      ? `${project.buildingType} — Project ${project.index} | ${company.shortName}`
-      : `Project Not Found | ${company.shortName}`
+    const project = (loaderData ?? []).find((p) => p.slug === params.slug)
+    const title = project ? `${project.name} | Projects | ${company.name}` : `Projects | ${company.name}`
     const description = project
-      ? (project.verified
-          ? `${stripPending(project.study.overview)} Pre-engineered steel structure designed, fabricated and erected by ${company.name}.`
-          : `Pre-engineered steel ${project.buildingType.toLowerCase()} — design, fabrication, supply and erection by ${company.name}.`)
-      : 'This project record is not available.'
-
+      ? `${project.buildingType} in ${project.location}${project.area ? ` — ${project.area}` : ''}. ${project.study.overview}`.slice(0, 160)
+      : ''
     return {
       meta: [
         { title },
@@ -407,11 +261,11 @@ export const Route = createFileRoute('/projects/$slug')({
         { property: 'og:title', content: title },
         { property: 'og:description', content: description },
         { property: 'og:type', content: 'article' },
-        { name: 'twitter:card', content: 'summary_large_image' },
-        ...(project?.verified ? [] : [{ name: 'robots', content: 'noindex, follow' }]),
+        { property: 'og:url', content: `${company.siteUrl}/projects/${params.slug}` },
+        ...(project?.photo ? [{ property: 'og:image', content: `${company.siteUrl}${project.photo}` }] : []),
       ],
       links: [{ rel: 'canonical', href: `${company.siteUrl}/projects/${params.slug}` }],
     }
   },
-  component: ProjectDetailPage,
+  component: ProjectPage,
 })

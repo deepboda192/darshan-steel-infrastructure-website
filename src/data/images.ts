@@ -63,6 +63,7 @@ const img = (
 
 export const siteImages = {
   /* -------------------------------------------------------------------- HOME */
+  /** Hero backdrop. */
   hero: img(
     'hero-steel-frame',
     'Steel portal frames and purlins of an industrial building rising against the sky',
@@ -71,6 +72,7 @@ export const siteImages = {
     '50% 45%',
   ),
 
+  /** The six building types — used by data/solutions.ts. */
   whatWeBuild: {
     industrialSheds: img(
       'solution-industrial-shed',
@@ -110,39 +112,7 @@ export const siteImages = {
     ),
   },
 
-  manufacturing: img(
-    'manufacturing-shop',
-    'Fabrication shop with machinery running the length of the bay',
-    'plant',
-    'FIG. 04 — FABRICATION',
-  ),
-  manufacturingDetail: img(
-    'manufacturing-weld',
-    'Close-up of a welder joining a fabricated steel member',
-    'blueprint',
-    'WELD DETAIL',
-  ),
-
-  engineering: img(
-    'engineering-drawings',
-    'Structural drawings laid out with drafting pencils and a steel rule',
-    'blueprint',
-    'FIG. 05 — CONNECTION DETAIL',
-  ),
-
-  quality: img(
-    'quality-inspection',
-    'Inspector in a hard hat checking a fabricated steel component',
-    'plant',
-    'FIG. 07 — INSPECTION',
-  ),
-  safety: img(
-    'safety-site-crew',
-    'Site crew in hard hats and high-visibility vests on an active site',
-    'erection',
-    'FIG. 08 — ERECTION',
-  ),
-
+  /** About: the works, then the site. */
   aboutPrimary: img(
     'about-site-team',
     'Two workers inside a large steel-framed building under construction',
@@ -156,59 +126,64 @@ export const siteImages = {
     'DSI — SITE',
   ),
 
-  careers: img(
-    'careers-crew',
-    'Construction crew in hard hats gathered on site',
+  /** The works on the about page. */
+  manufacturing: img(
+    'manufacturing-shop',
+    'Fabrication shop with machinery running the length of the bay',
     'plant',
-    'DSI — TEAM',
+    'FIG. 04 — FABRICATION',
   ),
 
-  /* ---------------------------------------------------------- PAGE BANNERS */
-  pageBanners: {
-    about: img('banner-about', 'Steel structure detail against an open sky', 'frames', 'ABOUT'),
-    solutions: img(
-      'banner-solutions',
-      'Large industrial warehouse with loading gates',
-      'warehouse',
-      'SOLUTIONS',
-    ),
-    industries: img(
-      'banner-industries',
-      'Interior of a working factory building',
-      'aerial',
-      'INDUSTRIES',
-    ),
-    manufacturing: img(
-      'banner-manufacturing',
-      'CNC laser cutter profiling a steel plate',
-      'plant',
-      'MANUFACTURING',
-    ),
-    projects: img(
-      'banner-projects',
-      'Building under construction with tower cranes behind it',
-      'erection',
-      'PROJECTS',
-    ),
-    quality: img(
-      'engineering-blueprints',
-      'Engineering blueprints spread across a work surface',
-      'blueprint',
-      'QUALITY',
-    ),
-    contact: img(
-      'banner-contact',
-      'Dark steel frame silhouetted against a pale sky',
-      'frames',
-      'CONTACT',
-    ),
-    careers: img(
-      'banner-careers',
-      'Roofing machine at work inside a building under construction',
-      'plant',
-      'CAREERS',
-    ),
-  },
+  /**
+   * DSI's own drone photograph of the works at Rajkot — the backdrop behind
+   * the Why DSI plate. A WebP supplied by DSI, so it bypasses the .jpg helper.
+   */
+  worksAerial: {
+    src: '/images/works-aerial.webp',
+    alt: 'Aerial view of the Darshan Steel Infrastructure works and yard at Rajkot, surrounded by farmland',
+    plate: 'aerial',
+    label: 'FIG. 05 — THE WORKS FROM ABOVE',
+    focus: '50% 55%',
+  } satisfies SiteImage,
+
+  /** Photograph beside the enquiry form. */
+  safety: img(
+    'safety-site-crew',
+    'Site crew in hard hats and high-visibility vests on an active site',
+    'erection',
+    'FIG. 08 — ERECTION',
+  ),
+
+  /** Backdrop behind the closing call to action and footer. */
+  /* Inner-page heroes: the projects index and every project record. */
+  projectsHero: img(
+    'banner-projects',
+    'Building under construction with tower cranes behind it',
+    'erection',
+    'FIG. 07 — PROJECTS',
+    '50% 45%',
+  ),
+  projectHero: img(
+    'banner-industries',
+    'Interior of a working factory building',
+    'aerial',
+    'FIG. 08 — PROJECT RECORD',
+    '50% 50%',
+  ),
+  /* About page: hero, the small projects still, the film poster, the
+     tagline band, shop-and-site and the second works. */
+  aboutHero: img('banner-about', 'Steel structure detail against an open sky', 'frames', 'FIG. 09 — ABOUT', '50% 50%'),
+  aboutProjects: img('gallery-site-progress', 'Plant working beside a partly clad steel building', 'warehouse', 'FIG. 10 — SITE PROGRESS'),
+  aboutFilm: img('banner-manufacturing', 'CNC laser cutter profiling a steel plate', 'plant', 'FIG. 11 — THE WORKS'),
+  aboutBand: img('gallery-frame-sky', 'Steel portal frame standing against an overcast sky', 'frames', 'FIG. 12 — PORTAL FRAME'),
+  quality: img('quality-inspection', 'Inspector in a hard hat checking a fabricated steel component', 'blueprint', 'FIG. 13 — INSPECTION'),
+  worksWeld: img('manufacturing-weld', 'Close-up of a welder joining a fabricated steel member', 'plant', 'FIG. 14 — WELDING'),
+  footer: img(
+    'banner-projects',
+    'Building under construction with tower cranes behind it',
+    'erection',
+    'PROJECTS',
+  ),
 } as const
 
 /**
@@ -238,3 +213,13 @@ export function galleryFor(index: number, prefix: string): SiteImage[] {
     }
   })
 }
+
+/**
+ * Motion backdrop for the hero. Never part of the first paint: the hero
+ * photograph renders immediately and sections/HeroVideo attaches this file
+ * only after the page's load event, so First Contentful Paint is unaffected.
+ */
+export const heroVideo = {
+  src: '/videos/hero-loop.mp4',
+  type: 'video/mp4',
+} as const

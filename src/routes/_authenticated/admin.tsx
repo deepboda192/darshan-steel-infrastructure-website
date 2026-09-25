@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import Link from '@/components/site/NextLink'
 import { supabase } from '@/integrations/supabase/client'
 import { Container } from '@/components/site/Container'
+import { Logo } from '@/components/layout/Logo'
 import { cn } from '@/lib/cn'
 
 const NAV = [
@@ -11,6 +12,11 @@ const NAV = [
   { label: 'Users', href: '/admin/users' },
 ]
 
+/**
+ * The admin shell: a white header bar with the brand, the section tabs and
+ * the way out, over a neutral-1 workspace. Screens render in the outlet
+ * once the signed-in account is confirmed to hold the admin role.
+ */
 function AdminLayout() {
   const navigate = useNavigate()
   const pathname = useRouterState({ select: (s) => s.location.pathname })
@@ -33,61 +39,73 @@ function AdminLayout() {
   }
 
   return (
-    <section className="min-h-screen bg-white pt-32 pb-24">
-      <Container>
-        <div className="flex flex-wrap items-end justify-between gap-6 border-b border-charcoal/15 pb-6">
-          <div>
-            <p className="tech text-muted">Admin</p>
-            <h1 className="mt-3 font-display text-display-3 uppercase text-charcoal">
-              Site management
-            </h1>
+    <div className="min-h-svh bg-neutral-1 text-neutral-10">
+      <header className="border-b border-black/10 bg-white">
+        <Container>
+          <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 py-5">
+            <div className="flex items-center gap-5">
+              <Logo tone="light" height={34} />
+              <span aria-hidden="true" className="h-8 w-px bg-black/15 max-xs:hidden" />
+              <p className="font-heading text-[16px] font-semibold text-neutral-8 max-xs:hidden">
+                Site management
+              </p>
+            </div>
+            <div className="flex items-center gap-6">
+              <Link href="/" className="m-link">
+                View site
+              </Link>
+              <button type="button" onClick={signOut} className="m-link">
+                Sign out
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-6">
-            <Link href="/" className="tech text-muted hover:text-charcoal">
-              View site
-            </Link>
-            <button type="button" onClick={signOut} className="tech text-brand hover:underline">
-              Sign out
-            </button>
-          </div>
-        </div>
 
-        <nav className="mt-6 flex gap-6">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                'tech border-b-2 pb-2',
-                pathname === item.href
-                  ? 'border-brand text-charcoal'
-                  : 'border-transparent text-muted hover:text-charcoal',
-              )}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+          <nav aria-label="Admin sections" className="-mb-px flex gap-8 overflow-x-auto">
+            {NAV.map((item) => {
+              const current = pathname === item.href
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={current ? 'page' : undefined}
+                  className={cn(
+                    'whitespace-nowrap border-b-2 pb-4 font-heading text-[14px] font-semibold uppercase tracking-[0.5px] transition-colors duration-300',
+                    current
+                      ? 'border-accent text-neutral-10'
+                      : 'border-transparent text-neutral-6 hover:text-neutral-10',
+                  )}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
+          </nav>
+        </Container>
+      </header>
 
-        <div className="mt-12">
+      <main className="py-12 max-md:py-8">
+        <Container>
           {isLoading ? (
-            <p className="tech text-muted">Checking access…</p>
+            <p role="status" className="text-[15px] text-neutral-6">
+              Checking access…
+            </p>
           ) : isAdmin ? (
             <Outlet />
           ) : (
-            <div className="border border-charcoal/15 p-10">
-              <h2 className="font-display text-display-4 uppercase text-charcoal">
+            <div className="max-w-[640px] border border-black/10 bg-white p-10 max-xs:p-6">
+              <p className="m-subtitle">Access</p>
+              <h2 className="mt-4 font-heading text-[28px] font-bold leading-(--lh-sm) text-neutral-10">
                 Access not enabled
               </h2>
-              <p className="measure mt-4 text-small text-muted">
+              <p className="mt-3 text-[15px] leading-[1.6] text-neutral-7">
                 Your account is signed in but has not been granted the admin role yet. Ask an
                 existing administrator to add it, then reload this page.
               </p>
             </div>
           )}
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </main>
+    </div>
   )
 }
 

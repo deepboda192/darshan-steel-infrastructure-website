@@ -13,16 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as CareersRouteImport } from './routes/careers'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as IndustriesRouteImport } from './routes/industries'
-import { Route as ManufacturingRouteImport } from './routes/manufacturing'
-import { Route as PebSolutionsRouteImport } from './routes/peb-solutions'
-import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as QualityEngineeringRouteImport } from './routes/quality-engineering'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects/$slug'
@@ -50,41 +42,6 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CareersRoute = CareersRouteImport.update({
-  id: '/careers',
-  path: '/careers',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndustriesRoute = IndustriesRouteImport.update({
-  id: '/industries',
-  path: '/industries',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ManufacturingRoute = ManufacturingRouteImport.update({
-  id: '/manufacturing',
-  path: '/manufacturing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PebSolutionsRoute = PebSolutionsRouteImport.update({
-  id: '/peb-solutions',
-  path: '/peb-solutions',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const QualityEngineeringRoute = QualityEngineeringRouteImport.update({
-  id: '/quality-engineering',
-  path: '/quality-engineering',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
@@ -93,11 +50,6 @@ const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
@@ -141,16 +93,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/careers': typeof CareersRoute
-  '/contact': typeof ContactRoute
-  '/industries': typeof IndustriesRoute
-  '/manufacturing': typeof ManufacturingRoute
-  '/peb-solutions': typeof PebSolutionsRoute
-  '/privacy': typeof PrivacyRoute
-  '/quality-engineering': typeof QualityEngineeringRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/terms': typeof TermsRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/': typeof ProjectsIndexRoute
@@ -163,16 +107,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/careers': typeof CareersRoute
-  '/contact': typeof ContactRoute
-  '/industries': typeof IndustriesRoute
-  '/manufacturing': typeof ManufacturingRoute
-  '/peb-solutions': typeof PebSolutionsRoute
-  '/privacy': typeof PrivacyRoute
-  '/quality-engineering': typeof QualityEngineeringRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/terms': typeof TermsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects': typeof ProjectsIndexRoute
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
@@ -186,16 +122,8 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/careers': typeof CareersRoute
-  '/contact': typeof ContactRoute
-  '/industries': typeof IndustriesRoute
-  '/manufacturing': typeof ManufacturingRoute
-  '/peb-solutions': typeof PebSolutionsRoute
-  '/privacy': typeof PrivacyRoute
-  '/quality-engineering': typeof QualityEngineeringRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/terms': typeof TermsRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/': typeof ProjectsIndexRoute
@@ -210,16 +138,8 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
-    | '/careers'
-    | '/contact'
-    | '/industries'
-    | '/manufacturing'
-    | '/peb-solutions'
-    | '/privacy'
-    | '/quality-engineering'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/terms'
     | '/admin'
     | '/projects/$slug'
     | '/projects/'
@@ -232,16 +152,8 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
-    | '/careers'
-    | '/contact'
-    | '/industries'
-    | '/manufacturing'
-    | '/peb-solutions'
-    | '/privacy'
-    | '/quality-engineering'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/terms'
     | '/projects/$slug'
     | '/projects'
     | '/admin/projects'
@@ -254,16 +166,8 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/auth'
-    | '/careers'
-    | '/contact'
-    | '/industries'
-    | '/manufacturing'
-    | '/peb-solutions'
-    | '/privacy'
-    | '/quality-engineering'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/terms'
     | '/_authenticated/admin'
     | '/projects/$slug'
     | '/projects/'
@@ -278,16 +182,8 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
-  CareersRoute: typeof CareersRoute
-  ContactRoute: typeof ContactRoute
-  IndustriesRoute: typeof IndustriesRoute
-  ManufacturingRoute: typeof ManufacturingRoute
-  PebSolutionsRoute: typeof PebSolutionsRoute
-  PrivacyRoute: typeof PrivacyRoute
-  QualityEngineeringRoute: typeof QualityEngineeringRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  TermsRoute: typeof TermsRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiPublicEnquiryRoute: typeof ApiPublicEnquiryRoute
@@ -323,55 +219,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/careers': {
-      id: '/careers'
-      path: '/careers'
-      fullPath: '/careers'
-      preLoaderRoute: typeof CareersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/industries': {
-      id: '/industries'
-      path: '/industries'
-      fullPath: '/industries'
-      preLoaderRoute: typeof IndustriesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/manufacturing': {
-      id: '/manufacturing'
-      path: '/manufacturing'
-      fullPath: '/manufacturing'
-      preLoaderRoute: typeof ManufacturingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/peb-solutions': {
-      id: '/peb-solutions'
-      path: '/peb-solutions'
-      fullPath: '/peb-solutions'
-      preLoaderRoute: typeof PebSolutionsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/quality-engineering': {
-      id: '/quality-engineering'
-      path: '/quality-engineering'
-      fullPath: '/quality-engineering'
-      preLoaderRoute: typeof QualityEngineeringRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/robots.txt': {
       id: '/robots.txt'
       path: '/robots.txt'
@@ -384,13 +231,6 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin': {
@@ -476,16 +316,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
-  CareersRoute: CareersRoute,
-  ContactRoute: ContactRoute,
-  IndustriesRoute: IndustriesRoute,
-  ManufacturingRoute: ManufacturingRoute,
-  PebSolutionsRoute: PebSolutionsRoute,
-  PrivacyRoute: PrivacyRoute,
-  QualityEngineeringRoute: QualityEngineeringRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  TermsRoute: TermsRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiPublicEnquiryRoute: ApiPublicEnquiryRoute,

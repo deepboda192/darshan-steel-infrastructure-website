@@ -57,3 +57,9 @@ DSI photograph of the same name and the site picks it up with no code change.
 | `gallery-racking.jpg` | Labelled cartons on warehouse racking | [photo-1606824722920-4c652a70f348](https://images.unsplash.com/photo-1606824722920-4c652a70f348?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `gallery-structure-detail.jpg` | Detail of a grey steel structure in daylight | [photo-1509024368907-57294758cfc5](https://images.unsplash.com/photo-1509024368907-57294758cfc5?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `gallery-crane-lift.jpg` | Crane lifting a load on an industrial site | [photo-1660884121477-2be490bc2a08](https://images.unsplash.com/photo-1660884121477-2be490bc2a08?auto=format&fit=max&w=1800&q=75&fm=jpg) |
+
+## DSI's own photography
+
+| File | Subject | Source |
+| --- | --- | --- |
+| `works-aerial.webp` | Drone view of the DSI works and yard at Rajkot | Supplied by Darshan Steel Infrastructure |

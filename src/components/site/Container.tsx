@@ -10,11 +10,14 @@ type ContainerProps = {
 }
 
 /**
- * The site's horizontal rhythm. Every content block sits inside a Container so
- * that text, images and the structural grid overlay share one set of edges.
+ * The site's horizontal rhythm — the 1370px container with responsive side
+ * padding. Marketing sections use the `m-container` class directly; this
+ * wrapper serves the admin screens.
  */
 export function Container({ children, className, as: Tag = 'div', bleed = false }: ContainerProps) {
   return (
-    <Tag className={cn(bleed ? 'w-full px-gutter' : 'container-site', className)}>{children}</Tag>
+    <Tag className={cn(bleed ? 'w-full px-[var(--container-pad)]' : 'm-container', className)}>
+      {children}
+    </Tag>
   )
 }

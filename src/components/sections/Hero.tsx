@@ -1,104 +1,134 @@
 import { siteImages } from '@/data/images'
-import { ImageFrame } from '@/components/media/ImageFrame'
+import { company } from '@/data/company'
 import { Button } from '@/components/site/Button'
-import { Reveal } from '@/components/animations/Reveal'
+import { HeroVideo } from './HeroVideo'
 
 const DISCIPLINES = ['PEB Manufacturing', 'Structural Steel', 'Engineering & Erection']
 
 /**
  * Homepage hero.
  *
- * Full-height, dark, image-led. The headline reveals line by line behind a
- * mask and the background settles from a 1.06 scale. Everything else is
- * restraint — one blue accent word, one blue button.
+ * A full-height photograph — a looping video fades in over it once the page
+ * has loaded — under a dark wash, the headline blurring in word
+ * by word, one solid call to action beside the positioning line. Directly
+ * beneath, on the hairline: the certification marks on the left, the project
+ * count in the accent stat box on the right. Figures and certifications come
+ * from data/company.ts.
  */
 export function Hero() {
+  const projectsMetric = company.metrics.find((m) => m.key === 'projects')
+  const certifications = company.certifications.filter((c) => c.verified)
+
   return (
     <section
-      className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden bg-charcoal on-dark"
+      className="relative isolate flex min-h-svh flex-col overflow-hidden pb-[min(54px,5svh)] pt-[78px] text-white"
       aria-label="Introduction"
     >
       {/* ---------------- background ---------------- */}
-      <div className="absolute inset-0">
-        <ImageFrame
-          image={siteImages.hero}
-          tone="dark"
-          ratio="fill"
-          reveal={false}
-          priority
-          grain
-          scrim={72}
-          scrimStyle="editorial"
-          sizes="100vw"
-          showLabel={false}
-          className="dsi-hero-media"
-        />
-      </div>
-
-      {/* structural grid wash over the image */}
       <div
         aria-hidden="true"
-        className="blueprint pointer-events-none absolute inset-0 text-white opacity-[0.05]"
-      />
+        className="absolute inset-0 -z-10 bg-cover bg-[50%] bg-fixed max-md:bg-scroll max-xs:bg-[72%]"
+        style={{ backgroundImage: `url(${siteImages.hero.src})` }}
+      >
+        <HeroVideo />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,#000000a6,#0000008c)]" />
+      </div>
 
-      {/* ---------------- content ---------------- */}
-      <div className="container-site relative z-10 pb-16 pt-32 md:pb-20 lg:pb-24">
-        {/* disciplines */}
-        <Reveal delay={0.15}>
-          <ul className="mb-8 flex flex-wrap items-center gap-x-7 gap-y-3 tech text-white/55">
-            {DISCIPLINES.map((d, i) => (
-              <li key={d} className="flex items-center gap-7">
-                {i > 0 && <span aria-hidden="true" className="h-3 w-px bg-white/25" />}
-                {d}
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+      {/* ---------------- top: headline ---------------- */}
+      <div className="border-b border-white/30 py-[min(32px,3svh)] max-lg:border-b-0 max-lg:pb-[70px] max-md:pb-20">
+        <div className="m-container">
+          <div className="flex max-w-[700px] flex-col gap-[min(48px,4.5svh)] max-md:gap-6">
+            <ul
+              className="flex flex-wrap items-center gap-x-6 gap-y-2 font-heading text-[14px] font-semibold uppercase tracking-[0.5px] text-white/70"
+              data-reveal="fade"
+            >
+              {DISCIPLINES.map((d, i) => (
+                <li key={d} className="flex items-center gap-6">
+                  {i > 0 && <span aria-hidden="true" className="h-3 w-px bg-white/30 max-md:hidden" />}
+                  {d}
+                </li>
+              ))}
+            </ul>
 
-        {/* headline */}
-        <h1 className="font-display wdth-wide text-display-1 uppercase text-white">
-          <Reveal variant="line" delay={0.28}>
-            Pre-Engineered
-          </Reveal>
-          <Reveal variant="line" delay={0.38}>
-            <span>For </span>
-            <span className="text-brand">Industry.</span>
-          </Reveal>
-        </h1>
+            <h1 className="m-h1 light" data-animation="blur-stagger">
+              Pre-Engineered For Industry.
+            </h1>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-12 lg:items-end">
-          <Reveal delay={0.5} className="lg:col-span-6">
-            <p className="measure text-lead text-white/70">
-              Darshan Steel Infrastructure delivers complete Pre-Engineered Building
-              solutions for modern industrial spaces.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.58} className="lg:col-span-5 lg:col-start-8">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center lg:justify-end">
-              <Button href="/contact" size="lg" arrow>
-                Start Your Project
-              </Button>
-              <Button href="/manufacturing" variant="secondary" tone="dark" size="lg">
-                Explore Capabilities
-              </Button>
+            <div
+              className="flex items-center gap-10 max-md:flex-col-reverse max-md:items-start max-md:gap-8"
+              data-reveal="up"
+            >
+              <Button href="/#contact">Start Your Project</Button>
+              <div className="max-w-[400px]">
+                <p className="text-[18px] leading-[1.5] text-white max-xs:text-[16px] max-xs:leading-[1.6]">
+                  Darshan Steel Infrastructure delivers complete Pre-Engineered Building solutions
+                  for modern industrial spaces.
+                </p>
+              </div>
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
 
+      {/* ---------------- bottom: figures ---------------- */}
+      <div className="border-b border-white/30 max-lg:border-b-0">
+        <div className="m-container">
+          <div className="flex items-end justify-between max-md:flex-col max-md:items-start max-md:gap-8">
+            {/* the certification marks, on equal white plates */}
+            <ul
+              className="flex items-center gap-5 pb-8 max-lg:pb-0 max-xs:gap-4"
+              aria-label="Certifications"
+              data-reveal="up"
+            >
+              {certifications.map((cert) => (
+                <li
+                  key={cert.label}
+                  className="flex h-[min(180px,23svh)] w-[min(180px,23svh)] items-center justify-center max-lg:h-[156px] max-lg:w-[156px] max-xs:h-[100px] max-xs:w-[100px]"
+                >
+                  <img
+                    src={cert.logo}
+                    alt={`${cert.label} certified — ${cert.issuer}`}
+                    className="h-full w-full object-contain"
+                    decoding="async"
+                  />
+                </li>
+              ))}
+            </ul>
 
-      {/* entry zoom on the background only */}
-      <style>{`
-        .dsi-hero-media { animation: dsi-hero-settle 2200ms var(--ease-expo) both; }
-        @keyframes dsi-hero-settle {
-          from { transform: scale(1.07); }
-          to   { transform: scale(1); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .dsi-hero-media { animation: none; }
-        }
-      `}</style>
+            {projectsMetric && (
+              <div
+                className="relative flex h-[clamp(170px,26svh,270px)] w-full max-w-[320px] flex-col justify-between bg-accent px-[30px] py-6 max-lg:h-[240px] max-lg:max-w-[290px] max-lg:px-[26px] max-lg:py-5 max-md:max-w-full max-md:pr-[54px]"
+                data-reveal="fade"
+                data-placeholder={projectsMetric.placeholder}
+              >
+                <p className="font-heading text-[length:min(68px,7.5svh)] font-semibold leading-none text-white max-lg:text-[64px] max-xs:text-[60px]">
+                  <span data-counter={projectsMetric.value} data-suffix={projectsMetric.suffix}>
+                    {projectsMetric.value}
+                    {projectsMetric.suffix}
+                  </span>
+                </p>
+                <div>
+                  <p className="font-heading text-[24px] font-bold leading-(--lh-sm) text-white max-lg:text-[22px]">
+                    {projectsMetric.label}
+                  </p>
+                  <p className="mt-1.5 text-neutral-1 max-lg:mt-3.5">{projectsMetric.note}</p>
+                </div>
+
+                {/* Vertical rules from the top of the page to the foot of the hero: they
+                    overshoot on purpose and the section's overflow-hidden trims them. */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -bottom-[100vh] left-0 h-[350vh] w-px bg-white/30 max-lg:hidden"
+                />
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -bottom-[100vh] right-0 h-[350vh] w-px bg-white/30 max-lg:hidden"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </section>
   )
 }

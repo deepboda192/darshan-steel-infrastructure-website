@@ -1,15 +1,25 @@
 import { useState } from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { AlertCircle, CheckCircle2 } from 'lucide-react'
 import { supabase } from '@/integrations/supabase/client'
-import { Container } from '@/components/site/Container'
+import { Logo } from '@/components/layout/Logo'
+import { Button } from '@/components/site/Button'
 
+const LABEL = 'font-heading text-[14px] font-semibold uppercase tracking-[0.5px] text-neutral-8'
+
+/**
+ * Staff sign-in — a tool, not a page of the site, so it renders without the
+ * marketing chrome: the dark surface, a white card with the brand, the form
+ * in the site's field dress and the way to create an account (which only
+ * becomes useful once an administrator grants the role).
+ */
 function AuthPage() {
   const navigate = useNavigate()
   const [mode, setMode] = useState<'signin' | 'signup'>('signin')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [busy, setBusy] = useState(false)
-  const [message, setMessage] = useState<string | null>(null)
+  const [message, setMessage] = useState<{ tone: 'error' | 'info'; text: string } | null>(null)
 
   async function onSubmit(event: React.FormEvent) {
     event.preventDefault()
@@ -28,74 +38,109 @@ function AuthPage() {
     setBusy(false)
 
     if (result.error) {
-      setMessage(result.error.message)
+      setMessage({ tone: 'error', text: result.error.message })
       return
     }
 
     if (result.data.session) {
       navigate({ to: '/admin' })
     } else {
-      setMessage('Check your inbox to confirm your email address, then sign in.')
+      setMessage({
+        tone: 'info',
+        text: 'Check your inbox to confirm your email address, then sign in.',
+      })
     }
   }
 
   return (
-    <section className="bg-charcoal py-32 text-white">
-      <Container>
-        <div className="mx-auto max-w-md">
-          <p className="tech text-white/55">Darshan Steel Infrastructure</p>
-          <h1 className="mt-4 font-display text-display-3 uppercase">Staff sign in</h1>
-          <p className="mt-4 text-small text-white/60">
-            Access to the site administration panel is restricted to authorised staff.
-          </p>
+    <section className="flex min-h-svh items-center justify-center bg-secondary px-4 py-16">
+      <div className="w-full max-w-[440px] bg-white p-10 shadow-[0_10px_25px_#0000004d] max-xs:p-6">
+        <div>
+          <Logo tone="light" height={36} />
+        </div>
 
-          <form onSubmit={onSubmit} className="mt-10 space-y-5">
-            <label className="block">
-              <span className="tech text-white/55">Email</span>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mt-2 w-full border border-white/20 bg-transparent px-4 py-3 text-white outline-none focus:border-brand"
-              />
+        <div className="mt-8">
+          <p className="m-subtitle">Staff sign in</p>
+        </div>
+        <h1 className="mt-4 font-heading text-[28px] font-bold leading-(--lh-sm) text-neutral-10">
+          {mode === 'signin' ? 'Sign in to manage the site.' : 'Create a staff account.'}
+        </h1>
+        <p className="mt-3 text-[15px] leading-[1.6] text-neutral-7">
+          Access to the site administration panel is restricted to authorised staff.
+        </p>
+
+        <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-5">
+          <div className="flex flex-col">
+            <label htmlFor="auth-email" className={`${LABEL} mb-2`}>
+              Email
             </label>
-
-            <label className="block">
-              <span className="tech text-white/55">Password</span>
-              <input
-                type="password"
-                required
-                minLength={6}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mt-2 w-full border border-white/20 bg-transparent px-4 py-3 text-white outline-none focus:border-brand"
-              />
-            </label>
-
-            {message ? <p className="text-small text-brand">{message}</p> : null}
-
-            <button
-              type="submit"
+            <input
+              id="auth-email"
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               disabled={busy}
-              className="w-full bg-brand px-6 py-3.5 tech uppercase text-white disabled:opacity-60"
-            >
-              {busy ? 'Please wait…' : mode === 'signin' ? 'Sign in' : 'Create account'}
-            </button>
-          </form>
+              placeholder="name@darshansteelinfra.com"
+              className="m-field"
+            />
+          </div>
 
+          <div className="flex flex-col">
+            <label htmlFor="auth-password" className={`${LABEL} mb-2`}>
+              Password
+            </label>
+            <input
+              id="auth-password"
+              type="password"
+              autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
+              required
+              minLength={6}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              disabled={busy}
+              placeholder={mode === 'signin' ? 'Your password' : 'At least 6 characters'}
+              className="m-field"
+            />
+          </div>
+
+          {message && (
+            <p
+              role={message.tone === 'error' ? 'alert' : 'status'}
+              className={`flex items-start gap-2 border px-4 py-3 text-[14px] leading-[1.5] ${
+                message.tone === 'error'
+                  ? 'border-error/40 bg-error/5 text-error'
+                  : 'border-accent/40 bg-accent/5 text-neutral-9'
+              }`}
+            >
+              {message.tone === 'error' ? (
+                <AlertCircle aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2} />
+              ) : (
+                <CheckCircle2 aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-accent" strokeWidth={2} />
+              )}
+              <span>{message.text}</span>
+            </p>
+          )}
+
+          <Button type="submit" disabled={busy} arrow={false} className="w-full justify-center">
+            {busy ? 'Please wait…' : mode === 'signin' ? 'Sign in' : 'Create account'}
+          </Button>
+        </form>
+
+        <div className="mt-6 border-t border-black/10 pt-5">
           <button
             type="button"
             onClick={() => {
               setMode(mode === 'signin' ? 'signup' : 'signin')
               setMessage(null)
             }}
-            className="mt-6 tech text-white/55 underline underline-offset-4 hover:text-white"
+            className="m-link"
           >
             {mode === 'signin' ? 'Create a staff account' : 'I already have an account'}
           </button>
         </div>
-      </Container>
+      </div>
     </section>
   )
 }

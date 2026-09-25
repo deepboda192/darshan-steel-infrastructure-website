@@ -5,6 +5,8 @@ import { toast } from 'sonner'
 import { supabase } from '@/integrations/supabase/client'
 import { PROJECT_COLUMNS, type ProjectRow } from '@/lib/projects-map'
 import { cn } from '@/lib/cn'
+import { Button } from '@/components/site/Button'
+import { Select } from '@/components/site/Select'
 
 const PLATES = ['frames', 'erection', 'plant', 'blueprint', 'warehouse', 'coldstore', 'aerial']
 
@@ -98,8 +100,8 @@ const slugify = (value: string) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
 
-const inputClass =
-  'mt-2 w-full border border-charcoal/20 bg-white px-3 py-2.5 text-small text-charcoal outline-none focus:border-brand'
+const inputClass = 'm-field mt-2'
+const LABEL = 'font-heading text-[14px] font-semibold uppercase tracking-[0.5px] text-neutral-8'
 
 function Field({
   label,
@@ -112,7 +114,7 @@ function Field({
 }) {
   return (
     <label className={cn('block', className)}>
-      <span className="tech text-muted">{label}</span>
+      <span className={LABEL}>{label}</span>
       {children}
     </label>
   )
@@ -198,34 +200,32 @@ function AdminProjects() {
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <h2 className="font-display text-display-4 uppercase text-charcoal">Projects</h2>
-        <button
-          type="button"
-          onClick={() => setForm({ ...EMPTY, sort_order: rows.length + 1 })}
-          className="bg-brand px-6 py-3 tech uppercase text-white"
-        >
+        <h2 className="font-heading text-[28px] font-bold leading-(--lh-sm) text-neutral-10">Projects</h2>
+        <Button arrow={false} onClick={() => setForm({ ...EMPTY, sort_order: rows.length + 1 })}>
           Add project
-        </button>
+        </Button>
       </div>
 
       {isLoading ? (
-        <p className="tech mt-8 text-muted">Loading…</p>
+        <p role="status" className="mt-8 text-[15px] text-neutral-6">
+          Loading…
+        </p>
       ) : (
-        <ul className="mt-8 divide-y divide-charcoal/12 border-y border-charcoal/12">
+        <ul className="mt-8 border border-black/10 bg-white">
           {rows.map((row) => (
-            <li key={row.id} className="flex flex-wrap items-center gap-4 py-5">
-              <span className="tabular font-display text-display-4 text-charcoal/40">{row.idx}</span>
+            <li
+              key={row.id}
+              className="flex flex-wrap items-center gap-5 border-b border-black/10 p-5 last:border-b-0"
+            >
+              <span className="font-heading text-[24px] font-bold text-neutral-3 tabular-nums">{row.idx}</span>
               <div className="min-w-0 flex-1">
-                <p className="font-display uppercase text-charcoal">{row.name}</p>
-                <p className="tech mt-1 text-muted">
-                  {row.building_type} · /projects/{row.slug} · {row.verified ? 'Published data' : 'Placeholder data'}
+                <p className="truncate font-heading text-[18px] font-semibold text-neutral-10">{row.name}</p>
+                <p className="mt-1 text-[13px] uppercase text-neutral-6">
+                  {row.building_type} · /projects/{row.slug} ·{' '}
+                  {row.verified ? 'Published data' : 'Placeholder data'}
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => setForm(rowToForm(row))}
-                className="tech text-charcoal underline underline-offset-4"
-              >
+              <button type="button" onClick={() => setForm(rowToForm(row))} className="m-link">
                 Edit
               </button>
               <button
@@ -233,30 +233,30 @@ function AdminProjects() {
                 onClick={() => {
                   if (confirm(`Delete "${row.name}"? This cannot be undone.`)) remove.mutate(row.id)
                 }}
-                className="tech text-brand underline underline-offset-4"
+                className="text-[16px] font-medium text-error underline underline-offset-[3px]"
               >
                 Delete
               </button>
             </li>
           ))}
-          {rows.length === 0 ? <li className="py-6 tech text-muted">No projects yet.</li> : null}
+          {rows.length === 0 ? <li className="p-5 text-[15px] text-neutral-6">No projects yet.</li> : null}
         </ul>
       )}
 
       {form ? (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal/70 p-4 sm:p-10">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 p-4 sm:p-10">
           <form
             onSubmit={(e) => {
               e.preventDefault()
               save.mutate(form)
             }}
-            className="mx-auto max-w-3xl bg-white p-8"
+            className="mx-auto max-w-3xl bg-white p-8 shadow-[0_10px_25px_#0000004d] max-xs:p-5"
           >
-            <div className="flex items-center justify-between border-b border-charcoal/15 pb-5">
-              <h3 className="font-display text-display-4 uppercase text-charcoal">
+            <div className="flex items-center justify-between border-b border-black/10 pb-5">
+              <h3 className="font-heading text-[24px] font-bold leading-(--lh-sm) text-neutral-10">
                 {form.id ? 'Edit project' : 'New project'}
               </h3>
-              <button type="button" onClick={() => setForm(null)} className="tech text-muted">
+              <button type="button" onClick={() => setForm(null)} className="m-link">
                 Close
               </button>
             </div>
@@ -328,19 +328,17 @@ function AdminProjects() {
                   onChange={(e) => set('scope', e.target.value)}
                 />
               </Field>
-              <Field label="Fallback plate style">
-                <select
-                  className={inputClass}
+              <div className="flex flex-col">
+                <label htmlFor="project-plate" className={`${LABEL} mb-2`}>
+                  Fallback plate style
+                </label>
+                <Select
+                  id="project-plate"
                   value={form.plate}
-                  onChange={(e) => set('plate', e.target.value)}
-                >
-                  {PLATES.map((plate) => (
-                    <option key={plate} value={plate}>
-                      {plate}
-                    </option>
-                  ))}
-                </select>
-              </Field>
+                  onChange={(next) => set('plate', next)}
+                  options={PLATES.map((plate) => ({ value: plate, label: plate }))}
+                />
+              </div>
               <Field label="Display order">
                 <input
                   type="number"
@@ -381,30 +379,23 @@ function AdminProjects() {
               <label className="flex items-center gap-3 sm:col-span-2">
                 <input
                   type="checkbox"
+                  className="h-4 w-4 accent-accent"
                   checked={form.verified}
                   onChange={(e) => set('verified', e.target.checked)}
                 />
-                <span className="tech text-muted">
+                <span className="text-[15px] leading-[1.5] text-neutral-8">
                   All figures on this record are real and checked (removes the placeholder flag)
                 </span>
               </label>
             </div>
 
-            <div className="mt-8 flex gap-4 border-t border-charcoal/15 pt-6">
-              <button
-                type="submit"
-                disabled={save.isPending}
-                className="bg-brand px-8 py-3 tech uppercase text-white disabled:opacity-60"
-              >
+            <div className="mt-8 flex flex-wrap gap-4 border-t border-black/10 pt-6">
+              <Button type="submit" arrow={false} disabled={save.isPending}>
                 {save.isPending ? 'Saving…' : 'Save project'}
-              </button>
-              <button
-                type="button"
-                onClick={() => setForm(null)}
-                className="border border-charcoal/25 px-8 py-3 tech uppercase text-charcoal"
-              >
+              </Button>
+              <Button variant="outline" arrow={false} onClick={() => setForm(null)}>
                 Cancel
-              </button>
+              </Button>
             </div>
           </form>
         </div>

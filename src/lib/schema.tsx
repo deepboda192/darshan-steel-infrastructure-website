@@ -1,5 +1,4 @@
 import { company } from '@/data/company'
-import { solutions } from '@/data/solutions'
 
 /**
  * JSON-LD builders.
@@ -70,26 +69,7 @@ export function websiteSchema(): Json {
   }
 }
 
-/** Service catalogue for the solutions page. */
-export function serviceCatalogSchema(): Json {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: 'Pre-Engineered Building Solutions',
-    itemListElement: solutions.map((s, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      item: {
-        '@type': 'Service',
-        name: s.title,
-        description: s.short,
-        provider: { '@id': `${company.siteUrl}/#organization` },
-        url: `${company.siteUrl}/peb-solutions#${s.slug}`,
-      },
-    })),
-  }
-}
-
+/** Renders a JSON-LD block. Use inside a page's returned tree. */
 export function breadcrumbSchema(trail: { name: string; path: string }[]): Json {
   return {
     '@context': 'https://schema.org',
@@ -103,19 +83,6 @@ export function breadcrumbSchema(trail: { name: string; path: string }[]): Json 
   }
 }
 
-export function faqSchema(items: { question: string; answer: string }[]): Json {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: items.map((f) => ({
-      '@type': 'Question',
-      name: f.question,
-      acceptedAnswer: { '@type': 'Answer', text: f.answer },
-    })),
-  }
-}
-
-/** Renders a JSON-LD block. Use inside a page's returned tree. */
 export function JsonLd({ data }: { data: Json | Json[] }) {
   return (
     <script

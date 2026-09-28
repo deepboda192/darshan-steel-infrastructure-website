@@ -6,19 +6,15 @@ import { SectionIntro } from '@/components/site/SectionIntro'
 /**
  * Shop and site — laid out as the reference's history section: a sticky
  * left column with the heading, the argument and the company facts, and on
- * the right a card for each of the two works, its number standing in the
- * photograph and its name and address on the dark plate beneath.
+ * the right the works card: DSI's drone photograph of the factory with its
+ * name and address on the dark plate beneath.
  */
 export function ShopAndSite() {
   const facts = [
     { label: 'Established', field: company.established },
     { label: 'Facility area', field: company.facilityArea },
-    { label: 'Workforce', field: company.employees },
   ]
-  const works = [
-    { ...company.works[0], image: siteImages.manufacturing },
-    { ...company.works[1], image: siteImages.worksWeld },
-  ]
+  const works = [{ ...company.works[0], image: siteImages.worksAerial }]
 
   return (
     <section className="m-section" aria-label="Shop and site">
@@ -38,7 +34,7 @@ export function ShopAndSite() {
                 surveying the result.
               </p>
             </div>
-            <dl className="grid grid-cols-3 gap-5 border-t border-black/10 pt-6 max-xs:grid-cols-1">
+            <dl className="grid grid-cols-2 gap-5 border-t border-black/10 pt-6 max-xs:grid-cols-1">
               {facts.map((fact) => (
                 <div key={fact.label}>
                   <dt className="font-heading text-[14px] font-semibold uppercase tracking-[0.5px] text-neutral-6">
@@ -61,18 +57,12 @@ export function ShopAndSite() {
           </div>
 
           <ul className="flex w-full max-w-[500px] flex-col gap-5 max-lg:max-w-none">
-            {works.map((work, i) => (
+            {works.map((work) => (
               <li key={work.unit} className="flex flex-col gap-[5px]" data-reveal="up">
                 <div className="relative h-[355px] overflow-hidden bg-neutral-2 max-xs:h-[260px]">
                   <div className="absolute inset-0">
                     <ImageFrame image={work.image} ratio="fill" sizes="(min-width: 1024px) 500px, 100vw" />
                   </div>
-                  <p
-                    aria-hidden="true"
-                    className="absolute inset-x-0 -bottom-3 bg-gradient-to-t from-white to-white/30 bg-clip-text text-center font-heading text-[170px] font-bold leading-none text-transparent max-xs:text-[110px]"
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </p>
                 </div>
                 <div className="bg-secondary px-8 py-7 text-white max-md:p-6">
                   <p className="font-heading text-[14px] font-semibold uppercase tracking-[0.5px] text-neutral-2">

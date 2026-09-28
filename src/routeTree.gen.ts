@@ -12,13 +12,20 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AboutPebRouteImport } from './routes/about-peb'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AboutPebAccessoriesRouteImport } from './routes/about-peb_.accessories'
+import { Route as AboutPebCladdingSystemRouteImport } from './routes/about-peb_.cladding-system'
+import { Route as AboutPebMezzanineFloorsRouteImport } from './routes/about-peb_.mezzanine-floors'
+import { Route as AboutPebPrimarySystemRouteImport } from './routes/about-peb_.primary-system'
+import { Route as AboutPebSecondarySystemRouteImport } from './routes/about-peb_.secondary-system'
 import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects/$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminEnquiriesRouteImport } from './routes/_authenticated/admin.enquiries'
 import { Route as AuthenticatedAdminProjectsRouteImport } from './routes/_authenticated/admin.projects'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
 import { Route as ApiPublicEnquiryRouteImport } from './routes/api/public/enquiry'
@@ -35,6 +42,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutPebRoute = AboutPebRouteImport.update({
+  id: '/about-peb',
+  path: '/about-peb',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -57,6 +69,31 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AboutPebAccessoriesRoute = AboutPebAccessoriesRouteImport.update({
+  id: '/about-peb_/accessories',
+  path: '/about-peb/accessories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutPebCladdingSystemRoute = AboutPebCladdingSystemRouteImport.update({
+  id: '/about-peb_/cladding-system',
+  path: '/about-peb/cladding-system',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutPebMezzanineFloorsRoute = AboutPebMezzanineFloorsRouteImport.update({
+  id: '/about-peb_/mezzanine-floors',
+  path: '/about-peb/mezzanine-floors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutPebPrimarySystemRoute = AboutPebPrimarySystemRouteImport.update({
+  id: '/about-peb_/primary-system',
+  path: '/about-peb/primary-system',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutPebSecondarySystemRoute = AboutPebSecondarySystemRouteImport.update({
+  id: '/about-peb_/secondary-system',
+  path: '/about-peb/secondary-system',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
   id: '/projects/',
   path: '/projects/',
@@ -72,6 +109,12 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminEnquiriesRoute =
+  AuthenticatedAdminEnquiriesRouteImport.update({
+    id: '/enquiries',
+    path: '/enquiries',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminProjectsRoute =
   AuthenticatedAdminProjectsRouteImport.update({
     id: '/projects',
@@ -92,12 +135,19 @@ const ApiPublicEnquiryRoute = ApiPublicEnquiryRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/about-peb': typeof AboutPebRoute
   '/auth': typeof AuthRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/about-peb/accessories': typeof AboutPebAccessoriesRoute
+  '/about-peb/cladding-system': typeof AboutPebCladdingSystemRoute
+  '/about-peb/mezzanine-floors': typeof AboutPebMezzanineFloorsRoute
+  '/about-peb/primary-system': typeof AboutPebPrimarySystemRoute
+  '/about-peb/secondary-system': typeof AboutPebSecondarySystemRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/api/public/enquiry': typeof ApiPublicEnquiryRoute
@@ -106,11 +156,18 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/about-peb': typeof AboutPebRoute
   '/auth': typeof AuthRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/about-peb/accessories': typeof AboutPebAccessoriesRoute
+  '/about-peb/cladding-system': typeof AboutPebCladdingSystemRoute
+  '/about-peb/mezzanine-floors': typeof AboutPebMezzanineFloorsRoute
+  '/about-peb/primary-system': typeof AboutPebPrimarySystemRoute
+  '/about-peb/secondary-system': typeof AboutPebSecondarySystemRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects': typeof ProjectsIndexRoute
+  '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
   '/admin/users': typeof AuthenticatedAdminUsersRoute
   '/api/public/enquiry': typeof ApiPublicEnquiryRoute
@@ -121,12 +178,19 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/about-peb': typeof AboutPebRoute
   '/auth': typeof AuthRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/about-peb_/accessories': typeof AboutPebAccessoriesRoute
+  '/about-peb_/cladding-system': typeof AboutPebCladdingSystemRoute
+  '/about-peb_/mezzanine-floors': typeof AboutPebMezzanineFloorsRoute
+  '/about-peb_/primary-system': typeof AboutPebPrimarySystemRoute
+  '/about-peb_/secondary-system': typeof AboutPebSecondarySystemRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/_authenticated/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/_authenticated/admin/projects': typeof AuthenticatedAdminProjectsRoute
   '/_authenticated/admin/users': typeof AuthenticatedAdminUsersRoute
   '/api/public/enquiry': typeof ApiPublicEnquiryRoute
@@ -137,12 +201,19 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/about-peb'
     | '/auth'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/admin'
+    | '/about-peb/accessories'
+    | '/about-peb/cladding-system'
+    | '/about-peb/mezzanine-floors'
+    | '/about-peb/primary-system'
+    | '/about-peb/secondary-system'
     | '/projects/$slug'
     | '/projects/'
+    | '/admin/enquiries'
     | '/admin/projects'
     | '/admin/users'
     | '/api/public/enquiry'
@@ -151,11 +222,18 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/about-peb'
     | '/auth'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/about-peb/accessories'
+    | '/about-peb/cladding-system'
+    | '/about-peb/mezzanine-floors'
+    | '/about-peb/primary-system'
+    | '/about-peb/secondary-system'
     | '/projects/$slug'
     | '/projects'
+    | '/admin/enquiries'
     | '/admin/projects'
     | '/admin/users'
     | '/api/public/enquiry'
@@ -165,12 +243,19 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/about'
+    | '/about-peb'
     | '/auth'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/_authenticated/admin'
+    | '/about-peb_/accessories'
+    | '/about-peb_/cladding-system'
+    | '/about-peb_/mezzanine-floors'
+    | '/about-peb_/primary-system'
+    | '/about-peb_/secondary-system'
     | '/projects/$slug'
     | '/projects/'
+    | '/_authenticated/admin/enquiries'
     | '/_authenticated/admin/projects'
     | '/_authenticated/admin/users'
     | '/api/public/enquiry'
@@ -181,9 +266,15 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AboutPebRoute: typeof AboutPebRoute
   AuthRoute: typeof AuthRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  AboutPebAccessoriesRoute: typeof AboutPebAccessoriesRoute
+  AboutPebCladdingSystemRoute: typeof AboutPebCladdingSystemRoute
+  AboutPebMezzanineFloorsRoute: typeof AboutPebMezzanineFloorsRoute
+  AboutPebPrimarySystemRoute: typeof AboutPebPrimarySystemRoute
+  AboutPebSecondarySystemRoute: typeof AboutPebSecondarySystemRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiPublicEnquiryRoute: typeof ApiPublicEnquiryRoute
@@ -210,6 +301,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about-peb': {
+      id: '/about-peb'
+      path: '/about-peb'
+      fullPath: '/about-peb'
+      preLoaderRoute: typeof AboutPebRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -240,6 +338,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/about-peb_/accessories': {
+      id: '/about-peb_/accessories'
+      path: '/about-peb/accessories'
+      fullPath: '/about-peb/accessories'
+      preLoaderRoute: typeof AboutPebAccessoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about-peb_/cladding-system': {
+      id: '/about-peb_/cladding-system'
+      path: '/about-peb/cladding-system'
+      fullPath: '/about-peb/cladding-system'
+      preLoaderRoute: typeof AboutPebCladdingSystemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about-peb_/mezzanine-floors': {
+      id: '/about-peb_/mezzanine-floors'
+      path: '/about-peb/mezzanine-floors'
+      fullPath: '/about-peb/mezzanine-floors'
+      preLoaderRoute: typeof AboutPebMezzanineFloorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about-peb_/primary-system': {
+      id: '/about-peb_/primary-system'
+      path: '/about-peb/primary-system'
+      fullPath: '/about-peb/primary-system'
+      preLoaderRoute: typeof AboutPebPrimarySystemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about-peb_/secondary-system': {
+      id: '/about-peb_/secondary-system'
+      path: '/about-peb/secondary-system'
+      fullPath: '/about-peb/secondary-system'
+      preLoaderRoute: typeof AboutPebSecondarySystemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects/': {
       id: '/projects/'
       path: '/projects'
@@ -259,6 +392,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/enquiries': {
+      id: '/_authenticated/admin/enquiries'
+      path: '/enquiries'
+      fullPath: '/admin/enquiries'
+      preLoaderRoute: typeof AuthenticatedAdminEnquiriesRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/projects': {
@@ -286,12 +426,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminEnquiriesRoute: typeof AuthenticatedAdminEnquiriesRoute
   AuthenticatedAdminProjectsRoute: typeof AuthenticatedAdminProjectsRoute
   AuthenticatedAdminUsersRoute: typeof AuthenticatedAdminUsersRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminEnquiriesRoute: AuthenticatedAdminEnquiriesRoute,
   AuthenticatedAdminProjectsRoute: AuthenticatedAdminProjectsRoute,
   AuthenticatedAdminUsersRoute: AuthenticatedAdminUsersRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
@@ -315,9 +457,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AboutPebRoute: AboutPebRoute,
   AuthRoute: AuthRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  AboutPebAccessoriesRoute: AboutPebAccessoriesRoute,
+  AboutPebCladdingSystemRoute: AboutPebCladdingSystemRoute,
+  AboutPebMezzanineFloorsRoute: AboutPebMezzanineFloorsRoute,
+  AboutPebPrimarySystemRoute: AboutPebPrimarySystemRoute,
+  AboutPebSecondarySystemRoute: AboutPebSecondarySystemRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiPublicEnquiryRoute: ApiPublicEnquiryRoute,

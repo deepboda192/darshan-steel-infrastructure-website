@@ -4,14 +4,12 @@ import { siteImages } from '@/data/images'
 import { useMotion } from '@/lib/motion'
 import { breadcrumbSchema, JsonLd } from '@/lib/schema'
 import { InnerHero } from '@/components/site/InnerHero'
-import { VideoBand } from '@/components/site/VideoBand'
 import { AboutIntro } from '@/components/about/AboutIntro'
 import { Solutions } from '@/components/sections/Solutions'
 import { TaglineBand } from '@/components/about/TaglineBand'
 import { Principles } from '@/components/about/Principles'
 import { ShopAndSite } from '@/components/about/ShopAndSite'
 import { IntegratedModel } from '@/components/about/IntegratedModel'
-import { Leadership } from '@/components/about/Leadership'
 
 const TITLE = `About | ${company.name}`
 const DESCRIPTION =
@@ -20,11 +18,11 @@ const DESCRIPTION =
 /**
  * About — the reference's about page, section for section: the inner-page
  * hero, who we are with the big figures and the film, what we build, the
- * tagline band, how
- * we work on the dark surface, shop and site, the integrated model, the film
- * band and leadership. Team profiles and FAQs are left out until DSI has
- * content for them. The footer's closing call to action follows from the
- * root layout.
+ * tagline band over the drone footage, how we work on the dark surface, shop
+ * and site and the integrated model. The works film band and the leadership
+ * placeholder that followed were removed at the user's request on
+ * 2026-09-28; team profiles and FAQs stay out until DSI has content for
+ * them. The footer's closing call to action follows from the root layout.
  */
 function AboutPage() {
   useMotion()
@@ -49,8 +47,6 @@ function AboutPage() {
       <Principles />
       <ShopAndSite />
       <IntegratedModel />
-      <VideoBand />
-      <Leadership />
     </>
   )
 }

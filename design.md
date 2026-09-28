@@ -213,7 +213,7 @@ Body default is Inter 16 / 1.6, weight 400. Add `.light` on dark surfaces.
 | `site/NotFoundPage` | 404 on the secondary surface; calls `useMotion()`. |
 | `site/InnerHero` | Inner-page hero (65 svh photo under a wash): `title`, `image`, `crumbs` (the last is the current page), `tall` for records. |
 | `site/VideoBand` | Full-width film band (90 svh) with a play/pause control; loads through `lib/useLazyVideo` exactly like the hero video. |
-| `about/*` | The About page sections: `AboutIntro` (statement, big figures, film box with its lightbox, figure plates), `TaglineBand` (outlined marquee + photo), `Principles` (six-cell plate on the dark surface), `ShopAndSite` (sticky argument + the two works), `IntegratedModel` (four stepped, sticky cards), `Leadership`. |
+| `about/*` | The About page sections: `AboutIntro` (statement, big figures, film box with its lightbox, figure plates), `TaglineBand` (outlined marquee + photo), `Principles` (six-cell plate on the dark surface), `ShopAndSite` (sticky argument + the works card), `IntegratedModel` (four stepped, sticky cards), `Leadership`. |
 | `projects/Gallery` | Two-across gallery tiles with a hover wash; each opens a native `<dialog>` lightbox with previous/next, arrow keys and Escape. |
 | `projects/ProjectCard` | The reference's project card: 76 %-tall photo under a gradient wash, accent type tag, location and name; links to the record. `priority` for above-the-fold cards. |
 | `media/ImageFrame` | Photograph with `tone`, `ratio` (`fill` …), `scrim`, `zoom`, `priority`, `sizes`; falls back to `TechnicalPlate` when the image has no `src`. |
@@ -266,7 +266,7 @@ Rules:
 | # | Section (`id`) | Reference pattern | Content source |
 | --- | --- | --- | --- |
 | 1 | Hero | one-viewport photo (`min-h-svh`; gaps, stat box and h1 compress on short screens), blur-in headline, ISO chips (small mark beside standard + scope) under an “ISO certified” eyebrow + stat box | hero copy in `Hero.tsx`, `company.metrics`, `company.certifications` |
-| 2 | About (`#about`) | scrub statement, Vision/Mission, stat plate + photos | `company.about/vision/mission/metrics` |
+| 2 | About (`#about`) | scrub statement, Vision/Mission, stat plate (projects, capacity per year in MT, Since 2018) + photos | `company.about/vision/mission/metrics` |
 | 3 | Solutions (`#solutions`) | 3 × 2 service grid on the dark band, photo in every cell (zooms 6% on hover, clipped), summary on hover | `solutions` |
 | 4 | Why DSI (`#why-dsi`) | drone photo of the works under `black/75`; eight translucent `#141414/70` cards with accent icon plate, lift and fill accent on hover | `whyChooseDsi` |
 | 5 | Clients | ruled heading, then a hairline grid of marks (4 / 3 / 2 across) | `clients` |
@@ -275,8 +275,11 @@ Rules:
 | 8 | Contact (`#contact`) | info boxes, form on the light block, photo | `company` contact data, `ContactForm` |
 | — | Footer | closing CTA over a photo; white box in three labelled, left-aligned columns (brand + office/factory addresses · link groups under headings · email/phones/social) with copyright and back-to-top; watermark | footer copy, `footerNav` |
 
-Navigation (`src/data/nav.ts`): About · Solutions · Projects · Why DSI ·
+Navigation (`src/data/nav.ts`): About · About PEB · Solutions · Projects · Why DSI ·
 Process · Contact, plus the "Contact Us" button → `/#contact`. Projects
+With seven links the desktop bar tightens on narrower screens: `.m-nav-link`
+is 15 px / 8 px padding below 1280 px and 14 px / 6 px between 1024 and 1151 px
+(the hamburger takes over below 1024).
 leads to its own pages; the other links are home-page anchors that resolve
 from any page.
 
@@ -291,8 +294,8 @@ build* (the same Solutions grid as the home page) → the tagline band (`company
 photo rising into it) → *How we work* on the dark surface: the six operating
 principles (`operatingPrinciples` in `capabilities.ts`) as a hairline plate
 filling with the accent on hover → *Shop and site*: sticky heading, argument
-and facts (established / facility area / workforce) beside a card per works
-(`company.works`) → *What we do*: the four bands of the integrated model
+and facts (established / facility area / workforce) beside the works card
+(`company.works[0]`, the drone photograph) → *What we do*: the four bands of the integrated model
 (`integratedModel`), each card stepping 60 px lower and sticking as the page
 scrolls, listing the workflow stages it covers → the film band → *Leadership*
 (eyebrow-left / heading-right, profiles flagged as pending). Team profiles and
@@ -304,11 +307,68 @@ Tools, not pages: the root layout drops the navbar and footer for them.
 Sign-in is a white card (max 440 px) on the secondary surface — logo,
 `m-subtitle`, 28 px heading, `.m-field` inputs, a full-width primary button
 and an `m-link` to switch between sign-in and account creation; feedback is
-the pale red error panel or a pale accent info panel. Admin is a white header
-(logo · "Site management" · View site / Sign out) with caps tab links
-underlined in the accent, over a neutral-1 workspace; screens use white
-hairline cards, 28 px headings, 13 px caps labels, `.m-field` controls, the
-site `Select` and `Button`, and `--color-error` for destructive actions.
+the pale red error panel or a pale accent info panel. Admin is an app shell: a 264 px
+sidebar on the secondary surface (white logo mark, "Admin" tag, icon nav with
+an accent bar on the current section, View site, the signed-in account with
+initials disc and sign-out) beside a neutral-1 workspace capped at 1200 px;
+on phones the sidebar folds into a top bar with the nav as a scrollable row.
+Screens open with `PageHeader` (12 px caps eyebrow, 30 px title, note,
+actions) and use `Card` (white, 4 px radius, hairline, 1 px shadow), `Chip`
+(neutral / accent / success pills), `IconButton` (36 px, neutral or danger
+hover) and `EmptyState` from `components/admin/ui.tsx`, plus `.m-field`, the
+site `Select` and `Button`. Overview: three stat cards, recent projects.
+Projects: a table-like list (thumbnail, name + slug, type chip, location,
+order, icon actions) and an editor modal on a blurred secondary wash with a
+fixed header and footer around a scrolling body. Enquiries: the contact-form
+inbox — New / Handled / All filters, rows that expand to the visitor's
+details and message, reply-by-email and mark-handled. Users: account rows
+with initials, role chip and a grant/remove control.
+
+### About PEB (`/about-peb`)
+
+`InnerHero` ("About PEB", Home • About PEB) → *What is a PEB*: sticky
+heading + lead beside three paragraphs and the "what a DSI PEB includes"
+checklist (`pebIncludes`) → *Inside a PEB*: a white two-column band, the
+five structural systems (`structuralSystems`) as a numbered hairline list
+(Primary System links to its page) beside the catalogue's structural-systems
+poster (`siteImages.structuralSystems`) → *Advantages*:
+the ten catalogue advantages (`pebAdvantages`) as numbered white cards on
+neutral-1 → *Applications*: the six building types (`solutions`, linking to
+the home sections) as photo cards, then "also built as PEB"
+(`pebApplications`) and the industries as chips (`industriesServed`) → *FAQ*:
+six native `<details>` rows (`pebFaq` in `data/peb.ts`) with a plus/cross
+toggle → closing call to action. Head: Article + FAQPage + breadcrumb JSON-LD,
+canonical, `og:type article`. Copy is in `data/peb.ts`; figures are the
+catalogue's only.
+
+### Primary System (`/about-peb/primary-system`)
+
+A page under About PEB (file `about-peb_.primary-system.tsx`, not nested in
+the parent's outlet). `InnerHero` ("Primary System", Home • About PEB •
+Primary System) → intro: sticky column of heading, lead, two paragraphs and
+an "on this page" list beside the catalogue's structural-systems poster
+(`siteImages.structuralSystems`, recoloured to the brand blue; on phones
+the poster's table is repeated as text beneath it) → four part sections
+alternating white / dark
+(`parts` in `data/primary-system.ts`: primary framing, crane beam system,
+canopies & fascia, bracing), each with the paragraphs beside a captioned
+photograph (`siteImages.pebParts`; the crane part uses DSI's own crane
+photo, `craneSystem`) and a checklist; the framing part adds the catalogue's
+eight frame types (`frameTypes`: CS, MS-1, MS-2, MS-3, MG, RS, SS, LT) as
+cards, each headed by the catalogue's line drawing of that frame
+(`siteImages.pebFrames`, transparent PNGs recoloured to the brand blue, on
+neutral-1) with the code plate beside the title and the practical width
+beneath it; the crane beam part (from the catalogue's Crane
+Beam System page) adds the catalogue's "Top running crane" drawing beneath
+the photo (`craneDrawing`, recoloured for the dark band), Standard supply
+and Technical specifications plates beneath the copy and a full-width accent
+Advantages strip. Hand-drawn SVG
+diagrams were tried here and rejected on 2026-09-27; the catalogue's own
+drawings and photographs are used instead → *Design*: the
+load cases as a definition list
+beside a photo → FAQ (`primarySystemFaq`) → dark closing call to action.
+Article + FAQPage + breadcrumb JSON-LD. About PEB's "Inside a PEB" list
+links here from the Primary System row.
 
 ### Projects index (`/projects`)
 
@@ -319,10 +379,12 @@ phones). Records come from the route loader (Supabase, catalogue fallback).
 
 ### Project record (`/projects/:slug`)
 
-`InnerHero` (`tall`, name, Home • Projects • name) → the cover photograph
+`InnerHero` (`tall`, name, Home • Projects • name, backed by the record's last
+gallery photograph, stock banner if none) → the cover photograph
 (54 % tall) → two columns (1.72 fr / 1 fr, stacked below 992 px): the case
-study (overview, challenge, approach, execution, result, then the gallery)
-and a sticky rail with Project details (icon rows), Specification and the
+study (the overview only, then the gallery; the challenge, approach,
+execution and result fields are kept in the data but not rendered) and a
+sticky rail with Project details (icon rows) and the
 contact card → "More projects" (the next two records) on neutral-1. An
 unknown slug throws `notFound()` from the loader and renders the 404 page
 with a real 404 status; the sitemap lists every verified record.
@@ -353,6 +415,7 @@ with a real 404 status; the sitemap lists every verified record.
 ## 9. Forms
 
 - Controls use `.m-field`; labels are 14 px caps eyebrow style in neutral-8. The form sits on a neutral-1 block so the white fields read as fields.
+- On a stored submission the API e-mails DSI (`lib/enquiry-mail.server.ts`, nodemailer over SMTP): a branded HTML message with the details table, the message and a reply button, plus a plain-text part; Reply-To is the visitor. Sender is a Gmail account: `SMTP_USER` (the address) and `SMTP_PASS` (its App Password), `ENQUIRY_NOTIFY_TO`; `SMTP_HOST`/`SMTP_PORT` default to smtp.gmail.com:465, `ENQUIRY_FROM` optional. Unset → the enquiry is stored but not mailed. In development these come from the git-ignored `.env.local` via `lib/server-env.ts`; `npm run mail:test` checks the login and sends one test message.
 - Required fields are marked in the label; the summary (`role="alert"`) lists
   every problem with a jump link, and each field repeats its own message
   beneath it. Colours: `error-soft` borders, `error-light` text.

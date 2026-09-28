@@ -27,7 +27,7 @@ const ENDPOINT = import.meta.env.VITE_ENQUIRY_ENDPOINT || '/api/public/enquiry'
 /** Project types come from the solutions data so the two never drift apart. */
 const PROJECT_TYPES: string[] = [...solutions.map((s) => s.title), 'Other']
 
-const DEFAULT_SUBJECT = 'General Enquiry'
+const DEFAULT_SUBJECT = 'Request Quote'
 
 const MESSAGE_MAX = 4000
 
@@ -652,7 +652,7 @@ export function ContactForm() {
       {/* ---------------- submit ---------------- */}
       <div className="mt-2.5">
         <Button type="submit" disabled={submitting} className="w-full justify-center sm:w-auto">
-          {submitting ? 'Sending…' : 'Send Enquiry'}
+          {submitting ? 'Sending…' : 'Request My Quote'}
         </Button>
       </div>
 

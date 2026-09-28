@@ -9,7 +9,7 @@ import { company } from '@/data/company'
  * DSI supplies real data and the `placeholder` flag is cleared.
  */
 
-type Json = Record<string, unknown>
+export type Json = Record<string, unknown>
 
 const real = <T,>(field: { value: T; placeholder: boolean }): T | undefined =>
   field.placeholder ? undefined : field.value

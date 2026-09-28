@@ -305,6 +305,8 @@
     transition: border-color 0.25s ease;
   }
   .m-nav-link:hover { border-bottom-color: var(--color-accent); }
+  /* On the white, scrolled bar the links go dark; the hover rule stays the accent. */
+  header[data-solid] .m-nav-link { color: var(--color-neutral-10); transition: border-color 0.25s ease, color 0.3s ease; }
 
   /* Square accent plate that carries an icon. */
   .m-icon-box {
@@ -437,4 +439,12 @@ html[data-audit='on'] [data-placeholder='true']::after {
   color: #b45309;
   margin-left: 0.35em;
   vertical-align: super;
+}
+
+/* Seven primary links: close the ranks a little on narrower desktops. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .m-nav-link { padding: 0 8px; font-size: 15px; }
+}
+@media (min-width: 1024px) and (max-width: 1151px) {
+  .m-nav-link { padding: 0 6px; font-size: 14px; }
 }

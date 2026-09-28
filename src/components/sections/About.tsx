@@ -6,7 +6,9 @@ import { ImageFrame } from '@/components/media/ImageFrame'
 import { Counter } from './Counter'
 import { cn } from '@/lib/cn'
 
-const STAT_KEYS = ['projects', 'clients', 'industries'] as const
+// The middle tile is the yearly fabrication capacity with its unit; the
+// third is the founding year, read as "Since 2018".
+const STAT_KEYS = ['projects', 'capacity', 'years'] as const
 const STAT_TONES = ['secondary', 'neutral', 'accent'] as const
 
 /**
@@ -105,15 +107,18 @@ export function About() {
                         dark ? 'border-white/20 text-neutral-1' : 'border-black/20 text-neutral-10',
                       )}
                     >
-                      {metric.label}
+                      {metric.key === 'years' ? 'Since' : metric.key === 'capacity' ? 'Annual Capacity' : metric.label}
                     </p>
                     <p
                       className={cn(
-                        'font-heading text-[68px] font-bold leading-none max-xs:text-[60px]',
+                        'whitespace-nowrap font-heading text-[68px] font-bold leading-none max-xs:text-[60px]',
                         dark ? 'text-white' : 'text-neutral-10',
                       )}
                     >
-                      <Counter metric={metric} />
+                      {metric.key === 'years' ? String(metric.value) : <Counter metric={metric} />}
+                      {metric.unit && (
+                        <span className="ml-2.5 text-[22px] font-semibold max-xs:text-[20px]">{metric.unit}</span>
+                      )}
                     </p>
                   </div>
                 )

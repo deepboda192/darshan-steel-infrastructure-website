@@ -26,11 +26,10 @@ DSI photograph of the same name and the site picks it up with no code change.
 | `about-site-team.jpg` | Two workers inside a large warehouse under construction | [photo-1787672358772-a53840892c0c](https://images.unsplash.com/photo-1787672358772-a53840892c0c?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `about-site-work.jpg` | Workers on an active construction site | [photo-1662120399978-738d233edbec](https://images.unsplash.com/photo-1662120399978-738d233edbec?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `careers-crew.jpg` | Construction crew in hard hats gathered on site | [photo-1759922378222-47ad736a174d](https://images.unsplash.com/photo-1759922378222-47ad736a174d?auto=format&fit=max&w=1800&q=75&fm=jpg) |
-| `banner-about.jpg` | Steel structure detail against open sky | [photo-1720572782505-423b226a406b](https://images.unsplash.com/photo-1720572782505-423b226a406b?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `banner-solutions.jpg` | Large industrial warehouse with loading gates | [photo-1759310347467-578dfd846229](https://images.unsplash.com/photo-1759310347467-578dfd846229?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `banner-industries.jpg` | Interior of a working factory | [photo-1554070211-e3953a3de374](https://images.unsplash.com/photo-1554070211-e3953a3de374?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `banner-manufacturing.jpg` | CNC laser cutter profiling a steel plate | [photo-1764114235896-034c8772de01](https://images.unsplash.com/photo-1764114235896-034c8772de01?auto=format&fit=max&w=1800&q=75&fm=jpg) |
-| `banner-projects.jpg` | Building under construction with tower cranes behind it | [photo-1632885936573-cf65e9a9fe92](https://images.unsplash.com/photo-1632885936573-cf65e9a9fe92?auto=format&fit=max&w=1800&q=75&fm=jpg) |
+| `projects-hero.jpg` | Drone view of the Fortune Enterprise logistics facility, Rajkot (Projects hero) | DSI project photograph, copied from the project cover in Supabase storage |
 | `banner-contact.jpg` | Dark steel frame silhouetted against a pale sky | [photo-1621831337122-428c07cda1bf](https://images.unsplash.com/photo-1621831337122-428c07cda1bf?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `banner-careers.jpg` | Roofing machine inside a warehouse under construction | [photo-1787672358547-4fe17680b900](https://images.unsplash.com/photo-1787672358547-4fe17680b900?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `industry-manufacturing.jpg` | Large production machine inside a manufacturing hall | [photo-1717386255773-1e3037c81788](https://images.unsplash.com/photo-1717386255773-1e3037c81788?auto=format&fit=max&w=1800&q=75&fm=jpg) |
@@ -53,10 +52,31 @@ DSI photograph of the same name and the site picks it up with no code change.
 | `gallery-weld-detail.jpg` | Welding a steel joint, arc light on the metal | [photo-1510900767338-8bf61abf2562](https://images.unsplash.com/photo-1510900767338-8bf61abf2562?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `gallery-shop-floor.jpg` | Operator working a machine on the shop floor | [photo-1730584474338-aa8d9d186bf7](https://images.unsplash.com/photo-1730584474338-aa8d9d186bf7?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `gallery-site-progress.jpg` | Excavator working beside a partly clad steel building | [photo-1611906566714-3ebd58190500](https://images.unsplash.com/photo-1611906566714-3ebd58190500?auto=format&fit=max&w=1800&q=75&fm=jpg) |
+| `accessories-hero.jpg` | A row of roof ventilators along a curved metal roof with steam (Accessories hero) | [Pexels 35489678](https://www.pexels.com/photo/35489678/) — `https://images.pexels.com/photos/35489678/pexels-photo-35489678.jpeg?auto=compress&cs=tinysrgb&w=1920` |
+| `accessory-ventilator.jpg` | Stainless turbine ventilator on its base | [Pexels 32182706](https://www.pexels.com/photo/32182706/) — `https://images.pexels.com/photos/32182706/pexels-photo-32182706.jpeg?auto=compress&cs=tinysrgb&w=1800` |
+| `accessory-daylight.jpg` | Industrial roof from below with translucent daylight panels | [Pexels 34006095](https://www.pexels.com/photo/34006095/) — `https://images.pexels.com/photos/34006095/pexels-photo-34006095.jpeg?auto=compress&cs=tinysrgb&w=1800` |
+| `accessory-louvers.jpg` | Two louver panels set into profiled wall cladding | [Pexels 19562998](https://www.pexels.com/photo/19562998/) — `https://images.pexels.com/photos/19562998/pexels-photo-19562998.jpeg?auto=compress&cs=tinysrgb&w=1800` |
+| `accessory-insulation.jpg` | Fibreglass insulation being fitted between framing | [Pexels 6124239](https://www.pexels.com/photo/6124239/) — `https://images.pexels.com/photos/6124239/pexels-photo-6124239.jpeg?auto=compress&cs=tinysrgb&w=1800` |
+| `accessory-ladder.jpg` | Galvanized cage ladder on the clad wall of an industrial building | [Pexels 33320792](https://www.pexels.com/photo/33320792/) — `https://images.pexels.com/photos/33320792/pexels-photo-33320792.jpeg?auto=compress&cs=tinysrgb&w=1800` |
+| `cladding-roof.jpg` | Grey trapezoidal roof sheeting over a yellow wall, with gutter and downspout | [Pexels 18289258](https://www.pexels.com/photo/18289258/) — `https://images.pexels.com/photos/18289258/pexels-photo-18289258.jpeg?auto=compress&cs=tinysrgb&w=1800` |
+| `cladding-standing-seam.jpg` | Dark seamed metal roof panels past a rooflight | [Pexels 18513462](https://www.pexels.com/photo/18513462/) — `https://images.pexels.com/photos/18513462/pexels-photo-18513462.jpeg?auto=compress&cs=tinysrgb&w=1800` |
+| `cladding-components.jpg` | Blue wall sheeting under a white eave flashing and corner trim | [Pexels 34418303](https://www.pexels.com/photo/34418303/) — `https://images.pexels.com/photos/34418303/pexels-photo-34418303.jpeg?auto=compress&cs=tinysrgb&w=1800` |
+| `mezzanine-hero.jpg` | Empty warehouse with a blue steel frame and a mezzanine office block with a steel stair (Mezzanine Floors hero) | [Pexels 4628583](https://www.pexels.com/photo/4628583/) — `https://images.pexels.com/photos/4628583/pexels-photo-4628583.jpeg?auto=compress&cs=tinysrgb&w=1920` |
+| `mezzanine-beams.jpg` | Steel beams and columns carrying grating platforms and a handrail | [photo-1745162391671-244e8d3ccd5f](https://images.unsplash.com/photo-1745162391671-244e8d3ccd5f?auto=format&fit=max&w=1800&q=75&fm=jpg) |
+| `mezzanine-deck.jpg` | Chequered plate floor of a mezzanine walkway with a handrail | [Pexels 5759123](https://www.pexels.com/photo/5759123/) — `https://images.pexels.com/photos/5759123/pexels-photo-5759123.jpeg?auto=compress&cs=tinysrgb&w=1800` |
+| `mezzanine-handrails.jpg` | Galvanized steel stairs and landings with post-and-rail handrails | [photo-1618446911412-e93bd7f24bf5](https://images.unsplash.com/photo-1618446911412-e93bd7f24bf5?auto=format&fit=max&w=1800&q=75&fm=jpg) |
+| `mezzanine-stair.jpg` | Two red steel staircases with tubular handrails up to a mezzanine | [photo-1687173535427-e8263e32ea4a](https://images.unsplash.com/photo-1687173535427-e8263e32ea4a?auto=format&fit=max&w=1800&q=75&fm=jpg) |
+| `mezzanine-section.png` | Catalogue detail: section through a mezzanine floor; the red steel recoloured to the brand blue on 2026-09-28 | DSI product catalogue |
+| `mezzanine-edge.png` | Catalogue detail: mezzanine edge at the sidewall; the red steel recoloured to the brand blue on 2026-09-28 | DSI product catalogue |
+| `about-projects.jpg` | Drone view of the G.M. Engineering plant, Rajkot ("Our projects" plate on the About page) | DSI project photograph, copied from the project cover in Supabase storage |
+| `secondary-sections.png` | The Z-section and C-section profiles cropped from the catalogue's secondary-system drawing | DSI product catalogue |
+| `primary-system-hero.jpg` | Main frames, crane beams and purlins against a clear sky (Primary System hero; also the purlins figure on the Secondary System page) | Supplied by DSI |
 | `gallery-frame-sky.jpg` | Steel portal frame against an overcast sky | [photo-1584099667019-c7fbb1f55664](https://images.unsplash.com/photo-1584099667019-c7fbb1f55664?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `gallery-racking.jpg` | Labelled cartons on warehouse racking | [photo-1606824722920-4c652a70f348](https://images.unsplash.com/photo-1606824722920-4c652a70f348?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `gallery-structure-detail.jpg` | Detail of a grey steel structure in daylight | [photo-1509024368907-57294758cfc5](https://images.unsplash.com/photo-1509024368907-57294758cfc5?auto=format&fit=max&w=1800&q=75&fm=jpg) |
 | `gallery-crane-lift.jpg` | Crane lifting a load on an industrial site | [photo-1660884121477-2be490bc2a08](https://images.unsplash.com/photo-1660884121477-2be490bc2a08?auto=format&fit=max&w=1800&q=75&fm=jpg) |
+
+| `peb-canopy-fascia.jpg` | Curved canopy over the rolling-shutter door of a DSI shed | Own photograph (DSI) |
 
 ## DSI's own photography
 
@@ -64,3 +84,10 @@ DSI photograph of the same name and the site picks it up with no code change.
 | --- | --- | --- |
 | `works-aerial.webp` | Drone view of the DSI works and yard at Rajkot | Supplied by Darshan Steel Infrastructure |
 | `works-interior.webp` | Inside the DSI fabrication shop, black and white | Supplied by Darshan Steel Infrastructure |
+| `crane-beam-system.webp` | Double-girder EOT crane on its crane beams inside a DSI building | Cropped from the DSI product catalogue (Crane Beam System page) |
+| `peb-frame-cs.png` … `peb-frame-lt.png` | The eight frame-type drawings (CS, MS-1, MS-2, MS-3, MG, RS, SS, LT) | DSI product catalogue, recoloured from red to the brand blue |
+| `peb-primary-framing.jpg` | Steel main frames of a pre-engineered building under erection | Supplied by Darshan Steel Infrastructure |
+| `crane-top-running.png` | "Top running crane" section drawing | DSI product catalogue, recoloured for the dark band (blue frame, white outlines) |
+| `footer-steel-frames.jpg` | Steel main frames under erection (same photo as the primary framing figure); the footer backdrop on every page | Supplied by Darshan Steel Infrastructure |
+| `peb-bracing.webp` | Rod X-bracing in the sidewall bays of a pre-engineered building | Supplied by Darshan Steel Infrastructure |
+| `structural-systems.webp` | "Structural systems & its components" poster: tower crane, world map, skyline | DSI product catalogue, recoloured from red to the brand blue |

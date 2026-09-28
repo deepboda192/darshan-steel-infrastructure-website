@@ -66,6 +66,7 @@ export function Contact() {
       name: 'Email us',
       items: [
         { hint: 'Enquiries', entry: company.email.enquiries },
+        { hint: 'Sales', entry: company.email.sales },
         { hint: 'Careers', entry: company.email.careers },
       ].map(({ hint, entry }) => ({
         hint,
@@ -154,7 +155,7 @@ export function Contact() {
                           <ArrowUpRight
                             size={18}
                             aria-hidden="true"
-                            className="shrink-0 text-neutral-6 transition-[color,transform] duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+                            className="shrink-0 text-neutral-6 transition-[color,translate] duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
                           />
                         </a>
                       </li>

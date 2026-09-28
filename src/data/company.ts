@@ -104,24 +104,14 @@ export const company = {
     ),
   },
 
-  /**
-   * Manufacturing units. Both sit on the Rajkot–Morbi highway and are listed
-   * separately in the catalogue.
-   */
+  /** The factory: one works, on the Rajkot–Morbi highway at Chhattar. */
   works: [
     {
-      unit: 'Unit 1',
+      unit: 'Factory',
       name: 'Darshan Steel Infrastructure',
       address: 'Survey No. 169/P4/P1, At, Rajkot - Morbi Hwy, Chhattar, Gujarat 363650',
       mapsQuery:
         'https://www.google.com/maps/search/?api=1&query=Survey+No.+169%2FP4%2FP1+Rajkot+Morbi+Hwy+Chhattar+Gujarat+363650',
-    },
-    {
-      unit: 'Unit 2',
-      name: 'Darshan Pre-Fab Pvt. Ltd.',
-      address: 'At. Kagdadi, Sr. No. 225, Rajkot–Morbi Highway, Rajkot, Gujarat 360003',
-      mapsQuery:
-        'https://www.google.com/maps/search/?api=1&query=Kagdadi+Sr.+No.+225+Rajkot+Morbi+Highway+Rajkot+Gujarat+360003',
     },
   ],
 
@@ -133,6 +123,7 @@ export const company = {
   email: {
     general: real('info@darshansteelinfra.com'),
     enquiries: real('info@darshansteelinfra.com'),
+    sales: real('sales@darshansteelinfra.com'),
     careers: real('hr@darshansteelinfra.com'),
   },
 
@@ -156,7 +147,7 @@ export const company = {
    *
    * The four figures carrying a value are evidenced by the product catalogue:
    *  - capacity   — the stated plant capacity, 2,300 MT per month.
-   *  - area       — sum of the built-up areas of the 14 documented projects.
+   *  - area       — total built-up area delivered, in square feet, as given by the user on 2026-09-28.
    *  - clients    — client marks published on the catalogue's client wall.
    *  - industries — unique entries in the "Industries we serve" list.
    *
@@ -176,8 +167,11 @@ export const company = {
    * brackets, 50 m practical clear-span width (120 m as a multi-span module).
    */
   metrics: [
-    { key: 'capacity',   value: 2300,   suffix: '',  unit: 'MT / Month', label: 'Fabrication Capacity',    note: 'Fully enclosed, automated production line',  placeholder: false },
-    { key: 'area',       value: 134540, suffix: '+', unit: 'Sq. Mt.',    label: 'Built-Up Area Delivered', note: 'Across 14 documented projects',              placeholder: false },
+    { key: 'capacity',   value: 15000,  suffix: '',  unit: 'MT',         label: 'Annual Fabrication Capacity',         note: 'Fully enclosed, automated production line',  placeholder: false },
+    // The works at Chhattar, Rajkot: figure given by the user on 2026-09-28. Shown on the About page plate.
+    { key: 'facility',   value: 15000,  suffix: '',  unit: 'Sq. Mt.',    label: 'Manufacturing Facility',              note: 'At Chhattar, Rajkot',                        placeholder: false },
+    // Figure given by the user on 2026-09-28 (was 1,34,540 Sq. Mt. across 14 documented projects).
+    { key: 'area',       value: 1560000, suffix: '+', unit: 'Sq. Ft.',   label: 'Built-Up Area Delivered', note: 'Since 2018',                                  placeholder: false },
     { key: 'clients',    value: 34,     suffix: '+', unit: '',           label: 'Clients Served',          note: 'Paper, ceramics, forging, logistics',        placeholder: false },
     { key: 'industries', value: 14,     suffix: '+', unit: '',           label: 'Industries Served',       note: 'Automobile to pharmaceutical',               placeholder: false },
     // The year itself is the figure; the derived experience moves to the note.
@@ -224,8 +218,8 @@ export const company = {
   ],
 
   /* -------------------------------------------------------------- WORKFORCE */
-  employees: todo('[NUMBER OF EMPLOYEES]'),
-  facilityArea: todo('[FACILITY AREA — SQ.FT.]'),
+  // The workforce figure was dropped from the site by the user on 2026-09-28.
+  facilityArea: real('15,000 Sq. Mt.'),
   established: real('2018'),
 } as const
 

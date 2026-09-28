@@ -7,6 +7,12 @@ type Props = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
   prefetch?: boolean | null;
   scroll?: boolean;
   replace?: boolean;
+  /**
+   * Count the link as active (aria-current="page") only on its own path. By
+   * default the router also treats it as active on any path beneath it, which
+   * is wrong for a section's overview link shown beside its child pages.
+   */
+  exact?: boolean;
 };
 
 const isExternal = (href: string) =>
@@ -17,7 +23,7 @@ const isExternal = (href: string) =>
  * Internal paths route through TanStack Router; everything else is a plain
  * anchor (external sites, mail, phone, hash targets).
  */
-export default function Link({ href, prefetch: _p, scroll: _s, replace, ...rest }: Props) {
+export default function Link({ href, prefetch: _p, scroll: _s, replace, exact, ...rest }: Props) {
   if (isExternal(href)) {
     return <a href={href} {...rest} />;
   }
@@ -29,6 +35,7 @@ export default function Link({ href, prefetch: _p, scroll: _s, replace, ...rest 
       to={pathname || "/"}
       hash={hash}
       replace={replace}
+      activeOptions={exact ? { exact: true } : undefined}
       {...(rest as Record<string, unknown>)}
     />
   );

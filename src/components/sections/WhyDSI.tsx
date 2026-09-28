@@ -81,7 +81,7 @@ export function WhyDSI() {
               return (
                 <li
                   key={item.index}
-                  className="group flex flex-col border border-white/10 bg-[#141414]/70 p-7 backdrop-blur-[2px] transition-[background-color,border-color,transform] duration-300 ease-out hover:-translate-y-1 hover:border-accent hover:bg-accent max-xs:p-6"
+                  className="group flex flex-col border border-white/10 bg-[#141414]/70 p-7 backdrop-blur-[2px] transition-[background-color,border-color,translate] duration-300 ease-out hover:-translate-y-1 hover:border-accent hover:bg-accent max-xs:p-6"
                 >
                   <span className="m-icon-box mb-7 h-12 w-12 transition-colors duration-300 group-hover:bg-white group-hover:text-accent">
                     {Icon && <Icon size={22} strokeWidth={1.8} aria-hidden="true" />}

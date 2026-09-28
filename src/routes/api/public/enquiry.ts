@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import type { Database } from '@/integrations/supabase/types'
 import { solutions } from '@/data/solutions'
 
 /**
@@ -26,13 +27,14 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/
 const ALLOWED_PROJECT_TYPES = new Set<string>([...solutions.map((s) => s.title), 'Other'])
 
 const ALLOWED_SUBJECTS = new Set<string>([
+  'Request Quote',
   'General Enquiry',
   'Request a Quote',
   'Talk to Our Experts',
   'Vendor Registration',
 ])
 
-const DEFAULT_SUBJECT = 'General Enquiry'
+const DEFAULT_SUBJECT = 'Request Quote'
 
 /* Rate limiting — in-process, per instance. Stops casual hammering only. */
 const RATE_WINDOW_MS = 60_000
@@ -195,21 +197,36 @@ export const Route = createFileRoute('/api/public/enquiry')({
           return badRequest('Some required details are missing or incomplete.', fields)
         }
 
-        const { supabaseAdmin } = await import('@/integrations/supabase/client.server')
+        // Stored by the definer function submit_enquiry (see
+        // supabase/migrations/20260926120000_submit_enquiry.sql) with the
+        // publishable key, so no service-role secret is needed here.
+        const url = process.env['SUPABASE_URL']
+        const key = process.env['SUPABASE_PUBLISHABLE_KEY']
+        if (!url || !key) {
+          console.error('[DSI ENQUIRY] Supabase environment variables are missing')
+          return json(
+            { ok: false, message: 'The enquiry could not be delivered. Please email us directly.' },
+            502,
+          )
+        }
+        const { createClient } = await import('@supabase/supabase-js')
+        const supabase = createClient<Database>(url, key, {
+          auth: { persistSession: false, autoRefreshToken: false },
+        })
 
-        const { error } = await supabaseAdmin.from('enquiries').insert({
-          name: enquiry.name,
-          company: enquiry.company || null,
-          phone: enquiry.phone,
-          email: enquiry.email,
-          project_type: enquiry.projectType || null,
-          location: enquiry.location || null,
-          area: enquiry.area || null,
-          message: enquiry.message || null,
-          subject: enquiry.subject,
-          ip,
-          user_agent: cleanLine(request.headers.get('user-agent'), 200) || null,
-          referer: cleanLine(request.headers.get('referer'), 300) || null,
+        const { data: storedId, error } = await supabase.rpc('submit_enquiry', {
+          _name: enquiry.name,
+          _company: enquiry.company || null,
+          _phone: enquiry.phone,
+          _email: enquiry.email,
+          _project_type: enquiry.projectType || null,
+          _location: enquiry.location || null,
+          _area: enquiry.area || null,
+          _message: enquiry.message || null,
+          _subject: enquiry.subject,
+          _ip: ip,
+          _user_agent: cleanLine(request.headers.get('user-agent'), 200) || null,
+          _referer: cleanLine(request.headers.get('referer'), 300) || null,
         })
 
         if (error) {
@@ -218,6 +235,27 @@ export const Route = createFileRoute('/api/public/enquiry')({
             { ok: false, message: 'The enquiry could not be delivered. Please email us directly.' },
             502,
           )
+        }
+
+        // Notify DSI by e-mail. The enquiry is already stored, so a mail failure
+        // is logged and never shown to the visitor.
+        try {
+          const { sendEnquiryMail } = await import('@/lib/enquiry-mail.server')
+          await sendEnquiryMail({
+            id: typeof storedId === 'string' ? storedId : null,
+            name: enquiry.name,
+            company: enquiry.company,
+            phone: enquiry.phone,
+            email: enquiry.email,
+            projectType: enquiry.projectType,
+            location: enquiry.location,
+            area: enquiry.area,
+            message: enquiry.message,
+            subject: enquiry.subject,
+            receivedAt: new Date(),
+          })
+        } catch (mailError) {
+          console.error('[DSI ENQUIRY] mail failed', mailError instanceof Error ? mailError.message : mailError)
         }
 
         return json({ ok: true, message: 'Enquiry received.' }, 200)

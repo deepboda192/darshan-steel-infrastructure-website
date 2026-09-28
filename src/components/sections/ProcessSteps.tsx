@@ -30,7 +30,9 @@ const ICONS: Record<string, LucideIcon> = {
  * A neutral band: the heading beside its lead across the top, then a grid of
  * white cards, each headed by the step number on an accent plate, with the
  * stage's pictogram set large and faint into the bottom-right corner as a
- * watermark, followed by the stage name and its one-line summary.
+ * watermark, followed by the stage name and its one-line summary. On hover
+ * the card lifts, an accent rule draws across its top, the title and plate deepen to the accent and the watermark
+ * swells slowly.
  */
 export function ProcessSteps() {
   return (
@@ -62,13 +64,13 @@ export function ProcessSteps() {
               return (
                 <li
                   key={stage.index}
-                  className="group relative isolate overflow-hidden border border-secondary/15 bg-white px-8 pb-8 pt-7 transition-colors duration-300 hover:border-accent max-lg:px-6 max-lg:pb-6 max-lg:pt-5"
+                  className="group relative isolate overflow-hidden border border-secondary/15 bg-white px-8 pb-8 pt-7 transition-[border-color,translate] duration-300 ease-out before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:origin-left before:scale-x-0 before:bg-accent before:transition-transform before:duration-300 before:ease-out hover:-translate-y-1.5 hover:border-accent/50 hover:before:scale-x-100 max-lg:px-6 max-lg:pb-6 max-lg:pt-5"
                 >
-                  <span className="m-icon-box mb-16 h-16 w-16 font-heading text-[22px] font-bold tabular-nums max-lg:mb-[54px]">
+                  <span className="m-icon-box mb-16 h-16 w-16 font-heading text-[22px] font-bold tabular-nums transition-colors duration-300 group-hover:bg-accent-deep max-lg:mb-[54px]">
                     <span className="sr-only">Step </span>
                     {stage.index}
                   </span>
-                  <h3 className="mb-2.5 max-w-[calc(100%-56px)] font-heading text-[28px] font-bold leading-(--lh-sm) text-neutral-10 max-xs:text-[24px]">
+                  <h3 className="mb-2.5 max-w-[calc(100%-56px)] font-heading text-[28px] font-bold leading-(--lh-sm) text-neutral-10 transition-colors duration-300 group-hover:text-accent max-xs:text-[24px]">
                     {stage.title}
                   </h3>
                   <p className="m-paragraph medium max-w-[calc(100%-48px)]">{stage.short}</p>
@@ -79,7 +81,7 @@ export function ProcessSteps() {
                       size={150}
                       strokeWidth={1}
                       aria-hidden="true"
-                      className="pointer-events-none absolute -bottom-7 -right-7 -z-10 text-accent opacity-[0.08] transition-[opacity,transform] duration-500 ease-out group-hover:-translate-y-1 group-hover:opacity-[0.14]"
+                      className="pointer-events-none absolute -bottom-7 -right-7 -z-10 text-accent opacity-[0.08] transition-[opacity,scale] duration-700 ease-out group-hover:scale-110 group-hover:opacity-[0.16]"
                     />
                   )}
                 </li>

@@ -169,6 +169,23 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      submit_enquiry: {
+        Args: {
+          _name: string
+          _company: string | null
+          _phone: string
+          _email: string
+          _project_type: string | null
+          _location: string | null
+          _area: string | null
+          _message: string | null
+          _subject: string
+          _ip: string | null
+          _user_agent: string | null
+          _referer: string | null
+        }
+        Returns: string
+      }
       admin_list_users: {
         Args: Record<PropertyKey, never>
         Returns: {

@@ -32,7 +32,7 @@ const asPairs = (value: unknown): { label: string; value: string }[] =>
         .map((entry) => ({ label: String(entry['label'] ?? ''), value: String(entry['value'] ?? '') }))
     : []
 
-const asGallery = (value: unknown): ProjectImage[] =>
+export const asGallery = (value: unknown): ProjectImage[] =>
   Array.isArray(value)
     ? (value as Record<string, unknown>[])
         .filter((entry) => entry && typeof entry === 'object')

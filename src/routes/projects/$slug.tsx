@@ -1,5 +1,5 @@
 import { createFileRoute, notFound } from '@tanstack/react-router'
-import { Calendar, ClipboardList, Factory, MapPin, Ruler, User } from 'lucide-react'
+import { Factory, MapPin, Ruler, User } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { company, shortAddress } from '@/data/company'
 import { siteImages } from '@/data/images'
@@ -15,13 +15,13 @@ import { Logo } from '@/components/layout/Logo'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { Gallery } from '@/components/projects/Gallery'
 
-/** The case study, in the order the record tells it. */
+/**
+ * The part of the record shown on the page: the overview only. The
+ * challenge, approach, execution and result fields stay in the data for the
+ * admin editor and future use but are not rendered.
+ */
 const STUDY: { key: keyof Project['study']; title: string }[] = [
   { key: 'overview', title: 'Project overview' },
-  { key: 'challenge', title: 'The challenge' },
-  { key: 'approach', title: 'Engineering approach' },
-  { key: 'execution', title: 'Execution' },
-  { key: 'result', title: 'Result' },
 ]
 
 type DetailRow = { icon: LucideIcon; label: string; value: string }
@@ -33,9 +33,8 @@ const dialable = (value: string) => value.replace(/[^+\d]/g, '')
  * Project record — the reference's project page.
  *
  * The inner-page hero, the cover photograph, then two columns: the case study
- * (overview through result, then the gallery) on the left; on the right, a
- * sticky rail with the record's details, the standard specification and the
- * contact card. "More projects" closes the page with the next two records.
+ * (the overview, then the gallery) on the left; on the right, a sticky rail
+ * with the record's details and the contact card. "More projects" closes the page with the next two records.
  * Everything comes from the record itself and data/company.ts.
  */
 function ProjectPage() {
@@ -47,6 +46,9 @@ function ProjectPage() {
   useMotion()
 
   const pending = project.verified ? undefined : 'true'
+  // The inner hero carries the last gallery photograph (falling back to the
+  // stock banner when a record has none); the cover below the hero is the
+  // record's own cover.
   const cover = {
     src: project.photo,
     alt: `${project.name} — ${project.buildingType}, ${project.location}`,
@@ -59,8 +61,6 @@ function ProjectPage() {
     { icon: MapPin, label: 'Location', value: project.location },
     { icon: Factory, label: 'Building type', value: project.buildingType },
     { icon: Ruler, label: 'Built-up area', value: project.area },
-    ...(project.year ? [{ icon: Calendar, label: 'Year', value: project.year }] : []),
-    { icon: ClipboardList, label: 'Scope', value: project.scope.join(' · ') },
   ].filter((row) => row.value.trim().length > 0)
 
   // The next two records in list order, wrapping round at the end.
@@ -82,7 +82,7 @@ function ProjectPage() {
       <InnerHero
         tall
         title={project.name}
-        image={siteImages.projectHero}
+        image={project.gallery[project.gallery.length - 1] ?? siteImages.projectHero}
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Projects', href: '/projects' }, { label: project.name }]}
       />
 
@@ -154,26 +154,6 @@ function ProjectPage() {
                   })}
                 </dl>
               </div>
-
-              {project.technical.length > 0 && (
-                <div className="bg-neutral-1 px-[34px] pb-5 pt-8 max-xs:px-6">
-                  <h2 className="m-h5">Specification</h2>
-                  <dl className="mt-6">
-                    {project.technical.map((row, i) => (
-                      <div
-                        key={row.label}
-                        className={cn(
-                          'flex items-start justify-between gap-[18px] py-3.5',
-                          i < project.technical.length - 1 && 'border-b border-black/10',
-                        )}
-                      >
-                        <dt className="shrink-0 font-medium text-neutral-9">{row.label}</dt>
-                        <dd className="text-right text-neutral-7">{row.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              )}
 
               {/* the reference's contact card */}
               <div className="flex flex-col">

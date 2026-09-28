@@ -21,7 +21,7 @@ type Metric = (typeof company.metrics)[number]
  */
 export function AboutIntro() {
   const projects = company.metrics.find((m) => m.key === 'projects')
-  const capacity = company.metrics.find((m) => m.key === 'capacity')
+  const facility = company.metrics.find((m) => m.key === 'facility')
   const area = company.metrics.find((m) => m.key === 'area')
 
   return (
@@ -85,7 +85,7 @@ export function AboutIntro() {
           <div className="flex flex-col gap-5">
             <FilmBox />
             <div className="grid grid-cols-2 gap-5 max-lg:grid-cols-1 max-xs:gap-3.5">
-              {capacity && <FigurePlate metric={capacity} tone="accent" reveal="right" />}
+              {facility && <FigurePlate metric={facility} tone="accent" reveal="right" />}
               {area && <FigurePlate metric={area} tone="dark" reveal="left" />}
             </div>
           </div>
@@ -124,7 +124,7 @@ function BigStat({
   )
 }
 
-/** A filled plate carrying a figure and its note — `about-bottom-stat-box`. */
+/** A filled plate carrying a figure and its label — `about-bottom-stat-box`. */
 function FigurePlate({
   metric,
   tone,
@@ -147,9 +147,8 @@ function FigurePlate({
         <Counter metric={metric} />
         {metric.unit && <span className="text-[28px] font-medium max-xs:text-[22px]">{metric.unit}</span>}
       </p>
-      <p className="max-w-[500px] text-[18px] leading-[1.5] max-md:text-[16px] max-xs:text-[14px]">
-        {metric.label} — {metric.note.charAt(0).toLowerCase() + metric.note.slice(1)}.
-      </p>
+      {/* The label alone: the user dropped the explanatory notes on 2026-09-28. */}
+      <p className="max-w-[500px] text-[18px] leading-[1.5] max-md:text-[16px] max-xs:text-[14px]">{metric.label}</p>
     </div>
   )
 }

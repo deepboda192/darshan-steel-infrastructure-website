@@ -10,6 +10,12 @@ type Entry = { path: string; changeFrequency: string; priority: number }
 const ROUTES: Entry[] = [
   { path: '/', changeFrequency: 'monthly', priority: 1.0 },
   { path: '/about', changeFrequency: 'yearly', priority: 0.8 },
+  { path: '/about-peb', changeFrequency: 'yearly', priority: 0.8 },
+  { path: '/about-peb/primary-system', changeFrequency: 'yearly', priority: 0.7 },
+  { path: '/about-peb/secondary-system', changeFrequency: 'yearly', priority: 0.7 },
+  { path: '/about-peb/mezzanine-floors', changeFrequency: 'yearly', priority: 0.7 },
+  { path: '/about-peb/cladding-system', changeFrequency: 'yearly', priority: 0.7 },
+  { path: '/about-peb/accessories', changeFrequency: 'yearly', priority: 0.7 },
   { path: '/projects', changeFrequency: 'monthly', priority: 0.8 },
 ]
 

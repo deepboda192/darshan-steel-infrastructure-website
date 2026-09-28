@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X, Maximize2 } from 'lucide-react'
 import type { ProjectImage } from '@/data/projects'
 import { ImageFrame } from '@/components/media/ImageFrame'
 
@@ -78,7 +78,7 @@ export function Gallery({ images, heading = 'Gallery' }: GalleryProps) {
       <ul className="mt-6 grid grid-cols-2 gap-6 max-xs:grid-cols-1">
         {images.map((image, i) => {
           const frame = (
-            <div className="absolute inset-0">
+            <div className="absolute inset-0 transition-[scale] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.04]">
               <ImageFrame image={image} ratio="fill" sizes="(min-width: 1024px) 30vw, 100vw" />
             </div>
           )
@@ -89,13 +89,21 @@ export function Gallery({ images, heading = 'Gallery' }: GalleryProps) {
                   type="button"
                   onClick={() => setShown({ index: i })}
                   aria-label={`Open image ${i + 1} of ${images.length}: ${image.alt}`}
-                  className="group relative block w-full overflow-hidden bg-neutral-1 pt-[70%]"
+                  className="group relative block w-full cursor-zoom-in overflow-hidden bg-neutral-1 pt-[70%] outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 >
                   {frame}
+                  {/* A quiet gradient from the foot and a small "view" chip, both easing in. */}
                   <div
                     aria-hidden="true"
-                    className="absolute inset-0 scale-0 bg-black/20 transition-transform duration-300 ease-out group-hover:scale-100"
+                    className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/5 to-transparent opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
                   />
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-4 right-4 flex translate-y-2 items-center gap-1.5 bg-white/95 px-3 py-1.5 font-heading text-[12px] font-semibold uppercase tracking-[0.5px] text-neutral-10 opacity-0 transition-[opacity,translate] duration-400 ease-out group-hover:translate-y-0 group-hover:opacity-100"
+                  >
+                    <Maximize2 size={13} strokeWidth={2.2} />
+                    View
+                  </span>
                 </button>
               ) : (
                 <div className="relative overflow-hidden bg-neutral-1 pt-[70%]">{frame}</div>

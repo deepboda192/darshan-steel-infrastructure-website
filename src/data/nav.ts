@@ -20,7 +20,9 @@ export const primaryNav: NavItem[] = [
       { label: 'Building Accessories', href: '/about-peb/accessories', description: 'Ventilators, daylight panels, louvers, insulation, ladders' },
     ],
   },
+  { label: 'Manufacturing', href: '/manufacturing', description: 'The works, its capacity, certifications and machines' },
   { label: 'Projects', href: '/projects', description: 'Every project on record' },
+  { label: 'Blogs', href: '/blogs', description: 'Articles on pre-engineered buildings' },
 ]
 
 export const footerNav: { heading: string; items: NavItem[] }[] = [
@@ -29,8 +31,10 @@ export const footerNav: { heading: string; items: NavItem[] }[] = [
     items: [
       { label: 'About Us', href: '/about' },
       { label: 'About PEB', href: '/about-peb' },
+      { label: 'Manufacturing', href: '/manufacturing' },
       { label: 'Solutions', href: '/#solutions' },
       { label: 'Projects', href: '/projects' },
+      { label: 'Blogs', href: '/blogs' },
       { label: 'Why DSI', href: '/#why-dsi' },
       { label: 'Process', href: '/#process' },
     ],

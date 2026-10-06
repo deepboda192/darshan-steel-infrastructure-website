@@ -24,14 +24,14 @@ const FOOT_LINK =
  * the brand with the office and factory addresses, the two link groups under
  * their headings, and the direct routes with the social buttons — closed by
  * the copyright line and a way back to the top. Everything is left-aligned
- * and labelled so it scans as a directory. The company's short name sits as
- * a watermark beneath the box.
+ * and labelled so it scans as a directory. The "DSI" watermark that sat
+ * beneath the box was removed at the user's request on 2026-09-29.
  */
 export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="relative isolate overflow-hidden pb-[180px] max-lg:pb-[120px] max-xs:pb-[72px]">
+    <footer className="relative isolate overflow-hidden pb-20 max-md:pb-14 max-xs:pb-10">
       {/* ---------------- backdrop ---------------- */}
       <div
         aria-hidden="true"
@@ -72,25 +72,6 @@ export function Footer() {
             className="relative bg-white px-10 pb-8 pt-14 shadow-[0_10px_25px_#0000004d] max-md:px-6 max-md:pb-6 max-md:pt-10 max-xs:px-5 max-xs:pb-5 max-xs:pt-8"
             data-reveal="fade"
           >
-            {/* watermark beneath the box */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -bottom-[43%] left-1/2 -z-10 -translate-x-1/2 max-lg:-bottom-[12%] max-md:-bottom-[10%] max-xs:-bottom-[8%]"
-            >
-              <p
-                className="font-heading font-semibold leading-none text-white"
-                style={{
-                  fontSize: 'clamp(2rem, 20vw, 18rem)',
-                  backgroundImage: 'linear-gradient(0deg, #fff, #fff0 72%)',
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
-              >
-                {company.shortName}
-              </p>
-            </div>
-
             <div className="grid grid-cols-[1.25fr_1fr_1fr] gap-x-12 gap-y-10 max-lg:grid-cols-1 max-lg:gap-y-0">
               {/* brand + addresses */}
               <div className="flex flex-col gap-7 max-lg:border-b max-lg:border-black/10 max-lg:pb-10 max-xs:pb-8">

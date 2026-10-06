@@ -491,6 +491,73 @@ export const siteImages = {
       '50% 40%',
     ),
   },
+  /** Blogs index hero. Stock photograph from Unsplash; source in CREDITS.md. */
+  blogsHero: img(
+    'blog-hero',
+    'Dark steel skeleton of a building under construction against a pale sky',
+    'frames',
+    'BLOGS',
+    '50% 45%',
+  ),
+  /**
+   * Article images, grouped by post. Stock photographs from Unsplash; sources
+   * in CREDITS.md. The cover doubles as the article's hero and og:image.
+   */
+  blog: {
+    pebVsConventional: {
+      cover: img(
+        'blog-peb-vs-conventional-cover',
+        'White steel portal frames of a large pre-engineered hall under erection, with mobile cranes and an excavator working on the site',
+        'erection',
+        'FIG. 41 — PEB UNDER ERECTION',
+        '50% 40%',
+      ),
+      steel: img(
+        'blog-peb-vs-conventional-steel',
+        'Primed steel portal frame of a pre-engineered building with its purlins and sag rods fixed, against a blue sky',
+        'frames',
+        'FIG. 42 — PEB FRAME',
+        '50% 50%',
+      ),
+      concrete: img(
+        'blog-peb-vs-conventional-concrete',
+        'Reinforced concrete frame of a conventional building under construction, with formwork, scaffolding and workers on the top floor',
+        'blueprint',
+        'FIG. 43 — RCC FRAME',
+        '50% 50%',
+      ),
+    },
+  },
+  /**
+   * Manufacturing page: the hero is DSI's own shop-floor photograph; the
+   * machine cards are stock photographs of the same machine types from
+   * Pexels and Unsplash, chosen to show the process honestly until DSI's
+   * own machine photographs replace them. Sources in CREDITS.md.
+   */
+  manufacturingHero: {
+    src: '/images/works-interior.webp',
+    alt: 'Inside the DSI fabrication shop: a long steel-framed bay with overhead cranes and machinery either side of the aisle',
+    plate: 'plant',
+    label: 'MANUFACTURING',
+    focus: '50% 50%',
+  } satisfies SiteImage,
+  machines: {
+    plasmaCnc: img('machine-plasma-cnc', 'CNC plasma torch cutting a shape from steel plate, the arc lighting the cut', 'plant', 'PLS-1', '50% 50%'),
+    shearingCnc: img('machine-shearing-cnc', 'A large green guillotine shearing machine in a fabrication shop', 'plant', 'SRG-1', '50% 50%'),
+    shearing: img('machine-shearing', 'Operators feeding a steel sheet into a guillotine shearing machine', 'plant', 'SRG-2', '50% 45%'),
+    pressBrake: img('machine-press-brake', 'A gloved hand positioning sheet under the tooling of a CNC press brake', 'plant', 'CNC PB-1', '50% 50%'),
+    powerPress: img('machine-power-press', 'An operator feeding a strip into a mechanical power press', 'plant', 'MPP-1', '50% 50%'),
+    hydraulicPunch: img('machine-hydraulic-punch', 'A hydraulic ram pressing a steel component on a punching bed', 'plant', 'HPH-1', '50% 50%'),
+    radialDrill: img('machine-radial-drill', 'A drill boring a bolt hole in a steel bar, swarf curling from the bit', 'plant', 'RDM-1', '50% 50%'),
+    threadRolling: img('machine-thread-rolling', 'Close-up of a rolled thread on a steel rod', 'plant', 'HTM-1', '60% 50%'),
+    beamWelding: img('machine-beam-welding', 'Automatic welding heads running along a large steel section on a welding line', 'plant', 'PHI-1', '50% 50%'),
+    migWelding: img('machine-mig-welding', 'A welder MIG welding steel sections inside a fabrication shop', 'plant', 'MIG-1', '50% 50%'),
+    shotBlasting: img('machine-shot-blasting', 'An operator in a hooded suit treating a large steel component inside an enclosed booth', 'plant', 'SBT-1', '50% 50%'),
+    purlinRollForming: img('machine-purlin-roll-forming', 'The roller stands of a cold roll-forming line for purlins and girts', 'plant', 'RFP-1', '50% 50%'),
+    sheetForming: img('machine-sheet-forming', 'A sheet roll-forming machine with blue roller stands in a workshop', 'plant', 'RFS-1', '50% 50%'),
+    standingSeam: img('machine-standing-seam', 'Close-up of a grooved forming roller on a roll-forming machine', 'plant', 'SSR-1', '50% 50%'),
+    deckForming: img('machine-deck-forming', 'A steel coil on a crane hook, ready to feed a forming line', 'plant', 'DSF-1', '50% 50%'),
+  },
   /** Primary System page hero: main frames, purlins and crane beams against a clear sky. */
   primarySystemHero: img(
     'primary-system-hero',

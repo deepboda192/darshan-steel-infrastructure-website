@@ -338,7 +338,8 @@
     padding: 10px 18px;
     border: 1px solid var(--color-neutral-4);
     border-radius: var(--radius-btn);
-    background-color: transparent;
+    /* White, not transparent, so a chip reads on the neutral-1 bands too. */
+    background-color: var(--color-white);
     font-family: var(--font-heading);
     font-size: 16px;
     line-height: 1.5;

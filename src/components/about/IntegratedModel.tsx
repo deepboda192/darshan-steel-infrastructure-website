@@ -3,20 +3,17 @@ import type { LucideIcon } from 'lucide-react'
 import { integratedModel, workflowStages } from '@/data/capabilities'
 import { Button } from '@/components/site/Button'
 import { SectionIntro } from '@/components/site/SectionIntro'
-import { cn } from '@/lib/cn'
 
 // One pictogram per band, in order: engineering, manufacturing, inspection, execution.
 const ICONS: LucideIcon[] = [PencilRuler, Factory, ClipboardCheck, Wrench]
-
-/** Desktop stagger: each card starts a step lower and sticks as the page scrolls. */
-const STAGGER = ['', 'lg:mt-[60px]', 'lg:mt-[120px]', 'lg:mt-[180px]']
 
 const stageTitle = (index: string) => workflowStages.find((s) => s.index === index)?.title ?? ''
 
 /**
  * What we do — the reference's process section: the heading and the call to
- * action across the top, then the cards stepping down across the page and
- * sticking as you scroll. The four bands of the integrated model come from
+ * action across the top, then the four cards on one line at one height
+ * (the reference's staircase and sticky scroll were dropped at the user's
+ * request on 2026-09-29). The four bands of the integrated model come from
  * data/capabilities.ts, each listing the workflow stages it covers.
  */
 export function IntegratedModel() {
@@ -38,16 +35,13 @@ export function IntegratedModel() {
             </div>
           </div>
 
-          <ol className="grid grid-cols-4 items-start gap-5 max-lg:grid-cols-2 max-md:grid-cols-1">
+          <ol className="grid grid-cols-4 items-stretch gap-5 max-lg:grid-cols-2 max-md:grid-cols-1">
             {integratedModel.map((band, i) => {
               const Icon = ICONS[i % ICONS.length]
               return (
                 <li
                   key={band.index}
-                  className={cn(
-                    'border border-secondary/15 bg-white px-8 pb-8 pt-7 lg:sticky lg:top-20 max-lg:px-6 max-lg:pb-6 max-lg:pt-5',
-                    STAGGER[i],
-                  )}
+                  className="flex flex-col border border-secondary/15 bg-white px-8 pb-8 pt-7 max-lg:px-6 max-lg:pb-6 max-lg:pt-5"
                 >
                   <div className="mb-16 flex items-center justify-between max-lg:mb-[54px]">
                     <span className="m-icon-box h-16 w-16">
@@ -63,8 +57,9 @@ export function IntegratedModel() {
                   <h3 className="font-heading text-[36px] font-bold leading-(--lh-lg) text-neutral-10 max-xs:text-[30px]">
                     {band.title}
                   </h3>
-                  <p className="m-paragraph medium mt-4">{band.body}</p>
-                  <p className="mt-6 border-t border-black/10 pt-4 text-[14px] leading-[1.6] text-neutral-6">
+                  <p className="m-paragraph medium mb-6 mt-4">{band.body}</p>
+                  {/* Pinned to the foot of the card, so the rule lines up across the row. */}
+                  <p className="mt-auto border-t border-black/10 pt-4 text-[14px] leading-[1.6] text-neutral-6">
                     <span className="font-heading font-semibold uppercase tracking-[0.5px]">Stages</span>{' '}
                     {band.stages.map(stageTitle).join(' · ')}
                   </p>

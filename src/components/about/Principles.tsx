@@ -37,9 +37,10 @@ export function Principles() {
               return (
                 <li
                   key={principle.index}
-                  className="border-b border-r border-white/20 transition-colors duration-300 hover:bg-accent"
+                  className="border-b border-r border-white/20 transition-colors duration-300 ease-in-out hover:bg-accent"
                 >
-                  <div className="w-fit bg-secondary p-[34px]">
+                  {/* The icon plate fills with the card, so the whole box turns blue on hover. */}
+                  <div className="w-fit p-[34px]">
                     <Icon size={40} strokeWidth={1.5} aria-hidden="true" />
                   </div>
                   <div className="px-[34px] pb-[34px] pt-[42px] max-xs:px-6 max-xs:pb-6 max-xs:pt-8">

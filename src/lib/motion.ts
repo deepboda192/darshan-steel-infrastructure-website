@@ -24,6 +24,7 @@ export function useMotion() {
  *   data-animation="blur-stagger"        words blur-fade in from the side
  *   data-animation="blur-stagger-chars"  characters blur-fade in from below
  *   data-marquee="left|right"            infinite track loop, pauses on hover
+ *   data-marquee-hover="run"             keeps that loop running under the pointer
  *   data-reveal="up|fade|left|right"     entrance when scrolled into view
  *   data-reveal-stagger                  children enter one after another
  *   data-stack / data-stack-item         covered sticky rows shrink and fade
@@ -140,10 +141,13 @@ export function initMotion(scope?: HTMLElement): () => void {
             paused: reduced,
           })
         })
-        wrap.addEventListener('mouseenter', () => tweens.forEach((t) => t.pause()))
-        wrap.addEventListener('mouseleave', () => {
-          if (!reduced) tweens.forEach((t) => t.resume())
-        })
+        // Pauses under the pointer unless the marquee opts out with data-marquee-hover="run".
+        if (wrap.dataset.marqueeHover !== 'run') {
+          wrap.addEventListener('mouseenter', () => tweens.forEach((t) => t.pause()))
+          wrap.addEventListener('mouseleave', () => {
+            if (!reduced) tweens.forEach((t) => t.resume())
+          })
+        }
       })
 
       /* ----------------------------------------------------- entrances */
@@ -164,6 +168,11 @@ export function initMotion(scope?: HTMLElement): () => void {
           duration: 0.9,
           ease: 'power2.out',
           delay: Number(el.dataset.revealDelay ?? 0),
+          // Drop the inline transforms once the entrance is done, so CSS
+          // hover effects (a card lifting on :hover) are not overridden by
+          // GSAP's leftover `translate: none`. Opacity stays: the stylesheet
+          // hides un-revealed elements, so clearing it would hide them again.
+          clearProps: 'transform,translate,rotate,scale',
           scrollTrigger: { trigger: el, ...enter(el) },
         })
       })
@@ -183,6 +192,7 @@ export function initMotion(scope?: HTMLElement): () => void {
             duration: 0.9,
             ease: 'power2.out',
             stagger: 0.12,
+            clearProps: 'transform,translate,rotate,scale',
             scrollTrigger: { trigger: group, ...enter(group, 'top 85%') },
           },
         )

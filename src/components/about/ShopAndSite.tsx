@@ -49,32 +49,23 @@ export function ShopAndSite() {
                 </div>
               ))}
             </dl>
-            <div className="relative bg-neutral-1 pt-[62%]">
-              <div className="absolute inset-0">
-                <ImageFrame image={siteImages.quality} ratio="fill" sizes="(min-width: 1024px) 40vw, 100vw" />
-              </div>
-            </div>
           </div>
 
+          {/* The works from above, then the shop floor beneath it. The name-and-address
+              plate that sat between them was removed at the user's request on 2026-09-29. */}
           <ul className="flex w-full max-w-[500px] flex-col gap-5 max-lg:max-w-none">
             {works.map((work) => (
-              <li key={work.unit} className="flex flex-col gap-[5px]" data-reveal="up">
-                <div className="relative h-[355px] overflow-hidden bg-neutral-2 max-xs:h-[260px]">
-                  <div className="absolute inset-0">
-                    <ImageFrame image={work.image} ratio="fill" sizes="(min-width: 1024px) 500px, 100vw" />
-                  </div>
-                </div>
-                <div className="bg-secondary px-8 py-7 text-white max-md:p-6">
-                  <p className="font-heading text-[14px] font-semibold uppercase tracking-[0.5px] text-neutral-2">
-                    {work.unit}
-                  </p>
-                  <h3 className="mt-2 font-heading text-[28px] font-semibold leading-(--lh-sm) max-xs:text-[24px]">
-                    {work.name}
-                  </h3>
-                  <p className="m-paragraph medium light mt-3">{work.address}</p>
+              <li key={work.unit} className="relative h-[355px] overflow-hidden bg-neutral-2 max-xs:h-[260px]" data-reveal="up">
+                <div className="absolute inset-0">
+                  <ImageFrame image={work.image} ratio="fill" sizes="(min-width: 1024px) 500px, 100vw" />
                 </div>
               </li>
             ))}
+            <li className="relative h-[355px] overflow-hidden bg-neutral-1 max-xs:h-[260px]" data-reveal="up">
+              <div className="absolute inset-0">
+                <ImageFrame image={siteImages.quality} ratio="fill" sizes="(min-width: 1024px) 500px, 100vw" />
+              </div>
+            </li>
           </ul>
         </div>
       </div>

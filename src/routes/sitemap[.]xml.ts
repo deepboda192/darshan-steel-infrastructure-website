@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { blogPosts } from '@/data/blogs'
 import { company } from '@/data/company'
 import { listProjects } from '@/lib/projects.functions'
 
@@ -16,7 +17,10 @@ const ROUTES: Entry[] = [
   { path: '/about-peb/mezzanine-floors', changeFrequency: 'yearly', priority: 0.7 },
   { path: '/about-peb/cladding-system', changeFrequency: 'yearly', priority: 0.7 },
   { path: '/about-peb/accessories', changeFrequency: 'yearly', priority: 0.7 },
+  { path: '/manufacturing', changeFrequency: 'yearly', priority: 0.8 },
   { path: '/projects', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/blogs', changeFrequency: 'weekly', priority: 0.8 },
+  ...blogPosts.map((post) => ({ path: `/blogs/${post.slug}`, changeFrequency: 'monthly', priority: 0.7 })),
 ]
 
 export const Route = createFileRoute('/sitemap.xml')({

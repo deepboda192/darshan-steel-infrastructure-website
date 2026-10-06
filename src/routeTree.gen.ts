@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AboutPebRouteImport } from './routes/about-peb'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ManufacturingRouteImport } from './routes/manufacturing'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -22,6 +23,8 @@ import { Route as AboutPebCladdingSystemRouteImport } from './routes/about-peb_.
 import { Route as AboutPebMezzanineFloorsRouteImport } from './routes/about-peb_.mezzanine-floors'
 import { Route as AboutPebPrimarySystemRouteImport } from './routes/about-peb_.primary-system'
 import { Route as AboutPebSecondarySystemRouteImport } from './routes/about-peb_.secondary-system'
+import { Route as BlogsIndexRouteImport } from './routes/blogs/index'
+import { Route as BlogsSlugRouteImport } from './routes/blogs/$slug'
 import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects/$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
@@ -52,6 +55,11 @@ const AboutPebRoute = AboutPebRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManufacturingRoute = ManufacturingRouteImport.update({
+  id: '/manufacturing',
+  path: '/manufacturing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -92,6 +100,16 @@ const AboutPebPrimarySystemRoute = AboutPebPrimarySystemRouteImport.update({
 const AboutPebSecondarySystemRoute = AboutPebSecondarySystemRouteImport.update({
   id: '/about-peb_/secondary-system',
   path: '/about-peb/secondary-system',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogsIndexRoute = BlogsIndexRouteImport.update({
+  id: '/blogs/',
+  path: '/blogs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogsSlugRoute = BlogsSlugRouteImport.update({
+  id: '/blogs/$slug',
+  path: '/blogs/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
@@ -137,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/about-peb': typeof AboutPebRoute
   '/auth': typeof AuthRoute
+  '/manufacturing': typeof ManufacturingRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -145,7 +164,9 @@ export interface FileRoutesByFullPath {
   '/about-peb/mezzanine-floors': typeof AboutPebMezzanineFloorsRoute
   '/about-peb/primary-system': typeof AboutPebPrimarySystemRoute
   '/about-peb/secondary-system': typeof AboutPebSecondarySystemRoute
+  '/blogs/$slug': typeof BlogsSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/blogs/': typeof BlogsIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
@@ -158,6 +179,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/about-peb': typeof AboutPebRoute
   '/auth': typeof AuthRoute
+  '/manufacturing': typeof ManufacturingRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/about-peb/accessories': typeof AboutPebAccessoriesRoute
@@ -165,7 +187,9 @@ export interface FileRoutesByTo {
   '/about-peb/mezzanine-floors': typeof AboutPebMezzanineFloorsRoute
   '/about-peb/primary-system': typeof AboutPebPrimarySystemRoute
   '/about-peb/secondary-system': typeof AboutPebSecondarySystemRoute
+  '/blogs/$slug': typeof BlogsSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/blogs': typeof BlogsIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/admin/projects': typeof AuthenticatedAdminProjectsRoute
@@ -180,6 +204,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/about-peb': typeof AboutPebRoute
   '/auth': typeof AuthRoute
+  '/manufacturing': typeof ManufacturingRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
@@ -188,7 +213,9 @@ export interface FileRoutesById {
   '/about-peb_/mezzanine-floors': typeof AboutPebMezzanineFloorsRoute
   '/about-peb_/primary-system': typeof AboutPebPrimarySystemRoute
   '/about-peb_/secondary-system': typeof AboutPebSecondarySystemRoute
+  '/blogs/$slug': typeof BlogsSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/blogs/': typeof BlogsIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/_authenticated/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/_authenticated/admin/projects': typeof AuthenticatedAdminProjectsRoute
@@ -203,6 +230,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/about-peb'
     | '/auth'
+    | '/manufacturing'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/admin'
@@ -211,7 +239,9 @@ export interface FileRouteTypes {
     | '/about-peb/mezzanine-floors'
     | '/about-peb/primary-system'
     | '/about-peb/secondary-system'
+    | '/blogs/$slug'
     | '/projects/$slug'
+    | '/blogs/'
     | '/projects/'
     | '/admin/enquiries'
     | '/admin/projects'
@@ -224,6 +254,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/about-peb'
     | '/auth'
+    | '/manufacturing'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/about-peb/accessories'
@@ -231,7 +262,9 @@ export interface FileRouteTypes {
     | '/about-peb/mezzanine-floors'
     | '/about-peb/primary-system'
     | '/about-peb/secondary-system'
+    | '/blogs/$slug'
     | '/projects/$slug'
+    | '/blogs'
     | '/projects'
     | '/admin/enquiries'
     | '/admin/projects'
@@ -245,6 +278,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/about-peb'
     | '/auth'
+    | '/manufacturing'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/_authenticated/admin'
@@ -253,7 +287,9 @@ export interface FileRouteTypes {
     | '/about-peb_/mezzanine-floors'
     | '/about-peb_/primary-system'
     | '/about-peb_/secondary-system'
+    | '/blogs/$slug'
     | '/projects/$slug'
+    | '/blogs/'
     | '/projects/'
     | '/_authenticated/admin/enquiries'
     | '/_authenticated/admin/projects'
@@ -268,6 +304,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AboutPebRoute: typeof AboutPebRoute
   AuthRoute: typeof AuthRoute
+  ManufacturingRoute: typeof ManufacturingRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   AboutPebAccessoriesRoute: typeof AboutPebAccessoriesRoute
@@ -275,7 +312,9 @@ export interface RootRouteChildren {
   AboutPebMezzanineFloorsRoute: typeof AboutPebMezzanineFloorsRoute
   AboutPebPrimarySystemRoute: typeof AboutPebPrimarySystemRoute
   AboutPebSecondarySystemRoute: typeof AboutPebSecondarySystemRoute
+  BlogsSlugRoute: typeof BlogsSlugRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
+  BlogsIndexRoute: typeof BlogsIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiPublicEnquiryRoute: typeof ApiPublicEnquiryRoute
 }
@@ -315,6 +354,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manufacturing': {
+      id: '/manufacturing'
+      path: '/manufacturing'
+      fullPath: '/manufacturing'
+      preLoaderRoute: typeof ManufacturingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -371,6 +417,20 @@ declare module '@tanstack/react-router' {
       path: '/about-peb/secondary-system'
       fullPath: '/about-peb/secondary-system'
       preLoaderRoute: typeof AboutPebSecondarySystemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blogs/': {
+      id: '/blogs/'
+      path: '/blogs'
+      fullPath: '/blogs/'
+      preLoaderRoute: typeof BlogsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blogs/$slug': {
+      id: '/blogs/$slug'
+      path: '/blogs/$slug'
+      fullPath: '/blogs/$slug'
+      preLoaderRoute: typeof BlogsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects/': {
@@ -459,6 +519,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AboutPebRoute: AboutPebRoute,
   AuthRoute: AuthRoute,
+  ManufacturingRoute: ManufacturingRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   AboutPebAccessoriesRoute: AboutPebAccessoriesRoute,
@@ -466,7 +527,9 @@ const rootRouteChildren: RootRouteChildren = {
   AboutPebMezzanineFloorsRoute: AboutPebMezzanineFloorsRoute,
   AboutPebPrimarySystemRoute: AboutPebPrimarySystemRoute,
   AboutPebSecondarySystemRoute: AboutPebSecondarySystemRoute,
+  BlogsSlugRoute: BlogsSlugRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
+  BlogsIndexRoute: BlogsIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiPublicEnquiryRoute: ApiPublicEnquiryRoute,
 }

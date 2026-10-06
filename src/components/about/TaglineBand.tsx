@@ -10,7 +10,8 @@ import { useLazyVideo } from '@/lib/useLazyVideo'
  * tint keeps the outlined type legible over the footage until then.
  */
 export function TaglineBand() {
-  const line = `${company.tagline}.`
+  /* The two lines alternate along the track (user's wording, 2026-09-29). */
+  const lines = [`${company.tagline}.`, 'A Place for Precise Work.']
   const { ref } = useLazyVideo(droneVideo.src)
 
   return (
@@ -38,7 +39,8 @@ export function TaglineBand() {
         className="absolute inset-x-0 top-0 h-[36svh] bg-[linear-gradient(180deg,transparent,#14141480_30%,#14141480_70%,transparent)]"
       />
 
-      <div className="relative w-full m-marquee" data-marquee="left" data-marquee-speed="40" aria-hidden="true">
+      {/* Keeps running under the pointer: the band is scenery, not a control. */}
+      <div className="relative w-full m-marquee" data-marquee="left" data-marquee-speed="40" data-marquee-hover="run" aria-hidden="true">
         {[0, 1].map((track) => (
           <div key={track} className="m-marquee-track gap-16 pr-16 max-xs:gap-10 max-xs:pr-10" data-marquee-track>
             {Array.from({ length: 4 }, (_, i) => (
@@ -46,13 +48,13 @@ export function TaglineBand() {
                 key={i}
                 className="whitespace-nowrap font-heading text-[150px] font-bold leading-none text-transparent [-webkit-text-stroke:1.5px_#fff] max-lg:text-[100px] max-md:text-[90px] max-xs:text-[64px] max-xs:[-webkit-text-stroke:1px_#fff]"
               >
-                {line}
+                {lines[i % lines.length]}
               </p>
             ))}
           </div>
         ))}
       </div>
-      <p className="sr-only">{line}</p>
+      <p className="sr-only">{lines.join(' ')}</p>
     </section>
   )
 }

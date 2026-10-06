@@ -54,7 +54,7 @@ export function Hero() {
             </ul>
 
             <h1 className="m-h1 light" data-animation="blur-stagger">
-              Pre-Engineered For Industry.
+              Pre-Engineered Building For Industry.
             </h1>
 
             <div

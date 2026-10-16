@@ -35,7 +35,7 @@ export function About() {
           <div className="flex justify-between gap-10 max-lg:flex-col max-lg:gap-[54px] max-xs:gap-10">
             <div className="flex flex-col justify-between gap-10 max-lg:flex-row max-lg:items-end">
               <p className="m-subtitle">About us</p>
-              <h2 className="m-h3 max-w-[420px] max-lg:hidden">Darshan Steel Infrastructure</h2>
+              <h2 className="m-h3 max-w-[420px] max-lg:sr-only">Darshan Steel Infrastructure</h2>
             </div>
 
             <div className="flex min-w-0 max-w-[800px] flex-col gap-[54px] max-lg:max-w-none max-md:gap-10">

@@ -8,9 +8,9 @@ import {
   secondaryParts,
   secondarySystemFaq,
   secondarySystemIntro,
-  secondarySystemMeta,
   sectionProfiles,
 } from '@/data/secondary-system'
+import { secondarySystemMeta } from '@/data/page-meta'
 import { useMotion } from '@/lib/motion'
 import { breadcrumbSchema, JsonLd, type Json } from '@/lib/schema'
 import { InnerHero } from '@/components/site/InnerHero'

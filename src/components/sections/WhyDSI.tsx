@@ -11,6 +11,7 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import { whyChooseDsi } from '@/data/capabilities'
 import { siteImages } from '@/data/images'
+import Image from '@/components/media/NextImage'
 import { Button } from '@/components/site/Button'
 
 // One pictogram per reason, keyed by index. Presentation only, so the mapping
@@ -43,13 +44,14 @@ export function WhyDSI() {
       aria-label="Why DSI"
     >
       <div aria-hidden="true" className="absolute inset-0 -z-10">
-        <img
+        <Image
           src={siteImages.worksAerial.src}
           alt=""
-          className="h-full w-full object-cover"
+          fill
+          // Under a 75% black wash, half the viewport's pixels are plenty.
+          sizes="50vw"
+          className="object-cover"
           style={{ objectPosition: siteImages.worksAerial.focus }}
-          loading="lazy"
-          decoding="async"
         />
         <div className="absolute inset-0 bg-black/75" />
       </div>

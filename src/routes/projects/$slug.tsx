@@ -4,7 +4,7 @@ import type { LucideIcon } from 'lucide-react'
 import { company, shortAddress } from '@/data/company'
 import { siteImages } from '@/data/images'
 import type { Project } from '@/data/projects'
-import { projectsQueryOptions } from '@/lib/projects-query'
+import { loadProjects } from '@/lib/projects-cache'
 import { useMotion } from '@/lib/motion'
 import { breadcrumbSchema, JsonLd } from '@/lib/schema'
 import { cn } from '@/lib/cn'
@@ -223,8 +223,8 @@ function ProjectPage() {
 }
 
 export const Route = createFileRoute('/projects/$slug')({
-  loader: async ({ context, params }) => {
-    const projects = await context.queryClient.ensureQueryData(projectsQueryOptions)
+  loader: async ({ params }) => {
+    const projects = await loadProjects()
     if (!projects.some((p) => p.slug === params.slug)) throw notFound()
     return projects
   },

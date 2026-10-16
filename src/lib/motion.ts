@@ -95,7 +95,8 @@ export function initMotion(scope?: HTMLElement): () => void {
           .timeline({
             scrollTrigger: { trigger: el, start: 'top 90%', end: 'top 15%', scrub: true },
           })
-          .from(split.words, { opacity: 0.4, duration: 0.2, ease: 'none', stagger: { each: 0.4 } })
+          // 0.65 keeps the dimmed words at 4.5:1 on white (neutral-8 text) for WCAG AA.
+          .from(split.words, { opacity: 0.65, duration: 0.2, ease: 'none', stagger: { each: 0.4 } })
       })
 
       /* ---------------------------------------------- blur stagger text */
@@ -105,17 +106,19 @@ export function initMotion(scope?: HTMLElement): () => void {
         )
         .forEach((el) => {
           if (reduced) {
-            gsap.set(el, { opacity: 1 })
+            gsap.set(el, { clearProps: 'filter,transform' })
             return
           }
           const chars = el.dataset.animation === 'blur-stagger-chars'
           const split = new SplitType(el, { types: chars ? 'words,chars' : 'words' })
           splits.push(split)
           const targets = chars ? split.chars : split.words
-          gsap.set(el, { opacity: 1 })
-          gsap.set(targets, { willChange: 'transform, filter, opacity' })
+          // The element's CSS pre-state (blurred, offset; see styles.css) moves onto
+          // the words, so the headline is painted from the first frame and never
+          // passes through opacity 0 — it is the page's largest contentful paint.
+          gsap.set(el, { filter: 'none', x: 0, y: 0 })
+          gsap.set(targets, { willChange: 'transform, filter' })
           gsap.from(targets, {
-            opacity: 0,
             filter: 'blur(8px)',
             x: chars ? 0 : 14,
             y: chars ? 15 : 0,

@@ -13,7 +13,7 @@ import { cn } from '@/lib/cn'
  * on data saver or a slow connection, keep the still.
  */
 export function HeroVideo() {
-  const { ref, started } = useLazyVideo(heroVideo.src)
+  const { ref, started } = useLazyVideo(heroVideo.src, heroVideo.srcSmall)
 
   return (
     <video

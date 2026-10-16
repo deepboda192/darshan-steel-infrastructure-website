@@ -1,4 +1,8 @@
 @import 'tailwindcss';
+/* The two site faces, self-hosted: each file carries one unicode subset, so an
+   English page downloads only the latin files (preloaded in routes/__root.tsx). */
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/rethink-sans';
 
 /* ==========================================================================
    DSI DESIGN SYSTEM — built on the Modera design language
@@ -50,9 +54,9 @@
   --color-current: currentColor;
 
   /* --- typography -------------------------------------------------------- */
-  /* Both faces are loaded by the Google Fonts <link> in routes/__root.tsx. */
-  --font-heading: 'Rethink Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  /* The @fontsource-variable families imported at the top of this file. */
+  --font-heading: 'Rethink Sans Variable', 'Rethink Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
 
   /* Paragraph scale: para-1 is the lead, para-3 the body default. */
   --text-para-1: 20px;
@@ -405,8 +409,11 @@
    renders visible and static.
    ========================================================================== */
 
-.js [data-animation='blur-stagger'],
-.js [data-animation='blur-stagger-chars'],
+/* Headlines are the largest contentful paint, so they are painted from the
+   first frame: their initial state is the blur and offset the words then
+   sharpen out of, never opacity 0. Everything else waits for its reveal. */
+.js [data-animation='blur-stagger'] { filter: blur(8px); transform: translateX(14px); }
+.js [data-animation='blur-stagger-chars'] { filter: blur(8px); transform: translateY(15px); }
 .js [data-reveal],
 .js [data-reveal-stagger] > * {
   opacity: 0;
@@ -415,7 +422,10 @@
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js [data-animation='blur-stagger'],
-  .js [data-animation='blur-stagger-chars'],
+  .js [data-animation='blur-stagger-chars'] {
+    filter: none !important;
+    transform: none !important;
+  }
   .js [data-reveal],
   .js [data-reveal-stagger] > * {
     opacity: 1 !important;

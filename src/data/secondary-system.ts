@@ -7,12 +7,6 @@
  * spacings are given because the catalogue does not quote them.
  */
 
-export const secondarySystemMeta = {
-  title: 'PEB Secondary System: Purlins, Girts & Eave Struts | DSI',
-  description:
-    'The secondary system of a pre-engineered building: cold-formed Z and C purlins, wall girts and eave struts that span between the frames, carry the sheeting and brace the primary members.',
-}
-
 export const secondarySystemIntro = {
   lead:
     'The secondary system is the layer between the frames and the skin: purlins on the roof, girts on the walls and an eave strut where the two meet, spanning from frame to frame and carrying the sheeting.',

@@ -533,11 +533,12 @@ export function ContactForm() {
           />
         </FieldShell>
 
+        {/* Project type, location and area share one row on wide screens. */}
+        <div className="grid gap-5 sm:col-span-2 md:grid-cols-3">
         <FieldShell
           id={fid('projectType')}
           label="Project type"
           error={errors.projectType}
-          className="sm:col-span-2"
         >
           <Select
             id={fid('projectType')}
@@ -602,6 +603,7 @@ export function ContactForm() {
             </div>
           </div>
         </FieldShell>
+        </div>
 
         <FieldShell
           id={fid('message')}

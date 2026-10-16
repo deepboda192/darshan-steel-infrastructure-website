@@ -13,12 +13,6 @@ import { siteImages, type SiteImage } from '@/data/images'
  * from the scanned certificates in public/images/certifications/.
  */
 
-export const manufacturingMeta = {
-  title: 'Manufacturing: Works, Capacity & Machines | DSI',
-  description:
-    'Inside the Darshan Steel Infrastructure works at Rajkot: 15,000 MT annual capacity, ISO 9001, 14001 and 45001 certification by TÜV SÜD, and the CNC cutting, welding, drilling, blasting and roll-forming machines on the floor.',
-}
-
 export const manufacturingIntro = {
   lead:
     'Every DSI building is made under one roof at Chhattar, on the Rajkot–Morbi highway: plate in at one end, numbered, painted members out at the other, from a 15,000 square metre works with a fully enclosed, automated production line.',
@@ -37,8 +31,11 @@ export type Certification = {
   title: string
   issuer: string
   badge: string
-  /** The scanned certificate, as supplied by DSI on 2026-09-29. */
+  /** The scanned certificate as supplied by DSI on 2026-09-29: the PNG offered as the download. */
   document: string
+  /** The scan at 1200 px for the lightbox, and at 240 px for the thumbnail. */
+  preview: string
+  thumb: string
   /** Certificate registration number, as printed. */
   registration: string
   summary: string
@@ -67,8 +64,10 @@ export const certifications: Certification[] = [
     standard: 'ISO 9001:2015',
     title: 'Quality management system',
     issuer: 'TÜV SÜD',
-    badge: '/images/certifications/tuv-sud-iso-9001.png',
+    badge: '/images/certifications/tuv-sud-iso-9001.webp',
     document: '/images/certifications/certificate-tuv-sud-iso-9001.png',
+    preview: '/images/certifications/certificate-tuv-sud-iso-9001.webp',
+    thumb: '/images/certifications/certificate-tuv-sud-iso-9001-thumb.webp',
     registration: '99 100 24683',
     summary:
       'The international standard for a quality management system: a documented way of working that starts from what the customer needs, controls every process that delivers it, checks the result, and corrects the process when something goes wrong.',
@@ -90,8 +89,10 @@ export const certifications: Certification[] = [
     standard: 'ISO 14001:2015',
     title: 'Environmental management system',
     issuer: 'TÜV SÜD',
-    badge: '/images/certifications/tuv-sud-iso-14001.png',
+    badge: '/images/certifications/tuv-sud-iso-14001.webp',
     document: '/images/certifications/certificate-tuv-sud-iso-14001.png',
+    preview: '/images/certifications/certificate-tuv-sud-iso-14001.webp',
+    thumb: '/images/certifications/certificate-tuv-sud-iso-14001-thumb.webp',
     registration: '99 104 01966',
     summary:
       'The standard for managing the environmental impact of an operation: identifying where the work touches air, water, land and resources, meeting the law that applies, setting objectives to do better, and proving it with records.',
@@ -113,8 +114,10 @@ export const certifications: Certification[] = [
     standard: 'ISO 45001:2018',
     title: 'Occupational health and safety management system',
     issuer: 'TÜV SÜD',
-    badge: '/images/certifications/tuv-sud-iso-45001.png',
+    badge: '/images/certifications/tuv-sud-iso-45001.webp',
     document: '/images/certifications/certificate-tuv-sud-iso-45001.png',
+    preview: '/images/certifications/certificate-tuv-sud-iso-45001.webp',
+    thumb: '/images/certifications/certificate-tuv-sud-iso-45001-thumb.webp',
     registration: '99 117 01401',
     summary:
       'The standard for keeping people safe at work: finding the hazards in every task, reducing the risk before the work starts, involving the workers themselves, and learning from every incident and near miss.',

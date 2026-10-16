@@ -286,12 +286,24 @@ function BlogPostPage() {
 }
 
 export const Route = createFileRoute('/blogs/$slug')({
-  loader: ({ params }) => {
-    if (!getPost(params.slug)) throw notFound()
-  },
-  head: ({ params }) => {
+  // The posts are imported here rather than at the top of the route module:
+  // the loader and head() run from the shell bundle every page downloads,
+  // while the page component (its own chunk) imports the posts statically.
+  loader: async ({ params }) => {
+    const { getPost, categoryOf } = await import('@/data/blogs')
     const post = getPost(params.slug)
-    const title = post ? post.seoTitle : `Blogs | ${company.name}`
+    if (!post) throw notFound()
+    return {
+      title: post.seoTitle,
+      description: post.description,
+      image: post.cover.src,
+      publishedAt: post.publishedAt,
+      modifiedAt: post.updatedAt ?? post.publishedAt,
+      section: categoryOf(post).name,
+    }
+  },
+  head: ({ params, loaderData: post }) => {
+    const title = post ? post.title : `Blogs | ${company.name}`
     const description = post?.description ?? ''
     const url = `${company.siteUrl}/blogs/${params.slug}`
     return {
@@ -304,10 +316,10 @@ export const Route = createFileRoute('/blogs/$slug')({
         { property: 'og:url', content: url },
         ...(post
           ? [
-              { property: 'og:image', content: `${company.siteUrl}${post.cover.src}` },
+              { property: 'og:image', content: `${company.siteUrl}${post.image}` },
               { property: 'article:published_time', content: post.publishedAt },
-              { property: 'article:modified_time', content: post.updatedAt ?? post.publishedAt },
-              { property: 'article:section', content: categoryOf(post).name },
+              { property: 'article:modified_time', content: post.modifiedAt },
+              { property: 'article:section', content: post.section },
               { name: 'twitter:card', content: 'summary_large_image' },
             ]
           : []),

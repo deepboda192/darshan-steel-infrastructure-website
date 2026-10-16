@@ -1,8 +1,6 @@
 import { Suspense } from 'react'
 import { ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react'
 import { company } from '@/data/company'
-import { siteImages } from '@/data/images'
-import { ImageFrame } from '@/components/media/ImageFrame'
 import { SectionIntro } from '@/components/site/SectionIntro'
 import { ContactForm } from '@/components/site/ContactForm'
 
@@ -46,7 +44,7 @@ function FormFallback() {
  * the direct routes — the icon plate beside the box's name, then each
  * number, address (office and factory) or e-mail as a ruled row with a hint of what it is for
  * and an arrow that answers the hover — then the form on a light block
- * with white fields, beside a photograph carrying the company strapline.
+ * with white fields, spanning the full container width.
  */
 export function Contact() {
   const address = company.address
@@ -166,27 +164,11 @@ export function Contact() {
             })}
           </ul>
 
-          {/* ---------------- form + image ---------------- */}
-          <div className="grid grid-cols-2 gap-16 max-lg:grid-cols-1 max-md:gap-[54px] max-xs:gap-10">
-            <div className="bg-neutral-1 p-10 max-md:p-8 max-xs:p-6" data-reveal="left">
-              <Suspense fallback={<FormFallback />}>
-                <ContactForm />
-              </Suspense>
-            </div>
-
-            <div className="relative min-h-[560px] bg-neutral-1 max-lg:min-h-[420px] max-xs:min-h-[360px]" data-reveal="right">
-              <ImageFrame
-                image={siteImages.safety}
-                tone="light"
-                ratio="fill"
-                sizes="(min-width: 1024px) 46vw, 100vw"
-              />
-              <div className="absolute bottom-5 left-5 max-w-[400px] bg-secondary py-6 pl-8 pr-6 max-xs:bottom-4 max-xs:left-4 max-xs:max-w-[300px] max-xs:p-5 max-xs:pl-6">
-                <p className="font-heading text-[26px] font-medium leading-(--lh-sm) text-white max-xs:text-[22px]">
-                  {company.strapline}
-                </p>
-              </div>
-            </div>
+          {/* ---------------- form ---------------- */}
+          <div className="bg-neutral-1 p-12 max-lg:p-10 max-md:p-8 max-xs:p-6" data-reveal="up">
+            <Suspense fallback={<FormFallback />}>
+              <ContactForm />
+            </Suspense>
           </div>
         </div>
       </div>

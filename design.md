@@ -97,10 +97,13 @@ and icon plates, **not for text**: links on dark bands use `.m-link.light`
 
 | Role | Family | Weights loaded | Notes |
 | --- | --- | --- | --- |
-| Headings, buttons, eyebrows, nav | **Rethink Sans** (`--font-heading`) | 400–700 | Google Fonts, variable. `body { font-synthesis: style }` keeps browsers from faking weights. |
-| Everything else | **Inter** (`--font-sans`) | 300–700 | Google Fonts, variable. |
+| Headings, buttons, eyebrows, nav | **Rethink Sans Variable** (`--font-heading`) | 400–800 | Self-hosted, `@fontsource-variable/rethink-sans`. `body { font-synthesis: style }` keeps browsers from faking weights. |
+| Everything else | **Inter Variable** (`--font-sans`) | 100–900 | Self-hosted, `@fontsource-variable/inter`. |
 
-Both are loaded by one `<link>` in `src/routes/__root.tsx`.
+Both are `@import`ed at the top of `src/styles.css` (one `@font-face` per
+unicode subset, so an English page downloads only the latin files) and the two
+latin files are preloaded from `src/routes/__root.tsx`. No third-party font
+host is contacted.
 
 ### Heading rules
 
@@ -208,7 +211,6 @@ Body default is Inter 16 / 1.6, weight 400. Add `.light` on dark surfaces.
 | `site/Button` | `variant` `primary` \| `outline` \| `link`; `tone` `light` \| `dark` (outline on dark surfaces); `arrow` (default on); `href` renders an anchor (`/#…`, external, `mailto:`) or a router link; otherwise a `<button>` with `type`, `disabled`, `onClick`. |
 | `site/Select` | The site-styled select (ARIA select-only combobox): `.m-field` trigger, white hairline listbox panel with square corners, active row on neutral-1, chosen row in the accent with a check; arrow keys, Home/End, type-ahead, Enter/Space, Escape, outside click. Used for project type and area unit. |
 | `site/SectionIntro` | Eyebrow + heading in one rhythm: `subtitle`, `title`, `tone`, `align` `left` \| `center`, `animate` `blur` \| `none`, `as` `h1` \| `h2`. Every section opens with it. |
-| `site/Container` | Thin `.m-container` wrapper (also used by the admin/auth screens). |
 | `site/ContactForm` | The enquiry form: validation summary + per-field errors, honeypot, posts to `VITE_ENQUIRY_ENDPOINT` (default `/api/public/enquiry`). Reads `?intent=` to preselect the subject. |
 | `site/NotFoundPage` | 404 on the secondary surface; calls `useMotion()`. |
 | `site/InnerHero` | Inner-page hero (65 svh photo under a wash): `title`, `image`, `crumbs` (the last is the current page), `tall` for records. |
@@ -395,9 +397,24 @@ with a real 404 status; the sitemap lists every verified record.
 
 - Photographs are registered in `src/data/images.ts` (`siteImages.hero`,
   `.aboutPrimary`, `.aboutSecondary`, `.manufacturing`, `.safety`,
-  `.footer`, `.whatWeBuild.*`). Give every entry `src`, `alt`, `width`,
-  `height`; an empty `src` renders the `TechnicalPlate` fallback instead of a
-  broken image.
+  `.footer`, `.whatWeBuild.*`). Give every entry `src`, `alt` and `plate`;
+  an empty `src` renders the `TechnicalPlate` fallback instead of a broken
+  image.
+- Every photograph in `public/images` is a WebP at most 2000 px wide with
+  renditions beside it (`name-480.webp`, `-768`, `-1200`, `-1600`) and an
+  entry in `src/data/image-manifest.ts`, all written by
+  `node scripts/optimize-images.mjs` (sharp). `media/NextImage` reads the
+  manifest to add `srcset`, `width` and `height` to any photo it renders, so
+  pass `sizes` on `ImageFrame` whenever the slot is narrower than the
+  viewport. `renditionUrl(src, 1600)` picks a rendition for CSS backgrounds
+  (the footer). Drawings with transparency stay PNG (palette-compressed by the
+  same script); the brand masters in `public/brand` are served as 700 px /
+  180 px WebP renditions.
+- The hero still is an `<img>` with `priority` (eager, `fetchpriority=high`)
+  and is preloaded from the home route's `head()` with its `srcset`; it is
+  the largest contentful paint on the home page. Everything else is lazy.
+- `public/videos` clips are re-encoded by `node scripts/optimize-videos.mjs`
+  (1280 px, H.264, faststart; needs ffmpeg).
 - Dark washes over photographs use the overlays in §2 so white type stays
   legible; never place text on an un-washed photo.
 - The hero also carries a looping video (`public/videos/hero-loop.mp4`, registered as
@@ -451,27 +468,102 @@ with a real 404 status; the sitemap lists every verified record.
   supplies more.
 - Modera's testimonials and blog sections are intentionally omitted — no DSI
   content exists for them.
-- The shadcn `src/components/ui/*` kit is unused apart from `sonner`; it and
-  its dependencies can be removed if the Lovable workflow no longer needs it.
+- The shadcn kit was removed on 2026-10-11 apart from `src/components/ui/sonner.tsx`;
+  its packages are gone with it.
 
 ---
 
-## 12. File map
+## 12. Performance
+
+- Public pages ship no Supabase client: `src/start.ts` uses
+  `lib/attach-supabase-auth` (which imports the client only when the browser
+  holds a stored session), the admin layout imports it inside `beforeLoad`, and
+  `projects.functions.ts` imports supabase-js inside its handler. Nothing else
+  may import `integrations/supabase/client` or `@supabase/supabase-js` at module
+  top level from a route, loader or Start file. Rows seeded with `.jpg` photo
+  paths are normalised to `.webp` by `localImagePath` in `lib/projects-map.ts`
+  (and by migration 20261011120000).
+- No shadcn leftovers: `components/ui` holds only the toaster the admin screens
+  use, mounted in the admin layout so public pages never load it. Dependencies
+  are limited to what `src` imports.
+- The shell bundle (the `index-*.js` every page downloads) holds React, the
+  router and the route modules' loaders and `head()`s, and nothing a route's
+  `head()` imports may be heavy: a page's title and description live in
+  `data/page-meta.ts`, while the page's content module (`data/primary-system.ts`
+  and the like) is imported only by its component, which the Start plugin splits
+  into a chunk of its own. `blogs/$slug` reads the posts inside its loader with a
+  dynamic import and builds its `head()` from the loader's result. react-query is
+  used by the admin screens alone, so its client is created in
+  `_authenticated/route.tsx`; the public project loaders share one fetch through
+  `lib/projects-cache`. Check with a source-mapped build (`vite build --sourcemap`)
+  when adding a route: the main chunk should not grow by a data module.
+- Chunk groups (`vite.config.ts`, rolldown `codeSplitting`): shared lucide icons
+  in one `icons` file and the site-wide data (`images`, `image-manifest`,
+  `company`) in one `data` file. Each group must stay a leaf that imports nothing
+  from the main bundle: a group that did would make a circular chunk import, and
+  a module in it that reads an import at module top level (every data module
+  does) would see it before it exists. Grouping shared components tried and
+  dropped for that reason.
+- The footer photograph is set from a state (`layout/Footer.tsx`) once the
+  footer is within a screen of the viewport, so a page's own images never queue
+  behind it; the logo (`layout/Logo.tsx`) and the certification marks ship 1x
+  and 2x renditions (`-180`/`-60`, `-112`) in a `srcset`, and the backdrops under
+  dark washes ask for half the viewport (`sizes="50vw"`, footer rendition 1200).
+- GSAP + ScrollTrigger + `lib/motion` are the one deliberate client cost
+  (~50 KB gzipped) and load in their own chunk.
+- Server response time: `lib/projects.functions.ts` keeps the project list in
+  memory on the server (fresh for a minute, served stale for up to ten while it
+  refreshes in the background), so the home page, the projects index, a record
+  and the sitemap render without waiting on the database. A saved record shows
+  on the public site within about a minute.
+- Static file caching is declared in `public/_headers` (honoured by Cloudflare
+  static asset hosting): hashed `/assets` forever, photos, brand files and clips
+  for a day with a week of stale-while-revalidate.
+- Lighthouse against the Vite dev server (localhost:8080) reports a slow,
+  uncompressed document, a 150 KB stylesheet and a 44 mobile score: that is the
+  dev server (unminified, no compression, debug attributes in the markup, one
+  file per module). Measure the production build instead:
+  `NITRO_PRESET=node-server npm run build`, `PORT=4174 node --env-file=.env
+  .output/server/index.mjs`, and put a compressing HTTP/2 proxy in front, since
+  the edge serves brotli over HTTP/2 and Lighthouse models the protocol it sees.
+  Measured that way on 2026-10-12 (home page): mobile 93–99 and desktop 100 over
+  HTTP/2, mobile 75–87 over HTTP/1.1, with accessibility, best practices and SEO
+  at 100. The spread comes from headless Chrome's first paint, which in some
+  runs waits for the script burst; the page itself is identical between runs.
+  The score the user sees should be taken from PageSpeed Insights against the
+  deployed site, never from the dev server.
+- Dates are formatted without a date library (`formatPostDate` in
+  `data/blogs.ts`).
+- Largest contentful paint is the page headline. Headlines with
+  `data-animation="blur-stagger"` / `-chars` are therefore painted from the
+  first frame: their CSS initial state is the blur and offset the words sharpen
+  out of (styles.css), not opacity 0, and `lib/motion.ts` never fades them
+  from 0. Only `data-reveal` blocks start hidden.
+- The hero loop has a 480 px rendition for phones (`heroVideo.srcSmall`,
+  chosen in `lib/useLazyVideo`).
+- Accessibility: the scrub-words effect dims to 0.65, not 0.4, so dimmed body
+  text keeps 4.5:1 on white; section headings hidden on small screens use
+  `sr-only`, not `hidden`, so the heading outline stays in order.
+- Images and fonts: see §3 and §8. Re-run `scripts/optimize-images.mjs` after
+  adding photos; it is idempotent.
+
+## 13. File map
 
 ```
 src/styles.css                  tokens (@theme), :root scale, base, m-* components, motion CSS, audit mode
 src/lib/motion.ts               initMotion() / useMotion() — the data-attribute behaviours
 src/lib/useLazyVideo.ts         post-load, idle-scheduled muted video (hero backdrop, film band)
-src/routes/__root.tsx           fonts <link>, meta, boot script, Navbar/Footer shell
+src/routes/__root.tsx           font preloads, meta, boot script, Navbar/Footer shell
 src/routes/index.tsx            the home page: section order + projects loader
 src/routes/about.tsx            the About page
 src/routes/projects/            index.tsx (all records + filter) and $slug.tsx (the record)
-src/components/site/            Button, SectionIntro, InnerHero, VideoBand, Container, ContactForm, NotFoundPage, NextLink
+src/components/site/            Button, SectionIntro, InnerHero, VideoBand, ContactForm, NotFoundPage, NextLink, Select
 src/components/about/           AboutIntro, TaglineBand, Principles, ShopAndSite, IntegratedModel, Leadership
 src/components/projects/        ProjectCard
 src/components/sections/        one file per home-page section (+ Counter)
 src/components/layout/          Navbar, Footer, Logo
 src/components/media/           ImageFrame, NextImage, TechnicalPlate
-src/data/                       company, solutions, capabilities, industries, clients, projects (fallback), nav, images
+src/data/                       page-meta (titles for head()), company, solutions, capabilities, clients, projects (fallback), nav, images, image-manifest (generated), peb, primary-system, blogs
+scripts/                        optimize-images.mjs (WebP renditions + manifest), optimize-videos.mjs, mail-test.mts
 modera_template/                the Webflow reference export (untracked)
 ```

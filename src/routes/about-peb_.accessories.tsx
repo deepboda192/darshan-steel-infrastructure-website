@@ -5,10 +5,10 @@ import { siteImages, type SiteImage } from '@/data/images'
 import {
   accessoriesFaq,
   accessoriesIntro,
-  accessoriesMeta,
   accessoryItems,
   accessoryParts,
 } from '@/data/accessories'
+import { accessoriesMeta } from '@/data/page-meta'
 import { useMotion } from '@/lib/motion'
 import { breadcrumbSchema, JsonLd, type Json } from '@/lib/schema'
 import { InnerHero } from '@/components/site/InnerHero'
@@ -22,19 +22,19 @@ import { cn } from '@/lib/cn'
 const PART_PHOTO: Record<string, { image: SiteImage; caption: string }> = {
   ventilation: {
     image: siteImages.accessoryParts.ventilation,
-    caption: 'A turbo ventilator on its base flashing: the wind spins the vanes and the spinning draws the hot air out.',
+    caption: 'Turbo ventilators on their base flashings along a DSI roof: the wind spins the vanes and the spinning draws the hot air out.',
   },
   daylight: {
     image: siteImages.accessoryParts.daylight,
-    caption: 'Daylight panels set along the roof slope between the steel sheets, lighting the floor from above.',
+    caption: 'Daylight panels run as strips along the roof slope of a DSI building, between the steel sheets, lighting the floor from above.',
   },
   louvers: {
     image: siteImages.accessoryParts.louvers,
-    caption: 'Louver panels set into profiled wall cladding: air passes between the blades and rain is turned down and out.',
+    caption: 'A band of louver panels set into the wall cladding of a DSI shed: air passes between the blades and rain is turned down and out.',
   },
   insulation: {
     image: siteImages.accessoryParts.insulation,
-    caption: 'A fibreglass blanket being fitted between framing. In a PEB the blanket is laid over the purlins and girts, under the sheet.',
+    caption: 'Insulation blanket laid over the purlins and under the roof sheet of a DSI building, held in place by wire mesh.',
   },
   access: {
     image: siteImages.accessoryParts.access,

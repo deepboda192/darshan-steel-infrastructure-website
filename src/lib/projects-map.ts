@@ -1,5 +1,15 @@
 import { galleryFor, type PlateKind } from '@/data/images'
+import { imageManifest } from '@/data/image-manifest'
 import type { Project, ProjectImage } from '@/data/projects'
+
+/**
+ * Rows seeded before the WebP pipeline point at /images/name.jpg; the file on
+ * disk is now /images/name.webp. Anything else (storage URLs, drawings) passes through.
+ */
+export const localImagePath = (src: string): string => {
+  const webp = src.replace(/^(\/images\/[^/?#]+)\.(?:jpe?g|png)$/i, '$1.webp')
+  return webp !== src && imageManifest[webp] ? webp : src
+}
 
 /** A row of the `projects` table as returned by the Data API. */
 export type ProjectRow = {
@@ -37,7 +47,7 @@ export const asGallery = (value: unknown): ProjectImage[] =>
     ? (value as Record<string, unknown>[])
         .filter((entry) => entry && typeof entry === 'object')
         .map((entry, i) => ({
-          src: String(entry['src'] ?? ''),
+          src: localImagePath(String(entry['src'] ?? '')),
           alt: String(entry['alt'] ?? ''),
           plate: (entry['plate'] as PlateKind) ?? 'frames',
           label: String(entry['label'] ?? `PLATE 0${i + 1}`),
@@ -58,7 +68,7 @@ export function rowToProject(row: ProjectRow, position: number): Project {
     area: row.area,
     scope: row.scope ?? [],
     verified: row.verified,
-    photo: row.photo,
+    photo: localImagePath(row.photo),
     plate: (row.plate as PlateKind) ?? 'frames',
     study: {
       overview: row.overview,

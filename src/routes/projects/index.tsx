@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { company } from '@/data/company'
 import { siteImages } from '@/data/images'
-import { projectsQueryOptions } from '@/lib/projects-query'
+import { loadProjects } from '@/lib/projects-cache'
 import { useMotion } from '@/lib/motion'
 import { breadcrumbSchema, JsonLd } from '@/lib/schema'
 import { InnerHero } from '@/components/site/InnerHero'
@@ -112,7 +112,7 @@ function ProjectsPage() {
 }
 
 export const Route = createFileRoute('/projects/')({
-  loader: ({ context }) => context.queryClient.ensureQueryData(projectsQueryOptions),
+  loader: () => loadProjects(),
   head: () => ({
     meta: [
       { title: TITLE },

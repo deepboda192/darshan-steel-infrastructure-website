@@ -1,7 +1,6 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
-  createRootRouteWithContext,
+  createRootRoute,
   useRouter,
   HeadContent,
   Scripts,
@@ -9,12 +8,13 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import rethinkLatin from "@fontsource-variable/rethink-sans/files/rethink-sans-latin-wght-normal.woff2?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 import { company } from "@/data/company";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/site/Button";
 import { usePathname } from "@/lib/next-navigation";
 
@@ -63,7 +63,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -84,14 +84,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        // The two site faces: Rethink Sans for display, Inter for copy.
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Rethink+Sans:wght@400..700&display=swap",
-      },
+      { rel: "icon", href: "/favicon.ico", sizes: "any" },
+      { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { rel: "icon", href: "/favicon-16.png", type: "image/png", sizes: "16x16" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      { rel: "manifest", href: "/site.webmanifest" },
+      // The two site faces are self-hosted (see styles.css); preloading the latin
+      // files lets text render in the right face from the first paint.
+      { rel: "preload", as: "font", type: "font/woff2", href: rethinkLatin, crossOrigin: "anonymous" },
+      { rel: "preload", as: "font", type: "font/woff2", href: interLatin, crossOrigin: "anonymous" },
     ],
     scripts: [
       { children: BOOT_SCRIPT },
@@ -122,7 +123,6 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
   const pathname = usePathname();
 
   // The admin and sign-in screens are tools, not pages of the site: they get
@@ -130,14 +130,13 @@ function RootComponent() {
   const bare = pathname.startsWith("/admin") || pathname.startsWith("/auth");
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       {!bare && <Navbar />}
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <main id="main">
         <Outlet />
       </main>
       {!bare && <Footer />}
-      <Toaster />
-    </QueryClientProvider>
+    </>
   );
 }

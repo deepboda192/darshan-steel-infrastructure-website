@@ -1,6 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { company } from '@/data/company'
-import { projectsQueryOptions } from '@/lib/projects-query'
+import { siteImages } from '@/data/images'
+import { srcSetFor } from '@/components/media/NextImage'
+import { loadProjects } from '@/lib/projects-cache'
 import { useMotion } from '@/lib/motion'
 
 import { Hero } from '@/components/sections/Hero'
@@ -46,7 +48,7 @@ function HomePage() {
 }
 
 export const Route = createFileRoute('/')({
-  loader: ({ context }) => context.queryClient.ensureQueryData(projectsQueryOptions),
+  loader: () => loadProjects(),
   head: () => ({
     meta: [
       { title: 'Darshan Steel Infrastructure | PEB & Structural Steel Solutions' },
@@ -64,7 +66,18 @@ export const Route = createFileRoute('/')({
       { property: 'og:type', content: 'website' },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
-    links: [{ rel: 'canonical', href: `${company.siteUrl}/` }],
+    links: [
+      { rel: 'canonical', href: `${company.siteUrl}/` },
+      // The hero still is the largest contentful paint: start fetching it with the HTML.
+      {
+        rel: 'preload',
+        as: 'image',
+        href: siteImages.hero.src,
+        imageSrcSet: srcSetFor(siteImages.hero.src),
+        imageSizes: '100vw',
+        fetchPriority: 'high',
+      },
+    ],
   }),
   component: HomePage,
 })

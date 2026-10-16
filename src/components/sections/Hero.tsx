@@ -2,6 +2,7 @@ import { siteImages } from '@/data/images'
 import { company } from '@/data/company'
 import { Button } from '@/components/site/Button'
 import { HeroVideo } from './HeroVideo'
+import Image from '@/components/media/NextImage'
 
 const DISCIPLINES = ['PEB Manufacturing', 'Structural Steel', 'Engineering & Erection']
 
@@ -25,11 +26,18 @@ export function Hero() {
       aria-label="Introduction"
     >
       {/* ---------------- background ---------------- */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-cover bg-[50%] bg-fixed max-md:bg-scroll max-xs:bg-[72%]"
-        style={{ backgroundImage: `url(${siteImages.hero.src})` }}
-      >
+      {/* The still is the largest contentful paint, so it is an <img> the browser can
+          find early (and the route head preloads it), with srcset renditions so a phone
+          does not download the 2000 px file. The video fades in over it. */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10">
+        <Image
+          src={siteImages.hero.src}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[50%_50%] max-xs:object-[72%_50%]"
+        />
         <HeroVideo />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,#000000a6,#0000008c)]" />
       </div>
@@ -89,6 +97,10 @@ export function Hero() {
                   <li key={cert.label} className="flex items-center gap-3.5">
                     <img
                       src={cert.logo}
+                      srcSet={`${cert.logo.replace(/\.webp$/, '-112.webp')} 112w, ${cert.logo} 160w`}
+                      sizes="(max-width: 479px) 56px, 76px"
+                      width={160}
+                      height={160}
                       alt={`${cert.label} certified — ${cert.issuer}`}
                       className="h-[min(76px,9svh)] w-[min(76px,9svh)] shrink-0 object-contain max-xs:h-14 max-xs:w-14"
                       decoding="async"

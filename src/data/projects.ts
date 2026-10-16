@@ -274,20 +274,20 @@ type Seed = {
 
 /** The fourteen projects documented in the catalogue, in catalogue order. */
 const seeds: Seed[] = [
-  { name: 'Lemit Paper LLP',                 buildingType: 'Paper Mill',                    sector: 'paper',      location: 'Morbi, Gujarat',     area: '19,920 Sq. Mt.', photo: '/images/project-01.jpg', plate: 'plant' },
-  { name: 'Ambani Paper LLP',                buildingType: 'Paper Mill',                    sector: 'paper',      location: 'Morbi, Gujarat',     area: '10,490 Sq. Mt.', photo: '/images/project-02.jpg', plate: 'plant' },
-  { name: 'Mascot Forge Pvt. Ltd.',          buildingType: 'Forging Plant',                 sector: 'forging',    location: 'Rajkot, Gujarat',    area: '12,020 Sq. Mt.', photo: '/images/project-03.jpg', plate: 'plant' },
-  { name: 'Davat Beverages Pvt. Ltd.',       buildingType: 'Beverage Plant',                sector: 'beverage',   location: 'Gondal, Gujarat',    area: '10,140 Sq. Mt.', photo: '/images/project-04.jpg', plate: 'warehouse' },
-  { name: 'Fortune Enterprise',              buildingType: 'Logistics Facility',            sector: 'logistics',  location: 'Rajkot, Gujarat',    area: '11,850 Sq. Mt.', photo: '/images/project-05.jpg', plate: 'warehouse' },
-  { name: 'Shilpan Boardlam Pvt. Ltd.',      buildingType: 'Plywood & Laminates Plant',     sector: 'laminates',  location: 'Rajkot, Gujarat',    area: '12,990 Sq. Mt.', photo: '/images/project-06.jpg', plate: 'plant' },
-  { name: 'Actionware India Pvt. Ltd.',      buildingType: 'Home Appliance Plant',          sector: 'appliances', location: 'Morbi, Gujarat',     area: '2,550 Sq. Mt.',  photo: '/images/project-01.jpg', plate: 'frames' },
-  { name: 'Action Metal & Tubes LLP',        buildingType: 'Metal & Tube Plant',            sector: 'metal',      location: 'Rajkot, Gujarat',    area: '4,700 Sq. Mt.',  photo: '/images/project-02.jpg', plate: 'plant' },
-  { name: 'Pelican Rotoflex Pvt. Ltd.',      buildingType: 'Machinery Manufacturing Plant', sector: 'machinery',  location: 'Jamnagar, Gujarat',  area: '4,650 Sq. Mt.',  photo: '/images/project-03.jpg', plate: 'plant' },
-  { name: 'Sicer Italian Ceramic Surfaces',  buildingType: 'Chemical Plant',                sector: 'chemical',   location: 'Morbi, Gujarat',     area: '4,150 Sq. Mt.',  photo: '/images/project-04.jpg', plate: 'frames' },
-  { name: 'Tileque Surfaces LLP',            buildingType: 'Decorative Surfaces Plant',     sector: 'decorative', location: 'Morbi, Gujarat',     area: '11,850 Sq. Mt.', photo: '/images/project-05.jpg', plate: 'frames' },
-  { name: 'Honey Bunny',                     buildingType: 'Hygiene Products Plant',        sector: 'hygiene',    location: 'Morbi, Gujarat',     area: '12,990 Sq. Mt.', photo: '/images/project-06.jpg', plate: 'warehouse' },
-  { name: 'Slogan Polyfilm Pvt. Ltd.',       buildingType: 'BOPP Film Plant',               sector: 'film',       location: 'Morbi, Gujarat',     area: '8,940 Sq. Mt.',  photo: '/images/project-01.jpg', plate: 'plant' },
-  { name: 'G.M. Engineering Pvt. Ltd.',      buildingType: 'Industrial Valve Plant',        sector: 'valves',     location: 'Rajkot, Gujarat',    area: '7,300 Sq. Mt.',  photo: '/images/project-02.jpg', plate: 'plant' },
+  { name: 'Lemit Paper LLP',                 buildingType: 'Paper Mill',                    sector: 'paper',      location: 'Morbi, Gujarat',     area: '19,920 Sq. Mt.', photo: '/images/project-01.webp', plate: 'plant' },
+  { name: 'Ambani Paper LLP',                buildingType: 'Paper Mill',                    sector: 'paper',      location: 'Morbi, Gujarat',     area: '10,490 Sq. Mt.', photo: '/images/project-02.webp', plate: 'plant' },
+  { name: 'Mascot Forge Pvt. Ltd.',          buildingType: 'Forging Plant',                 sector: 'forging',    location: 'Rajkot, Gujarat',    area: '12,020 Sq. Mt.', photo: '/images/project-03.webp', plate: 'plant' },
+  { name: 'Davat Beverages Pvt. Ltd.',       buildingType: 'Beverage Plant',                sector: 'beverage',   location: 'Gondal, Gujarat',    area: '10,140 Sq. Mt.', photo: '/images/project-04.webp', plate: 'warehouse' },
+  { name: 'Fortune Enterprise',              buildingType: 'Logistics Facility',            sector: 'logistics',  location: 'Rajkot, Gujarat',    area: '11,850 Sq. Mt.', photo: '/images/project-05.webp', plate: 'warehouse' },
+  { name: 'Shilpan Boardlam Pvt. Ltd.',      buildingType: 'Plywood & Laminates Plant',     sector: 'laminates',  location: 'Rajkot, Gujarat',    area: '12,990 Sq. Mt.', photo: '/images/project-06.webp', plate: 'plant' },
+  { name: 'Actionware India Pvt. Ltd.',      buildingType: 'Home Appliance Plant',          sector: 'appliances', location: 'Morbi, Gujarat',     area: '2,550 Sq. Mt.',  photo: '/images/project-01.webp', plate: 'frames' },
+  { name: 'Action Metal & Tubes LLP',        buildingType: 'Metal & Tube Plant',            sector: 'metal',      location: 'Rajkot, Gujarat',    area: '4,700 Sq. Mt.',  photo: '/images/project-02.webp', plate: 'plant' },
+  { name: 'Pelican Rotoflex Pvt. Ltd.',      buildingType: 'Machinery Manufacturing Plant', sector: 'machinery',  location: 'Jamnagar, Gujarat',  area: '4,650 Sq. Mt.',  photo: '/images/project-03.webp', plate: 'plant' },
+  { name: 'Sicer Italian Ceramic Surfaces',  buildingType: 'Chemical Plant',                sector: 'chemical',   location: 'Morbi, Gujarat',     area: '4,150 Sq. Mt.',  photo: '/images/project-04.webp', plate: 'frames' },
+  { name: 'Tileque Surfaces LLP',            buildingType: 'Decorative Surfaces Plant',     sector: 'decorative', location: 'Morbi, Gujarat',     area: '11,850 Sq. Mt.', photo: '/images/project-05.webp', plate: 'frames' },
+  { name: 'Honey Bunny',                     buildingType: 'Hygiene Products Plant',        sector: 'hygiene',    location: 'Morbi, Gujarat',     area: '12,990 Sq. Mt.', photo: '/images/project-06.webp', plate: 'warehouse' },
+  { name: 'Slogan Polyfilm Pvt. Ltd.',       buildingType: 'BOPP Film Plant',               sector: 'film',       location: 'Morbi, Gujarat',     area: '8,940 Sq. Mt.',  photo: '/images/project-01.webp', plate: 'plant' },
+  { name: 'G.M. Engineering Pvt. Ltd.',      buildingType: 'Industrial Valve Plant',        sector: 'valves',     location: 'Rajkot, Gujarat',    area: '7,300 Sq. Mt.',  photo: '/images/project-02.webp', plate: 'plant' },
 ]
 
 const slugify = (name: string) =>

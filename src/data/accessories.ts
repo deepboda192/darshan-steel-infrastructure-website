@@ -9,12 +9,6 @@
  * thicknesses or ladder heights are quoted because the catalogue gives none.
  */
 
-export const accessoriesMeta = {
-  title: 'PEB Accessories: Ventilators, Daylight Panels, Louvers, Insulation & Ladders | DSI',
-  description:
-    'The accessories of a pre-engineered building: turbo ventilators, ridge ventilators and roof monitors, polycarbonate daylight panels, S-type louvers, XLPE or fibreglass insulation and cage ladders, chosen with the cladding and fitted with the frame.',
-}
-
 export const accessoriesIntro = {
   lead:
     'Accessories are the parts that make the enclosed shell work as a building: the ventilators that move the air, the panels that let the daylight in, the louvers, the insulation that keeps the heat out, and the ladders that give safe access to the roof.',

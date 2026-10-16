@@ -8,12 +8,6 @@
  * sidewall) and its note that the concrete slab is not provided by DSI.
  */
 
-export const mezzanineMeta = {
-  title: 'PEB Mezzanine Floors: Beams, Deck Sheet, Handrails & Stairs | DSI',
-  description:
-    'Mezzanine floors in a pre-engineered building: steel beams, joists and columns, profiled deck sheet under a concrete slab or chequered plate, handrails and staircases, designed and built with the frame.',
-}
-
 export const mezzanineIntro = {
   lead:
     'A mezzanine is an intermediate floor built inside the height of the building: steel beams and joists on their own columns or on the main frame, a deck sheet over them, and the handrails and stairs that make it usable.',

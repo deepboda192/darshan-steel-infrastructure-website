@@ -7,9 +7,9 @@ import {
   claddingFaq,
   claddingIntro,
   claddingMaterialLabels,
-  claddingMeta,
   claddingParts,
 } from '@/data/cladding'
+import { claddingMeta } from '@/data/page-meta'
 import { useMotion } from '@/lib/motion'
 import { breadcrumbSchema, JsonLd, type Json } from '@/lib/schema'
 import { InnerHero } from '@/components/site/InnerHero'
@@ -23,11 +23,11 @@ import { cn } from '@/lib/cn'
 const PART_PHOTO: Record<string, { image: SiteImage; caption: string }> = {
   'roof-cladding': {
     image: siteImages.claddingParts.roof,
-    caption: 'Trapezoidal roof sheeting fixed through the rib crests, with the eave gutter and a downspout taking the water.',
+    caption: 'A DSI roof from above: profiled sheeting laid bay by bay over the ridge, with turbo ventilators and skylight strips in every bay.',
   },
   'wall-cladding': {
     image: siteImages.claddingParts.wall,
-    caption: 'A DSI shed with two-tone colour-coated wall cladding, a canopy over the door and a fascia along the eave.',
+    caption: 'Colour-coated wall cladding on a DSI shed, banded in three colours with louvre panels for ventilation along the upper wall.',
   },
   'standing-seam': {
     image: siteImages.claddingParts.standingSeam,
@@ -35,7 +35,7 @@ const PART_PHOTO: Record<string, { image: SiteImage; caption: string }> = {
   },
   components: {
     image: siteImages.claddingParts.components,
-    caption: 'An eave flashing and corner trim folded from coated steel, closing the top of the wall sheeting.',
+    caption: 'Eave flashing and joint trims folded from matching coated steel, closing the top and the joints of the wall sheeting.',
   },
 }
 

@@ -16,7 +16,10 @@ const SLOW = ['slow-2g', '2g', '3g']
  * Returns `started` (frames have played at least once — for fade-ins),
  * `playing` (currently running — for a play/pause control) and `toggle`.
  */
-export function useLazyVideo(src: string) {
+/** Phones get the small clip: a 480 px loop reads the same behind a wash. */
+const SMALL_SCREEN = '(max-width: 767px)'
+
+export function useLazyVideo(src: string, smallSrc?: string) {
   const ref = useRef<HTMLVideoElement>(null)
   const [started, setStarted] = useState(false)
   const [playing, setPlaying] = useState(false)
@@ -38,7 +41,7 @@ export function useLazyVideo(src: string) {
       // autoplay decisions; setting it here before the source is attached
       // makes muted autoplay reliable everywhere.
       video.muted = true
-      video.src = src
+      video.src = smallSrc && window.matchMedia(SMALL_SCREEN).matches ? smallSrc : src
       video.load()
       video.play().catch(() => {
         /* autoplay refused — whatever sits beneath the video stays */
@@ -86,7 +89,7 @@ export function useLazyVideo(src: string) {
       video.removeEventListener('pause', onPause)
       document.removeEventListener('visibilitychange', onVisible)
     }
-  }, [src])
+  }, [src, smallSrc])
 
   const toggle = () => {
     const video = ref.current

@@ -8,12 +8,6 @@
  * material table on the page is read from company.materialStandards.
  */
 
-export const claddingMeta = {
-  title: 'PEB Cladding System: Roof & Wall Sheeting, Standing Seam | DSI',
-  description:
-    'The cladding system of a pre-engineered building: roof and wall sheeting in S550 high-tensile steel, standing seam roofing, and the flashings, fasteners, sealants and insulation that close the envelope.',
-}
-
 export const claddingIntro = {
   lead:
     'The cladding system is the skin of the building: the roof and wall sheets fixed to the purlins and girts, and the flashings, trims, fasteners, sealants and insulation that turn them into a weathertight envelope.',

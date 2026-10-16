@@ -7,12 +7,6 @@
  * follows the catalogue's "Crane Beam System" page.
  */
 
-export const primarySystemMeta = {
-  title: 'PEB Primary Framing System: Frames, Cranes & Bracing | DSI',
-  description:
-    'The primary system of a pre-engineered building: the six rigid frame types, built-in crane systems, canopies and fascia, and the bracing that keeps it square.',
-}
-
 export const primarySystemIntro = {
   lead:
     'The primary system is the skeleton of a pre-engineered building: the rigid frames that carry every load to the foundations, and the crane runways, canopies and bracing that hang off them.',

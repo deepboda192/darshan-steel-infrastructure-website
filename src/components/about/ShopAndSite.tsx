@@ -14,7 +14,7 @@ export function ShopAndSite() {
     { label: 'Established', field: company.established },
     { label: 'Facility area', field: company.facilityArea },
   ]
-  const works = [{ ...company.works[0], image: siteImages.worksAerial }]
+  const works = [{ ...company.works[0], image: siteImages.worksWelder }]
 
   return (
     <section className="m-section" aria-label="Shop and site">
@@ -51,7 +51,7 @@ export function ShopAndSite() {
             </dl>
           </div>
 
-          {/* The works from above, then the shop floor beneath it. The name-and-address
+          {/* A welder on the shop floor, then the inspection still beneath it. The name-and-address
               plate that sat between them was removed at the user's request on 2026-09-29. */}
           <ul className="flex w-full max-w-[500px] flex-col gap-5 max-lg:max-w-none">
             {works.map((work) => (

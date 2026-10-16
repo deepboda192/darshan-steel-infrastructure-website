@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client'
 import { Logo } from '@/components/layout/Logo'
 import { initials } from '@/lib/initials'
 import { cn } from '@/lib/cn'
+import { Toaster } from '@/components/ui/sonner'
 
 const NAV: { label: string; href: string; icon: LucideIcon; exact?: boolean }[] = [
   { label: 'Overview', href: '/admin', icon: LayoutDashboard, exact: true },
@@ -133,7 +134,11 @@ function AdminLayout() {
               Checking access…
             </p>
           ) : session?.isAdmin ? (
-            <Outlet />
+            <>
+              <Outlet />
+              {/* Toasts are an admin-only affair, so the toaster mounts here, not in the root. */}
+              <Toaster />
+            </>
           ) : (
             <div className="max-w-[560px] rounded-[4px] border border-black/[0.08] bg-white p-8">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-accent/10 text-accent">

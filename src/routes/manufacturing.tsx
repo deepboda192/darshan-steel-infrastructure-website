@@ -12,10 +12,10 @@ import {
   machineProcesses,
   machines,
   manufacturingIntro,
-  manufacturingMeta,
   type Machine,
   type MachineProcess,
 } from '@/data/manufacturing'
+import { manufacturingMeta } from '@/data/page-meta'
 import { useMotion } from '@/lib/motion'
 import { breadcrumbSchema, JsonLd, type Json } from '@/lib/schema'
 import { cn } from '@/lib/cn'
@@ -258,7 +258,7 @@ function ManufacturingPage() {
                       <p className="mt-1.5 text-[15px] font-semibold text-accent">{cert.title}</p>
                       <p className="mt-1 text-[13px] font-semibold uppercase tracking-[0.5px] text-neutral-6">Certified by {cert.issuer}</p>
                     </div>
-                    <Image src={cert.badge} alt={`${cert.standard} certification mark, ${cert.issuer}`} width={96} height={96} className="h-[88px] w-[88px] shrink-0 object-contain max-xs:h-[72px] max-xs:w-[72px]" />
+                    <Image src={cert.badge} srcSet={`${cert.badge.replace(/\.webp$/, '-112.webp')} 112w, ${cert.badge} 160w`} sizes="(max-width: 479px) 72px, 88px" alt={`${cert.standard} certification mark, ${cert.issuer}`} width={96} height={96} className="h-[88px] w-[88px] shrink-0 object-contain max-xs:h-[72px] max-xs:w-[72px]" />
                   </div>
 
                   {/* The scanned certificate: a thumbnail that opens the full page. */}
@@ -269,7 +269,7 @@ function ManufacturingPage() {
                     aria-label={`View the ${cert.standard} certificate`}
                   >
                     <span className="block w-[64px] shrink-0 overflow-hidden border border-black/15 bg-white shadow-[0_4px_12px_#0000001f] transition-transform duration-300 group-hover:-translate-y-0.5">
-                      <Image src={cert.document} alt="" width={64} height={91} className="block h-auto w-full" />
+                      <Image src={cert.thumb} alt="" width={64} height={91} className="block h-auto w-full" />
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-[13px] font-semibold uppercase tracking-[0.5px] text-neutral-6">Certificate no.</span>
@@ -456,7 +456,7 @@ function CertificateDialog({ cert, onClose }: { cert: Certification | null; onCl
             </button>
           </div>
           <div className="max-h-[72vh] overflow-y-auto bg-neutral-2 p-4">
-            <img src={cert.document} alt={`Scanned ${cert.standard} certificate issued to ${company.name} by ${certificateCommon.body}`} className="mx-auto block h-auto w-full max-w-[640px] shadow-[0_8px_24px_#0003]" />
+            <img src={cert.preview} alt={`Scanned ${cert.standard} certificate issued to ${company.name} by ${certificateCommon.body}`} decoding="async" className="mx-auto block h-auto w-full max-w-[640px] shadow-[0_8px_24px_#0003]" />
           </div>
           <div className="flex items-center justify-between gap-4 border-t border-black/10 px-6 py-4 max-xs:flex-col max-xs:items-start">
             <p className="text-[13px] text-neutral-6">Scope: {certificateCommon.scope}.</p>

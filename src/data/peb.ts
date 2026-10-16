@@ -5,12 +5,6 @@
  * describes general PEB practice, not a DSI claim.
  */
 
-export const pebMeta = {
-  title: 'About PEB: Pre-Engineered Buildings Explained | DSI',
-  description:
-    'What a pre-engineered building (PEB) is, how it is built, its advantages over conventional construction and where it is used. By DSI, PEB manufacturer in Rajkot.',
-}
-
 /** The definition, kept short enough to read in one pass. */
 export const pebDefinition = {
   lead:

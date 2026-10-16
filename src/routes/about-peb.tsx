@@ -10,7 +10,8 @@ import {
   pebIncludes,
   structuralSystems,
 } from '@/data/capabilities'
-import { pebDefinition, pebFaq, pebMeta } from '@/data/peb'
+import { pebDefinition, pebFaq } from '@/data/peb'
+import { pebMeta } from '@/data/page-meta'
 import { useMotion } from '@/lib/motion'
 import { breadcrumbSchema, JsonLd, type Json } from '@/lib/schema'
 import { InnerHero } from '@/components/site/InnerHero'

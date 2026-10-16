@@ -1,6 +1,8 @@
+import { useEffect, useRef, useState } from 'react'
 import { company, formattedAddress } from '@/data/company'
 import { footerNav } from '@/data/nav'
 import { siteImages } from '@/data/images'
+import { renditionUrl } from '@/components/media/NextImage'
 import { Logo } from './Logo'
 import { Button } from '@/components/site/Button'
 import Link from '@/components/site/NextLink'
@@ -29,14 +31,38 @@ const FOOT_LINK =
  */
 export function Footer() {
   const year = new Date().getFullYear()
+  const ref = useRef<HTMLElement>(null)
+
+  // The photograph is fetched once the footer is within a screen of the
+  // viewport, so it never competes with a page's own images while that page
+  // is loading. Until then the footer is its own near-black.
+  const [near, setNear] = useState(false)
+  useEffect(() => {
+    const footer = ref.current
+    if (!footer || typeof IntersectionObserver === 'undefined') {
+      setNear(true)
+      return
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setNear(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '100% 0px' },
+    )
+    observer.observe(footer)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <footer className="relative isolate overflow-hidden pb-20 max-md:pb-14 max-xs:pb-10">
+    <footer ref={ref} className="relative isolate overflow-hidden bg-neutral-10 pb-20 max-md:pb-14 max-xs:pb-10">
       {/* ---------------- backdrop ---------------- */}
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 bg-cover bg-center bg-fixed max-md:bg-scroll"
-        style={{ backgroundImage: `url(${siteImages.footer.src})` }}
+        style={near ? { backgroundImage: `url(${renditionUrl(siteImages.footer.src, 1200)})` } : undefined}
       >
         {/* Dark wash over the whole photograph so the call to action reads. */}
         <div className="absolute inset-0 bg-black/60" />

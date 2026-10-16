@@ -7,11 +7,11 @@
  *
  * WHAT IS HERE NOW
  * ----------------
- * Licensed stock photography from Unsplash, downloaded into public/images/ so
- * the site has no runtime dependency on a third-party CDN. Sources are listed
- * in public/images/CREDITS.md. Re-fetch or extend the set with:
- *
- *     node scripts/fetch-photography.mjs
+ * Photographs live in public/images as WebP, each with smaller renditions
+ * (name-480.webp, name-768.webp, …) and an entry in image-manifest.ts, all
+ * written by `node scripts/optimize-images.mjs`. Drop a new JPEG or PNG into
+ * the folder, run the script, and reference it here by its stem. Sources are
+ * listed in public/images/CREDITS.md.
  *
  * These are STOCK PHOTOGRAPHS, not DSI's own buildings. They set the right
  * tone, but they do not depict DSI work.
@@ -59,7 +59,7 @@ const img = (
   plate: PlateKind,
   label: string,
   focus?: string,
-): SiteImage => ({ src: src ? `/images/${src}.jpg` : '', alt, plate, label, focus })
+): SiteImage => ({ src: src ? `/images/${src}.webp` : '', alt, plate, label, focus })
 
 /** A catalogue frame-type drawing: a transparent PNG shown on the card head. */
 const frame = (code: string, alt: string): SiteImage => ({
@@ -96,7 +96,7 @@ export const siteImages = {
     ),
     factoryBuildings: img(
       'solution-factory',
-      'Factory floor filled with production machinery under a steel roof',
+      'Inside a long factory hall: an overhead crane lifting a steel rack above racks of stock and bundles of profiles on the floor',
       'plant',
       'FACTORY',
     ),
@@ -106,12 +106,13 @@ export const siteImages = {
       'coldstore',
       'COLD STORE',
     ),
-    commercial: img(
-      'solution-commercial',
-      'Commercial building elevation seen from a low angle',
-      'frames',
-      'COMMERCIAL',
-    ),
+    commercial: {
+      src: '/images/commercial-structure.webp',
+      alt: 'Three-storey steel-framed commercial building under construction, blue columns and beams with decking laid and a blue roof on, amid greenery',
+      plate: 'frames',
+      label: 'COMMERCIAL',
+      focus: '50% 55%',
+    } satisfies SiteImage,
     custom: img(
       'solution-custom',
       'Steel beams and roof sheeting on a building under construction',
@@ -242,6 +243,19 @@ export const siteImages = {
     LT: frame('lt', 'Lean-to frame: a single slope borrowing support from an existing building, practical width 24 m'),
   },
 
+  /**
+   * DSI's own photograph of a welder at work on the shop floor, supplied on
+   * 2026-10-11. The frame on the About page is landscape and the photo is
+   * portrait, so the focal point sits low to keep the welder in view.
+   */
+  worksWelder: img(
+    'works-welder',
+    'A DSI welder in a yellow hard hat and mask welding a fabricated steel member on the shop floor, sparks flying',
+    'plant',
+    'FIG. 22 — SHOP FLOOR',
+    '52% 95%',
+  ),
+
   /** Photograph beside the enquiry form. */
   safety: img(
     'safety-site-crew',
@@ -271,11 +285,11 @@ export const siteImages = {
      tagline band, shop-and-site and the second works. */
   /** About PEB page hero. */
   pebHero: img(
-    'banner-solutions',
-    'Steel portal frames of a pre-engineered building under construction',
+    'footer-steel-frames',
+    'Grey steel main frames of a pre-engineered building under erection, purlins and girts fixed, mountains behind',
     'frames',
     'FIG. 15 — PEB',
-    '50% 50%',
+    '50% 45%',
   ),
   /** About page hero: DSI's own drone view of the works (user's choice, 2026-09-28). */
   aboutHero: {
@@ -366,10 +380,10 @@ export const siteImages = {
    */
   mezzanineHero: img(
     'mezzanine-hero',
-    'Empty pre-engineered warehouse with a blue steel frame and a mezzanine office block along one wall, reached by a blue steel staircase',
+    'Two-level steel mezzanine running the length of a pre-engineered building, with railings, a steel staircase and offices beneath, under a skylit roof',
     'warehouse',
     'MEZZANINE FLOORS',
-    '55% 55%',
+    '50% 50%',
   ),
   mezzanineParts: {
     beams: img(
@@ -379,19 +393,19 @@ export const siteImages = {
       'FIG. 28 — MEZZANINE BEAMS',
       '50% 45%',
     ),
-    deck: img(
-      'mezzanine-deck',
-      'Chequered steel plate floor of a mezzanine walkway with a handrail along its open edge and steel storage units beside it',
-      'plant',
-      'FIG. 29 — MEZZANINE DECK',
-      '40% 60%',
-    ),
+    deck: {
+      src: '/images/mezzanine-deck.webp',
+      alt: 'Underside of a mezzanine floor: galvanized profiled deck sheet spanning between dark steel joists, bolted to the mezzanine beam on a steel column',
+      plate: 'plant',
+      label: 'FIG. 29 — MEZZANINE DECK',
+      focus: '50% 40%',
+    } satisfies SiteImage,
     handrails: img(
       'mezzanine-handrails',
-      'Galvanized steel stairs and landings with post-and-rail handrails against a dark wall',
+      'Post-and-rail handrail along the open edge of a chequered-plate mezzanine walkway, with steel storage units on the other side',
       'frames',
       'FIG. 30 — HANDRAILS',
-      '50% 40%',
+      '35% 55%',
     ),
     stair: img(
       'mezzanine-stair',
@@ -406,27 +420,27 @@ export const siteImages = {
    * on its roofs; wall cladding is DSI's own shed photograph; the rest are
    * stock photographs from Pexels. Sources in CREDITS.md.
    */
-  claddingHero: {
-    src: '/images/works-aerial.webp',
-    alt: 'Aerial view of the white roof and wall sheeting of the Darshan Steel Infrastructure works at Rajkot, with farmland around',
-    plate: 'aerial',
-    label: 'CLADDING SYSTEM',
-    focus: '50% 42%',
-  } satisfies SiteImage,
+  claddingHero: img(
+    'cladding-hero',
+    'Red and white profiled wall sheeting of a pre-engineered building, seen from below against a clear sky, with a red eave trim along the top',
+    'warehouse',
+    'CLADDING SYSTEM',
+    '50% 60%',
+  ),
   claddingParts: {
     roof: img(
       'cladding-roof',
-      'Grey trapezoidal steel roof sheeting over a yellow clad wall, with the eave gutter and a downspout',
-      'warehouse',
+      'Drone view straight down onto the white profiled roof sheeting of a DSI building: a gabled roof with ridge, rows of turbo ventilators and skylight strips at every bay',
+      'aerial',
       'FIG. 32 — ROOF CLADDING',
-      '50% 40%',
+      '50% 45%',
     ),
     wall: img(
-      'peb-canopy-fascia',
-      'White and grey colour-coated wall cladding of a DSI shed, with a curved canopy over the rolling-shutter door',
+      'cladding-wall',
+      'Three-tone colour-coated wall cladding on a DSI shed: red and silver sheeting above a dark grey band with louvre panels, over a plastered base',
       'warehouse',
       'FIG. 33 — WALL CLADDING',
-      '60% 45%',
+      '45% 50%',
     ),
     standingSeam: img(
       'cladding-standing-seam',
@@ -437,10 +451,10 @@ export const siteImages = {
     ),
     components: img(
       'cladding-components',
-      'Blue profiled wall sheeting under a white eave flashing and corner trim, fixed with screws',
+      'Red and white profiled wall sheeting of a DSI shed running under a red eave flashing, with vertical corner and joint trims and screws along the rib lines',
       'frames',
       'FIG. 35 — FLASHINGS',
-      '50% 45%',
+      '35% 45%',
     ),
   },
   /**
@@ -449,39 +463,39 @@ export const siteImages = {
    */
   accessoriesHero: img(
     'accessories-hero',
-    'A row of roof ventilators along the ridge of a curved metal roof, with steam rising past them',
-    'plant',
+    'Aerial view of a DSI shed with red and white cladding, its roof lined with rows of turbo ventilators and skylight panels, a canopy along the loading front',
+    'aerial',
     'ACCESSORIES',
-    '50% 45%',
+    '50% 55%',
   ),
   accessoryParts: {
     ventilation: img(
       'accessory-ventilator',
-      'A stainless steel turbine ventilator on its base, with a vent pipe beside it against a cloudy sky',
+      'A turbo ventilator on its base flashing on a DSI roof, with a long row of ventilators running along the ridge behind it over farmland',
       'plant',
       'FIG. 36 — TURBO VENTILATOR',
-      '50% 55%',
+      '60% 55%',
     ),
     daylight: img(
       'accessory-daylight',
-      'An industrial roof seen from below, with translucent daylight panels set between the steel sheets and purlins',
+      'The roof of a DSI building from below: rafters and purlins carrying the sheeting, with strips of translucent daylight panels running along every bay',
       'frames',
       'FIG. 37 — DAYLIGHT PANELS',
-      '50% 45%',
+      '50% 50%',
     ),
     louvers: img(
       'accessory-louvers',
-      'Two louver panels set into grey profiled wall cladding',
+      'A continuous band of louver panels along the upper wall of a DSI shed, between dark grey sheeting above and white sheeting below',
       'warehouse',
       'FIG. 38 — LOUVERS',
-      '50% 50%',
+      '50% 60%',
     ),
     insulation: img(
       'accessory-insulation',
-      'Fibreglass insulation blanket being fitted between framing members by a worker in gloves',
+      'The roof of a DSI building from below: insulation blanket held by wire mesh over the purlins, under the roof sheet, with the rafter and rod bracing beneath',
       'plant',
       'FIG. 39 — INSULATION',
-      '40% 50%',
+      '50% 45%',
     ),
     access: img(
       'accessory-ladder',
@@ -612,6 +626,8 @@ export function galleryFor(index: number, prefix: string): SiteImage[] {
  */
 export const heroVideo = {
   src: '/videos/hero-loop.mp4',
+  /** The 480 px rendition, attached on phones instead of the 1280 px clip. */
+  srcSmall: '/videos/hero-loop-480.mp4',
   type: 'video/mp4',
 } as const
 

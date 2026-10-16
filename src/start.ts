@@ -1,7 +1,9 @@
 import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/react-start";
 
 import { renderErrorPage } from "./lib/error-page";
-import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
+// The lazy variant of integrations/supabase/auth-attacher: same behaviour for
+// signed-in staff, but public pages do not download the Supabase client.
+import { attachSupabaseAuth } from "@/lib/attach-supabase-auth";
 
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {

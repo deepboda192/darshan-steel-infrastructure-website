@@ -1,4 +1,3 @@
-import { format, parseISO } from 'date-fns'
 import { siteImages, type SiteImage } from '@/data/images'
 
 /**
@@ -6,8 +5,8 @@ import { siteImages, type SiteImage } from '@/data/images'
  * stay static and render on the server. Each post is a list of typed blocks
  * rather than markdown, so the renderer (components/blogs/BlogBody.tsx)
  * controls the typography. Reading time and word count are derived from the
- * blocks, and dates are formatted with date-fns from date-only ISO strings,
- * which parse to the same calendar day on the server and in every browser.
+ * blocks, and dates are formatted from the parts of date-only ISO strings, so
+ * the server and every browser print the same calendar day.
  *
  * Copy describes general PEB practice. The only figures quoted are DSI's
  * own catalogue figures: frames 20–30% lighter than conventional steel,
@@ -292,7 +291,13 @@ export function postStats(post: BlogPost): { words: number; readMinutes: number 
 }
 
 /** "29 Sep 2026": the same on the server and in every browser. */
-export const formatPostDate = (iso: string) => format(parseISO(iso), 'd MMM yyyy')
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+/** "12 Sep 2026" from "2026-09-12", with no time zone involved. */
+export const formatPostDate = (iso: string) => {
+  const [y, m, d] = iso.split('-').map(Number)
+  return `${d} ${MONTHS[m - 1]} ${y}`
+}
 
 export type BlogSort = 'newest' | 'oldest'
 

@@ -7,10 +7,10 @@ import {
   mezzanineFaq,
   mezzanineIntro,
   mezzanineLegend,
-  mezzanineMeta,
   mezzanineParts,
   mezzanineUses,
 } from '@/data/mezzanine'
+import { mezzanineMeta } from '@/data/page-meta'
 import { useMotion } from '@/lib/motion'
 import { breadcrumbSchema, JsonLd, type Json } from '@/lib/schema'
 import { InnerHero } from '@/components/site/InnerHero'
@@ -29,11 +29,11 @@ const PART_PHOTO: Record<string, { image: SiteImage; caption: string }> = {
   },
   'deck-sheet': {
     image: siteImages.mezzanineParts.deck,
-    caption: 'A chequered plate floor on a mezzanine walkway, the alternative to a deck sheet and slab where the load is light.',
+    caption: 'Profiled deck sheet from below, spanning between the mezzanine joists that carry it to the beams and columns.',
   },
   handrails: {
     image: siteImages.mezzanineParts.handrails,
-    caption: 'Galvanized post-and-rail handrails on steel stairs and landings, with a kick plate at the floor.',
+    caption: 'A post-and-rail handrail along the open edge of a mezzanine walkway, with a kick plate at the floor.',
   },
   staircase: {
     image: siteImages.mezzanineParts.stair,

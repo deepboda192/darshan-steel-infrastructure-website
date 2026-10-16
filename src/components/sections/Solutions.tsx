@@ -3,6 +3,7 @@ import type { LucideIcon } from 'lucide-react'
 import { solutions } from '@/data/solutions'
 import { SectionIntro } from '@/components/site/SectionIntro'
 import { Button } from '@/components/site/Button'
+import Image from '@/components/media/NextImage'
 
 // One pictogram per building type, keyed by slug. Presentation only, so the
 // mapping lives here rather than in data/solutions.ts.
@@ -64,12 +65,12 @@ export function Solutions() {
                     </div>
 
                     <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
-                      <img
+                      <Image
                         src={solution.image.src}
                         alt=""
-                        loading="lazy"
-                        decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                       />
                       <div className="absolute inset-0 bg-[#141414a6]" />
                     </div>

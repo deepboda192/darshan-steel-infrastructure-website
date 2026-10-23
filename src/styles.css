@@ -1,13 +1,15 @@
 @import 'tailwindcss';
 /* The two site faces, self-hosted: each file carries one unicode subset, so an
-   English page downloads only the latin files (preloaded in routes/__root.tsx). */
-@import '@fontsource-variable/inter';
-@import '@fontsource-variable/rethink-sans';
+   English page downloads only the latin files (preloaded in routes/__root.tsx).
+   Plus Jakarta Sans (wght axis) for display type, Instrument Sans (wght axis)
+   for everything else. */
+@import '@fontsource-variable/plus-jakarta-sans';
+@import '@fontsource-variable/instrument-sans';
 
 /* ==========================================================================
    DSI DESIGN SYSTEM — built on the Modera design language
    --------------------------------------------------------------------------
-   Rethink Sans display type, Inter body copy, a blue accent
+   Plus Jakarta Sans display type, Instrument Sans body copy, a blue accent
    on white and near-black, 2px radii, a 1370px container and a 96px section
    rhythm. Only these tokens resolve to utilities: the stock Tailwind palette
    is cleared so an off-system class such as `bg-slate-900` produces no CSS
@@ -55,8 +57,8 @@
 
   /* --- typography -------------------------------------------------------- */
   /* The @fontsource-variable families imported at the top of this file. */
-  --font-heading: 'Rethink Sans Variable', 'Rethink Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', 'Arial Black', Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Instrument Sans Variable', 'Instrument Sans', Helvetica, ui-sans-serif, system-ui, sans-serif;
 
   /* Paragraph scale: para-1 is the lead, para-3 the body default. */
   --text-para-1: 20px;
@@ -78,19 +80,24 @@
   --ease-modera: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Responsive display scale — the reference's sizes with the brand's line
-   heights: a heading rendering at 36px and up takes 1.15, anything smaller
-   1.167 (the 28px-on-24px ratio). Headings carry no letter-spacing.
-   Component headings sized inline use the same pair via leading-(--lh-*). */
+/* Responsive display scale — the brand system's Plus Jakarta Sans metrics (04 —
+   Typography, 2026): tight and low, display weight 800. Leading 0.96 for display sizes, 1.05 for headlines,
+   1.2 for titles; tracking −4% at hero size, −3% for display, −2% below.
+   The tighter the bigger. Component headings sized inline use the same pairs
+   via leading-(--lh-*) and tracking-(--ls-*). */
 :root {
-  --lh-lg: 1.15;
-  --lh-sm: 1.167;
+  --lh-lg: 0.96;
+  --lh-md: 1.05;
+  --lh-sm: 1.2;
+  --ls-lg: -0.04em;
+  --ls-md: -0.03em;
+  --ls-sm: -0.02em;
   /* h1 also yields to short desktop viewports so the hero fits one screen. */
-  --fs-h1: min(75px, 9.6svh); --lh-h1: var(--lh-lg);
-  --fs-h2: 54px; --lh-h2: var(--lh-lg);
-  --fs-h3: 42px; --lh-h3: var(--lh-lg);
-  --fs-h4: 31px; --lh-h4: var(--lh-sm);
-  --fs-h5: 24px; --lh-h5: var(--lh-sm);
+  --fs-h1: min(75px, 9.6svh); --lh-h1: var(--lh-lg); --ls-h1: var(--ls-lg);
+  --fs-h2: 54px; --lh-h2: var(--lh-lg); --ls-h2: var(--ls-md);
+  --fs-h3: 42px; --lh-h3: var(--lh-md); --ls-h3: var(--ls-md);
+  --fs-h4: 31px; --lh-h4: var(--lh-md); --ls-h4: var(--ls-sm);
+  --fs-h5: 24px; --lh-h5: var(--lh-sm); --ls-h5: var(--ls-sm);
   --section-lg: 96px;
   --section-md: 80px;
   --container-pad: 30px;
@@ -102,7 +109,7 @@
   :root {
     --fs-h1: 52px;
     --fs-h2: 38px;
-    --fs-h3: 31px; --lh-h3: var(--lh-sm);
+    --fs-h3: 31px; --lh-h3: var(--lh-md);
     --fs-h4: 24px;
     --fs-h5: 22px;
     --section-lg: 72px; --section-md: 64px;
@@ -112,7 +119,7 @@
 @media (max-width: 479px) {
   :root {
     --fs-h1: 42px;
-    --fs-h2: 30px; --lh-h2: var(--lh-sm);
+    --fs-h2: 30px; --lh-h2: var(--lh-md);
     --fs-h3: 24px;
     --fs-h4: 22px;
     --section-lg: 64px; --section-md: 64px;
@@ -148,6 +155,7 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     font-weight: 700;
+    letter-spacing: var(--ls-sm);
     margin: 0;
   }
 
@@ -195,30 +203,29 @@
     display: inline-block;
     border-left: 5px solid var(--color-accent);
     padding-left: 10px;
-    font-family: var(--font-heading);
-    font-size: 16px;
+    font-family: var(--font-sans);
+    font-size: 13px;
     line-height: 1;
     font-weight: 700;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-neutral-10);
   }
-  .m-subtitle.light { color: var(--color-neutral-1); letter-spacing: 0.5px; }
+  .m-subtitle.light { color: var(--color-neutral-1); }
 
   .m-h1, .m-h2, .m-h3, .m-h4, .m-h5 {
     font-family: var(--font-heading);
     font-weight: 700;
     color: var(--color-neutral-10);
   }
-  .m-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); }
-  .m-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); }
-  .m-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); }
-  .m-h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); }
-  .m-h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); }
-  /* On dark surfaces the reference drops headings to semi-bold. */
-  .m-h1.light, .m-h2.light, .m-h3.light, .m-h4.light, .m-h5.light {
-    color: var(--color-white);
-    font-weight: 600;
-  }
+  .m-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: var(--ls-h1); font-weight: 800; }
+  .m-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); letter-spacing: var(--ls-h2); font-weight: 800; }
+  .m-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--ls-h3); }
+  .m-h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); letter-spacing: var(--ls-h4); }
+  .m-h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); letter-spacing: var(--ls-h5); }
+  /* On dark surfaces headings turn white; the weight stays (the brand sheet
+     allows display 800 and 700 only, no semi-bold). */
+  .m-h1.light, .m-h2.light, .m-h3.light, .m-h4.light, .m-h5.light { color: var(--color-white); }
 
   .m-paragraph { color: var(--color-neutral-8); font-size: 18px; line-height: 1.5; }
   .m-paragraph.large { font-size: 20px; }

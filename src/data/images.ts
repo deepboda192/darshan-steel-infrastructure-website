@@ -72,12 +72,13 @@ const frame = (code: string, alt: string): SiteImage => ({
 export const siteImages = {
   /* -------------------------------------------------------------------- HOME */
   /** Hero backdrop. */
+  /** Home hero still, shown until the clip plays: DSI's drone photo of the works at Rajkot (user's choice, 2026-10-16). */
   hero: img(
-    'hero-steel-frame',
-    'Steel portal frames and purlins of an industrial building rising against the sky',
+    'hero-works-aerial',
+    'Drone view of the Darshan Steel Infrastructure works at Rajkot: the long white and blue shed with rooftop solar panels, containers and cranes loading in the yard, fields all around',
     'frames',
-    'FIG. 01 — PRIMARY FRAMING',
-    '50% 45%',
+    'FIG. 01 — THE WORKS',
+    '55% 50%',
   ),
 
   /** The six building types — used by data/solutions.ts. */

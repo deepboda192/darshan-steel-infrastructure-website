@@ -4,7 +4,7 @@ import { cn } from '@/lib/cn'
 /**
  * Small building blocks the admin screens share: a page header, the white
  * card, a status chip, an icon button and an empty state. They follow the
- * site's tokens (Rethink Sans headings, Inter copy, brand blue, hairlines)
+ * site's tokens (Plus Jakarta Sans headings, Instrument Sans copy, brand blue, hairlines)
  * so the panel feels like the same product as the site.
  */
 

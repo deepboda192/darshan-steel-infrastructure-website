@@ -49,20 +49,24 @@ export function Hero() {
       <div className="mt-auto border-b border-white/30 py-[min(32px,3svh)] max-lg:border-b-0 max-lg:pb-[70px] max-md:pb-20">
         <div className="m-container">
           <div className="flex max-w-[700px] flex-col gap-[min(48px,4.5svh)] max-md:gap-6">
+            {/* Eyebrow: the three disciplines as hairline chips. */}
             <ul
-              className="flex flex-wrap items-center gap-x-6 gap-y-2 font-heading text-[14px] font-semibold uppercase tracking-[0.5px] text-white/70"
+              className="flex flex-wrap items-center gap-x-2.5 gap-y-2.5 font-heading text-[12px] font-semibold uppercase tracking-[1.2px] text-white/85 max-xs:text-[11px]"
               data-reveal="fade"
             >
-              {DISCIPLINES.map((d, i) => (
-                <li key={d} className="flex items-center gap-6">
-                  {i > 0 && <span aria-hidden="true" className="h-3 w-px bg-white/30 max-md:hidden" />}
+              {DISCIPLINES.map((d) => (
+                <li
+                  key={d}
+                  className="flex items-center gap-2.5 rounded-full border border-white/20 bg-white/[0.06] px-3.5 py-[7px] backdrop-blur-[2px]"
+                >
+                  <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
                   {d}
                 </li>
               ))}
             </ul>
 
             <h1 className="m-h1 light" data-animation="blur-stagger">
-              Pre-Engineered Building For Industry.
+              A Place for Precise Work.
             </h1>
 
             <div

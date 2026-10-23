@@ -78,6 +78,7 @@ DSI photograph of the same name and the site picks it up with no code change.
 | File | Subject | Source |
 | --- | --- | --- |
 | `works-aerial.webp` | Drone view of the DSI works and yard at Rajkot | Supplied by Darshan Steel Infrastructure |
+| `hero-works-aerial.webp` | Drone view of the whole works: the shed with rooftop solar, the yard with containers and cranes, fields around; the home hero still behind the video | Supplied by Darshan Steel Infrastructure |
 | `works-interior.webp` | Inside the DSI fabrication shop, black and white | Supplied by Darshan Steel Infrastructure |
 | `crane-beam-system.webp` | Double-girder EOT crane on its crane beams inside a DSI building | Cropped from the DSI product catalogue (Crane Beam System page) |
 | `peb-frame-cs.png` … `peb-frame-lt.png` | The eight frame-type drawings (CS, MS-1, MS-2, MS-3, MG, RS, SS, LT) | DSI product catalogue, recoloured from red to the brand blue |

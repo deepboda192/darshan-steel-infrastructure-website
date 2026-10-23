@@ -8,8 +8,8 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import interLatin from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
-import rethinkLatin from "@fontsource-variable/rethink-sans/files/rethink-sans-latin-wght-normal.woff2?url";
+import jakartaLatin from "@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url";
+import instrumentLatin from "@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 import { company } from "@/data/company";
@@ -90,9 +90,9 @@ export const Route = createRootRoute({
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
       { rel: "manifest", href: "/site.webmanifest" },
       // The two site faces are self-hosted (see styles.css); preloading the latin
-      // files lets text render in the right face from the first paint.
-      { rel: "preload", as: "font", type: "font/woff2", href: rethinkLatin, crossOrigin: "anonymous" },
-      { rel: "preload", as: "font", type: "font/woff2", href: interLatin, crossOrigin: "anonymous" },
+      // files lets text render in the right faces from the first paint.
+      { rel: "preload", as: "font", type: "font/woff2", href: jakartaLatin, crossOrigin: "anonymous" },
+      { rel: "preload", as: "font", type: "font/woff2", href: instrumentLatin, crossOrigin: "anonymous" },
     ],
     scripts: [
       { children: BOOT_SCRIPT },

@@ -97,8 +97,8 @@ and icon plates, **not for text**: links on dark bands use `.m-link.light`
 
 | Role | Family | Weights loaded | Notes |
 | --- | --- | --- | --- |
-| Headings, buttons, eyebrows, nav | **Rethink Sans Variable** (`--font-heading`) | 400–800 | Self-hosted, `@fontsource-variable/rethink-sans`. `body { font-synthesis: style }` keeps browsers from faking weights. |
-| Everything else | **Inter Variable** (`--font-sans`) | 100–900 | Self-hosted, `@fontsource-variable/inter`. |
+| Headings, buttons, nav, stat figures | **Plus Jakarta Sans Variable** (`--font-heading`) | 800 at h1/h2, 700 below (`.light` only changes colour) | Self-hosted, `@fontsource-variable/plus-jakarta-sans`. Brand system 04 — Typography (revised 2026-10-17): tight and low — leading 0.96 display / 1.05 headline / 1.2 title, tracking −4% hero, −3% display, −2% below (`--lh-*`, `--ls-*`). `body { font-synthesis: style }` keeps browsers from faking weights. |
+| Everything else, eyebrow labels | **Instrument Sans Variable** (`--font-sans`) | 400–500, labels 700 caps | Self-hosted, `@fontsource-variable/instrument-sans`. Body 16 / 1.6. Eyebrows (`m-subtitle`) are 13 px Instrument Sans 700 caps with +8% tracking. |
 
 Both are `@import`ed at the top of `src/styles.css` (one `@font-face` per
 unicode subset, so an English page downloads only the latin files) and the two
@@ -131,7 +131,7 @@ host is contacted.
 
 Commonly used inline heading sizes: solution cards 36 px, project names 48 px
 (24 on phones), process/feature titles 24–28 px, footer call-to-action 64 px,
-About statement in Inter at lead size (`m-paragraph large`, 20 px), stat figures 54–68 px (`leading-none`).
+About statement in Instrument Sans at lead size (`m-paragraph large`, 20 px), stat figures 54–68 px (`leading-none`).
 
 ### Paragraphs (`.m-paragraph`)
 
@@ -142,7 +142,7 @@ About statement in Inter at lead size (`m-paragraph large`, 20 px), stat figures
 | `.medium` | 16 / 1.6 | 14 at ≤ 479 |
 | `.small` | 14 / 1.6 | — |
 
-Body default is Inter 16 / 1.6, weight 400. Add `.light` on dark surfaces.
+Body default is Instrument Sans 16 / 1.6, weight 400. Add `.light` on dark surfaces.
 
 ### Labels and eyebrows
 

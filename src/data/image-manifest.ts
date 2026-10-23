@@ -382,6 +382,19 @@ export const imageManifest: Record<string, { w: number; h: number; widths: numbe
       1800
     ]
   },
+  "/images/hero-works-aerial.webp": {
+    "w": 2000,
+    "h": 1125,
+    "widths": [
+      480,
+      640,
+      768,
+      1024,
+      1200,
+      1600,
+      2000
+    ]
+  },
   "/images/machine-beam-welding.webp": {
     "w": 1200,
     "h": 800,
